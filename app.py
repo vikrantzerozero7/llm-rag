@@ -12,7 +12,7 @@ import fitz  # PyMuPDF
 import re
 from unidecode import unidecode
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-from langchain_community.vectorstores import Chroma
+
 from langchain_community.document_loaders import JSONLoader
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -416,6 +416,7 @@ def main():
               #texts = text_splitter.split_documents(documents)
               #embedding_function = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
               embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+              from langchain_community.vectorstores import Chroma
               db = Chroma.from_documents(documents, embedding_function)
     
               retriever = db.as_retriever()
