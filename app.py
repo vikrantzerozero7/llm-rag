@@ -357,7 +357,7 @@ def main():
                   contents_list.append(content_entry)
     
               doc = {'contents': contents_list}
-              
+              st.write(doc)
               import json
               json_data = json.dumps(doc, indent=4)
               # Define file details
