@@ -171,7 +171,7 @@ def main():
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
                   text1 = unidecode(text1)
-                  st.write(text1[:5000])
+                 # st.write(text1[:5000])
                   
     
                   import re # topic subtopic subtopic2
