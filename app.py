@@ -161,7 +161,7 @@ def main():
                   text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
                 
                   text1 = re.sub(r'(\n\d+)(?:\. | )', r'\1.', text1)
-                  text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )', r'\1.', text1) #\n1\n1.1\n
+                  text1 = re.sub(r'(\n\d+\.\d+)(?:\. | |\n)', r'\1.', text1) #\n1\n1.1\n
                   text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )', r'\1.', text1)
                   text1 = re.sub(r'\b\d+\.[ivxl]{2,}\b', '', text1)
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
