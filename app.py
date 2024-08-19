@@ -19,7 +19,7 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain_community.document_loaders import JSONLoader
+
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
@@ -373,7 +373,7 @@ def main():
                   HarmCategory,
               )
               
-    
+              from langchain_community.document_loaders import JSONLoader
               loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
               documents = loader.load()
     
