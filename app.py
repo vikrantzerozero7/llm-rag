@@ -43,7 +43,7 @@ from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
 import re
 
 def get_text_starting_from_index(text):
-    match = re.search(r'\nindex\n', text)
+    match = re.search(r'index', text)
     end_index = match.start() if match else -1
 
     if end_index == -1:
@@ -54,11 +54,11 @@ def get_text_starting_from_index(text):
 
 def get_text_ending_to_index(text):
     # Find the starting index of the word "contents"
-    match = re.search(r'\ncontents\n', text)
+    match = re.search(r'contents', text)
     start_index = match.start() if match else -1
 
     # Find the exact match for the word "index" using regex
-    match = re.search(r'\nindex\n', text)
+    match = re.search(r'index', text)
     end_index = match.start() if match else -1
 
     if start_index == -1:
