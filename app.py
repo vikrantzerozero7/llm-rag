@@ -410,7 +410,7 @@ def main():
               with open("data.json", "w") as file:
                   file.write(s)
               from langchain_community.document_loaders import JSONLoader
-              loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
+              loader = JSONLoader(file_path="data.json", jq_schema=".contents[]", text_content=False)
               documents = loader.load()
     
               #texts = text_splitter.split_documents(documents)
