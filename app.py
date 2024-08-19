@@ -484,9 +484,9 @@ def main():
                     st.write("Subsubtopic : ",data_dict["Subsubtopic"])
               ######
 
-    if __name__=='__main__':
-        main()
-    
-    if st.button("About"):
-        st.text("Let's learn")
-        st.text("Built with Streamlit")
+if __name__=='__main__':
+    main()
+
+if st.button("About"):
+    st.text("Let's learn")
+    st.text("Built with Streamlit")
