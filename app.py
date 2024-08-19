@@ -145,6 +145,7 @@ def main():
                   raw_text2 = " ".join(page for page in pages if page)
                   x = raw_text2
                   raw_text2 = raw_text2[:-5000].lower()
+                  
                   #st.write(raw_text2[:40000])
                   #raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
                   #2.14 mutual and leakage fluxes 119
@@ -152,6 +153,7 @@ def main():
                   from unidecode import unidecode
                   
                   text1 = str(get_text_ending_to_index(raw_text2))
+                  st.text(text1)
                   text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
                   text1 = re.sub(r'\s{2,}', ' ',re.sub(r'\t{2,}', ' ', text1))
                   text1 = re.sub(r'‘', r'', text1)
@@ -212,7 +214,7 @@ def main():
                       if i in j:
                         topics1.remove(j)
                   topics = [i.strip() for i in topics1 ]
-                  st.write(topics)
+                  #st.write(topics)
     
                   stop1 = ['reference',"summary",'further reading']
                   for i in stop1:
