@@ -412,7 +412,7 @@ def main():
               from langchain_community.document_loaders import JSONLoader
               loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
               documents = loader.load()
-    
+              st.write(documents)
               #texts = text_splitter.split_documents(documents)
               #embedding_function = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
               from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
