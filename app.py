@@ -169,7 +169,7 @@ def main():
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
                   text1 = unidecode(text1)
-                  st.write(text1)
+                  #st.write(text1)
                   
 
                   import re # topic subtopic subtopic2
@@ -201,6 +201,7 @@ def main():
     
                   # Find all matches
                   topics1 = re.findall(pattern1, text1)
+                  st.write(topics1)
                   subtopics1 = re.findall(pattern2, text1)
                   subsubtopics1 = re.findall(pattern3, text1)
     
