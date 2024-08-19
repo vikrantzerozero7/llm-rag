@@ -69,20 +69,21 @@ def get_text_ending_to_index(text):
     # Return the text from "contents" to "index"
     return text[start_index:end_index]
 
-final_list = []
-
-final_list1 = []
-
-results=[]
-
-#contents = []
-
-contents_list = []
 
 import fitz  # PyMuPDF
 import re
 
 def main():
+    final_list = []
+
+    final_list1 = []
+
+    results=[]
+
+#contents = []
+
+    contents_list = []
+
     image_path = r"robo_Logo1.jpeg"
     image = Image.open(image_path)
     # Resize the image
