@@ -357,13 +357,13 @@ def main():
                   contents_list.append(content_entry)
     
               doc = {'contents': contents_list}
-    
+              
               import json
               json_data = json.dumps(doc, indent=4)
               # Define file details
               file_list = [json_data]
               file_names = ['file1.json']
-            
+              g = Github("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")
               # Generate commit message
               commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
