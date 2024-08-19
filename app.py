@@ -419,6 +419,7 @@ def main():
               SentenceTransformerEmbeddings,
               )
               embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+              st.write(embedding_function)
               import chromadb
               from langchain_community.vectorstores import Chroma
               #from langchain_chroma import Chroma
