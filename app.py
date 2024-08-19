@@ -206,6 +206,7 @@ def main():
                       if i in j:
                         topics1.remove(j)
                   topics = [i.strip() for i in topics1 ]
+                  st.write(topics)
     
                   stop1 = ['reference',"summary",'further reading']
                   for i in stop1:
