@@ -230,7 +230,7 @@ def main():
                   subsubtopics = []
                   for i in subsubtopics1:
                     subsubtopics.append(i[:].strip())
-                  #subsubtopics
+                  st.write(subsubtopics)
     
                   # Initialize text3 with text2
                   text3 = text2
