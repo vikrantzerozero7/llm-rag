@@ -152,7 +152,8 @@ def main():
                   text1 = text1.replace(' \n', '\n')
                   text1 = '\n'.join(text1.splitlines())
                   text1 = ' '.join(text1.split())
-                  text1 = re.sub(r'‘', r'', text1)
+                  text1 = text1.replace('‘', '')
+        
                   #text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
                 
                   text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
