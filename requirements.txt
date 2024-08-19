@@ -16,3 +16,4 @@ langchain_openai
 sentence_transformers
 pillow
 PyGithub
+jq
