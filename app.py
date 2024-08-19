@@ -152,7 +152,7 @@ def main():
                   from unidecode import unidecode
                   text1 = str(get_text_ending_to_index(raw_text2))
                   text22 = text1
-                 # st.write(text22[:5000])
+                  st.write(text22[:5000])
                   #text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
                   #text1 = re.sub(r'‘', r'', text1)
                   #text1 = re.sub(r' \n', ' ',re.sub(r'\n ', '\n', text1)) #works
