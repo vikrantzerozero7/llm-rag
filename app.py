@@ -111,7 +111,7 @@ def main():
     </div>
     """
     pdf_d = []
-    uploadedFile = st.sidebar.file_uploader("Choose a file" ,type=['pdf'],accept_multiple_files=True,key="fileUploader")
+    uploadedFile = st.sidebar.file_uploader("Choose a file" ,type=['pdf'],accept_multiple_files=False,key="fileUploader")
     
     if uploadedFile is not None :
         try:
