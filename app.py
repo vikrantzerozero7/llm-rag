@@ -146,7 +146,7 @@ def main():
                   x = raw_text2
                   raw_text2 = raw_text2[:-5000].lower()
                   st.write(raw_text2[:2000])
-                  raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
+                  #raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
     
                   import re # topic subtopic subtopic2
                   from unidecode import unidecode
