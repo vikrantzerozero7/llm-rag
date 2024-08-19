@@ -405,7 +405,7 @@ def main():
               file_content = repository.get_contents('data.json')
               bytes_data = file_content.decoded_content
               s = str(bytes_data, 'utf-8')
-              st.write(s)
+              #st.write(s)
               # Write the file content to a local file
               with open("data.json", "w") as file:
                   file.write(s)
