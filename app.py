@@ -112,18 +112,20 @@ def main():
     """
     pdf_d = []
     uploadedFile = st.sidebar.file_uploader("Choose a file" ,type=['pdf'],accept_multiple_files=True,key="fileUploader")
-    uploadedFile=uploadedFile.getvalue()
+    
     if uploadedFile is not None :
         try:
-
+            uploadedFile=uploadedFile.getvalue()
             df=fitz.open(stream=uploadedFile, filetype="pdf")
 
 
         except:
                 try:
+                    uploadedFile=uploadedFile.getvalue()
                     df = fitz.open(stream=uploadedFile, filetype="pdf")
 
                 except:
+                    uploadedFile=uploadedFile.getvalue()
                     df = fitz.open(stream=uploadedFile, filetype="pdf")
 
     else:
