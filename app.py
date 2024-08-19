@@ -150,9 +150,10 @@ def main():
                   text1 = str(get_text_ending_to_index(raw_text2))
                   text1 = text1.replace('\n ', '\n') #works
                   text1 = text1.replace(' \n', '\n')
-                  text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
+                  text1 = '\n'.join(text1.splitlines())
+                  text1 = ' '.join(text1.split())
                   text1 = re.sub(r'‘', r'', text1)
-                  text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
+                  #text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
                 
                   text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
                   text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
