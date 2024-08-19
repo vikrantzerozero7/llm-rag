@@ -145,9 +145,10 @@ def main():
                   raw_text2 = " ".join(page for page in pages if page)
                   x = raw_text2
                   raw_text2 = raw_text2[:-5000].lower()
-                  raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
+                  
                 
                   text1 = str(get_text_ending_to_index(raw_text2))
+                  text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
                   text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
                   text1 = re.sub(r'‘', r'', text1)
                   text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
