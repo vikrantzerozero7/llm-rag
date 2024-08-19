@@ -144,23 +144,21 @@ def main():
                   # Combine all the page texts into a single string
                   raw_text2 = " ".join(page for page in pages if page)
                   x = raw_text2
-                  raw_text2 = raw_text2[:-5000].lower()
-                  
                   import re
+                  raw_text2 = raw_text2[:-5000].lower()
+                  raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
+
                   text1 = str(get_text_ending_to_index(raw_text2))
-                  text1 = text1.replace('\n ', '\n') #works
-                  text1 = text1.replace(' \n', '\n')
-                  text1 = '\n'.join(text1.splitlines())
-                  text1 = ' '.join(text1.split())
-                  text1 = text1.replace('‘', '')
-        
-                  #text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
-                
-                  #text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
+                  # print(text1)
+                  text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
+                  text1 = re.sub(r'‘', r'', text1)
+                  text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
+
+                  text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
                   text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
                   text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
-                
-                
+
+
                   text1 = re.sub(r'(\n\d+)(?:\. | )', r'\1.', text1)
                   text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )', r'\1.', text1) #\n1\n1.1\n
                   text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )', r'\1.', text1)
