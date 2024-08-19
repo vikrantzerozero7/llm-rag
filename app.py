@@ -168,7 +168,7 @@ def main():
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
                   text1 = unidecode(text1)
-                  st.write(text1)
+                  #st.write(text1)
                   
 
                   import re # topic subtopic subtopic2
@@ -210,7 +210,7 @@ def main():
                       if i in j:
                         topics1.remove(j)
                   topics = [i.strip() for i in topics1 ]
-                  #st.write(topics)
+                  st.write(topics)
     
                   stop1 = ['reference',"summary",'further reading']
                   for i in stop1:
@@ -307,11 +307,11 @@ def main():
                         match = pattern.search(text3)
                         if match:
                             contents.append(match.group(1).strip())
-                        else:
+                        else: 
                             contents.append('')  # In case no match is found, append an empty string
                         k.append(name)
                         results.append([chapter_number,name, " ".join(contents)])
-                  final_list=[]
+                  final_list=[] 
                   topics=[]
                   import pandas as pd
                   df4 = pd.DataFrame(results, columns=['Chapter','Name',  'Contents'])
