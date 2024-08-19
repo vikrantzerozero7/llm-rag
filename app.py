@@ -160,7 +160,6 @@ def main():
                   text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
                   text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
                 
-                
                   text1 = re.sub(r'(\n\d+)(?:\. | )', r'\1.', text1)
                   text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )', r'\1.', text1) #\n1\n1.1\n
                   text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )', r'\1.', text1)
@@ -168,7 +167,7 @@ def main():
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
                   text1 = unidecode(text1)
-                  #st.write(text1)
+                  st.write(text1)
                   
 
                   import re # topic subtopic subtopic2
@@ -210,7 +209,7 @@ def main():
                       if i in j:
                         topics1.remove(j)
                   topics = [i.strip() for i in topics1 ]
-                  st.write(topics)
+                  #st.write(topics)
     
                   stop1 = ['reference',"summary",'further reading']
                   for i in stop1:
