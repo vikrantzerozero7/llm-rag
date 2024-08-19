@@ -223,7 +223,7 @@ def main():
                   subtopics = []
                   for i in subtopics1:
                     subtopics.append(i.strip())
-                  #subtopics
+                  st.write(subtopics)
     
                   subsubtopics = []
                   for i in subsubtopics1:
