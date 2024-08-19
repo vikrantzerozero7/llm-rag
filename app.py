@@ -170,7 +170,7 @@ def main():
                   text1 = unidecode(text1)
                   st.write(text1)
                   
-''' 
+
                   import re # topic subtopic subtopic2
                   text2 = str(get_text_starting_from_index(raw_text2))
                   text2 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text2))
@@ -474,7 +474,7 @@ def main():
                         st.write("Subtopic : ",data_dict["Subtopic"])
                         st.write("Subsubtopic : ",data_dict["Subsubtopic"])
                   ######
-'''
+
 if __name__=='__main__':
     main()
 
