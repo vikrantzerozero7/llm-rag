@@ -115,17 +115,17 @@ def main():
     
     if uploadedFile is not None :
         try:
-            uploadedFile=uploadedFile.read()
+            uploadedFile=uploadedFile.read().decode('utf-8')
             df=fitz.open(stream=uploadedFile, filetype="pdf")
 
 
         except:
                 try:
-                    uploadedFile=uploadedFile.read()
+                    uploadedFile=uploadedFile.read().decode('utf-8')
                     df = fitz.open(stream=uploadedFile, filetype="pdf")
 
                 except:
-                    uploadedFile=uploadedFile.read()
+                    uploadedFile=uploadedFile.read().decode('utf-8')
                     df = fitz.open(stream=uploadedFile, filetype="pdf")
 
     else:
