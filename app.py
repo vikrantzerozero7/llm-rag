@@ -224,12 +224,12 @@ def main():
                   subtopics = []
                   for i in subtopics1:
                     subtopics.append(i.strip())
-                  subtopics
+                  #subtopics
     
                   subsubtopics = []
                   for i in subsubtopics1:
                     subsubtopics.append(i[:].strip())
-                  subsubtopics
+                  #subsubtopics
     
                   # Initialize text3 with text2
                   text3 = text2
