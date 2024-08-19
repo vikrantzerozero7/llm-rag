@@ -399,6 +399,7 @@ def main():
                   HarmBlockThreshold,
                   HarmCategory,
               )
+              g = Github("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")
               user = g.get_user()
               repository = user.get_repo('fbb')
               file_content = repository.get_contents('data.json')
