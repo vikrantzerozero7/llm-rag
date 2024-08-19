@@ -417,7 +417,7 @@ def main():
               #embedding_function = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
               from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
               embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-              from langchain_community.vectorstores import Chroma
+              #from langchain_community.vectorstores import Chroma
               from langchain_chroma import Chroma
               db = Chroma.from_documents(documents, embedding_function)
     
