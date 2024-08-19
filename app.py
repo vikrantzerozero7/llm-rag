@@ -399,7 +399,15 @@ def main():
                   HarmBlockThreshold,
                   HarmCategory,
               )
-              
+              user = g.get_user()
+              repository = user.get_repo('fbb')
+              file_content = repository.get_contents('data.json')
+              bytes_data = file_content.decoded_content
+              s = str(bytes_data, 'utf-8')
+        
+              # Write the file content to a local file
+              with open("data.txt", "w") as file:
+                  file.write(s)
               from langchain_community.document_loaders import JSONLoader
               loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
               documents = loader.load()
