@@ -150,25 +150,20 @@ def main():
                   #2.14 mutual and leakage fluxes 119
                   import re # topic subtopic subtopic2
                   from unidecode import unidecode
+                  
                   text1 = str(get_text_ending_to_index(raw_text2))
-                  text22 = text1
-                  #st.write(text22[:5000])
-                  #text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
-                  #text1 = re.sub(r'‘', r'', text1)
-                  #text1 = re.sub(r' \n', ' ',re.sub(r'\n ', '\n', text1)) #works
-    
-                  #text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
+                  text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
+                  text1 = re.sub(r'‘', r'', text1)
+                  text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
+                
+                  text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
                   text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
                   text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
-                  text1 = re.sub(r'([a-z])\n([0-9])',"\\1 \\2", text1)
-                  #text222 = text1
-                 # st.write(text222[:5000])
-    
-                  text1 = re.sub(r'\n', ' ', text1)
-                  re.sub(r' {2,}', ' ', text1)
-                  text1 = re.sub(r'(\d+)(?:\. | |\n)([a-z])(.*) \d+', r'\1.\2\3', text1)
-                  text1 = re.sub(r'(\d+\.\d+)(?:\. | |\n)([a-z])(.*) \d+', r'\1.\2\3', text1) #\n1\n1.1\n
-                  text1 = re.sub(r'(\d+\.\d+\.\d+)(?:\. | |\n)([a-z])(.*) \d+', r'\1.\2\3', text1)
+                
+                
+                  text1 = re.sub(r'(\n\d+)(?:\. | )', r'\1.', text1)
+                  text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )', r'\1.', text1) #\n1\n1.1\n
+                  text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )', r'\1.', text1)
                   text1 = re.sub(r'\b\d+\.[ivxl]{2,}\b', '', text1)
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
