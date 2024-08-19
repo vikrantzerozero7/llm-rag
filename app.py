@@ -204,7 +204,7 @@ def main():
                   topics1 = re.findall(pattern1, text1)
                   #st.write(topics1)
                   subtopics1 = re.findall(pattern2, text1)
-                  st.write(subtopics1)
+                  #st.write(subtopics1)
                   subsubtopics1 = re.findall(pattern3, text1)
     
                   stop = ["review questions",'reference','further reading',"practice","section practice","multiple choice"]
@@ -225,7 +225,7 @@ def main():
                   subtopics = []
                   for i in subtopics1:
                     subtopics.append(i.strip())
-                  st.write(subtopics)
+                  #st.write(subtopics)
     
                   subsubtopics = []
                   for i in subsubtopics1:
