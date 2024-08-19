@@ -147,7 +147,7 @@ def main():
                   raw_text2 = raw_text2[:-5000].lower()
                   #st.write(raw_text2[:40000])
                   #raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
-    
+                  2.14 mutual and leakage fluxes 119
                   import re # topic subtopic subtopic2
                   from unidecode import unidecode
                   text1 = str(get_text_ending_to_index(raw_text2))
@@ -164,7 +164,7 @@ def main():
                   st.write(text222[:5000])
     
     
-                  text1 = re.sub(r'(\n\d+)(?:\. | )(?:[a-z])', r'\1.', text1)
+                  text1 = re.sub(r'(\d+)(?:\. | |\n)(w+) \d+', r'\1.\2', text1)
                   text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )[a-z]', r'\1.', text1) #\n1\n1.1\n
                   text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )[a-z]', r'\1.', text1)
                   text1 = re.sub(r'\b\d+\.[ivxl]{2,}\b', '', text1)
