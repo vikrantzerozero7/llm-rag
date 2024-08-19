@@ -369,7 +369,7 @@ def main():
             
               # Access the repository
               repo = g.get_user().get_repo('llm-rag')  # Replace 'your_repo_name' with your actual repository name
-              master_ref = repo.get_git_ref("heads/master")
+              master_ref = repo.get_git_ref("heads/main")
               master_sha = master_ref.object.sha
               base_tree = repo.get_git_tree(master_sha)
             
