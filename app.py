@@ -115,15 +115,15 @@ def main():
     if uploadedFile is not None :
         try:
 
-            df=fitz.open(uploadedFile)
+            df=fitz.open(stream=uploaded_file.read(), filetype="pdf")
 
 
         except:
                 try:
-                    df = fitz.open(uploadedFile)
+                    df = fitz.open(stream=uploaded_file.read(), filetype="pdf")
 
                 except:
-                    df = fitz.open(uploadedFile)
+                    df = fitz.open(stream=uploaded_file.read(), filetype="pdf")
 
     else:
         st.sidebar.warning("you need to upload a pdf file.")
