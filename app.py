@@ -164,13 +164,14 @@ def main():
                   st.write(text222[:5000])
     
     
-                  text1 = re.sub(r'(\n\d+)(?:\. | )', r'\1.', text1)
-                  text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )', r'\1.', text1) #\n1\n1.1\n
-                  text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )', r'\1.', text1)
+                  text1 = re.sub(r'(\n\d+)(?:\. | )[a-z]', r'\1.', text1)
+                  text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )[a-z]', r'\1.', text1) #\n1\n1.1\n
+                  text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )[a-z]', r'\1.', text1)
                   text1 = re.sub(r'\b\d+\.[ivxl]{2,}\b', '', text1)
                   text1 = re.sub(r'\n', r'\n\n', text1) #works
                   text1 = re.sub(r'-', r' ',text1)
                   text1 = unidecode(text1)
+                  st.write(text1[:5000])
                   
     
                   import re # topic subtopic subtopic2
