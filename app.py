@@ -195,7 +195,7 @@ def main():
     
                   # Example input text (adjust the text to test)
                   #text3 = text1
-                  pattern1 = r'\n\d\d?\.[^\.\n]*\n'
+                  pattern1 = r'(\n\d\d?\.[^\.\n]*) \d+'
                   pattern2 = r'\n\d+\.\d+\.[^\.\n]*\n'
                   pattern3 = r'\n\d+\.\d+\.\d+\.[^\.\n]*\n'
     
