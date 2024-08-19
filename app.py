@@ -131,7 +131,7 @@ def main():
     else:
         st.sidebar.warning("you need to upload a pdf file.")
     if uploadedFile is not None :
-        pdf_d = pdf_d.append(df)
+        pdf_d.append(df)
         st.write(pdf_d)
         if st.button('Submit'):
           if uploadedFile is not None :
