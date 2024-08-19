@@ -399,9 +399,9 @@ def main():
                   HarmBlockThreshold,
                   HarmCategory,
               )
-              g = Github("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")
+              #g = Github("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")
               user = g.get_user()
-              repository = user.get_repo('fbb')
+              repository = user.get_repo('llm-rag')
               file_content = repository.get_contents('data.json')
               bytes_data = file_content.decoded_content
               s = str(bytes_data, 'utf-8')
