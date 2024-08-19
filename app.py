@@ -147,7 +147,7 @@ def main():
                   raw_text2 = raw_text2[:-5000].lower()
                   #st.write(raw_text2[:40000])
                   #raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
-                  2.14 mutual and leakage fluxes 119
+                  #2.14 mutual and leakage fluxes 119
                   import re # topic subtopic subtopic2
                   from unidecode import unidecode
                   text1 = str(get_text_ending_to_index(raw_text2))
