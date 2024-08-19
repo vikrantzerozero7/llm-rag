@@ -407,7 +407,7 @@ def main():
               s = str(bytes_data, 'utf-8')
         
               # Write the file content to a local file
-              with open("data.txt", "w") as file:
+              with open("data.json", "w") as file:
                   file.write(s)
               from langchain_community.document_loaders import JSONLoader
               loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
