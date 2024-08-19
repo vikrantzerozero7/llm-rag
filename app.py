@@ -155,7 +155,7 @@ def main():
                   st.write(text22[:5000])
                   text1 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text1))
                   text1 = re.sub(r'‘', r'', text1)
-                  text1 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', text1)) #works
+                  text1 = re.sub(r' \n', ' ',re.sub(r'\n ', '\n', text1)) #works
     
                   text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
                   text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
