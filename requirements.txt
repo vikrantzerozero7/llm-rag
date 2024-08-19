@@ -14,3 +14,4 @@ langchain_google_genai
 pypdf
 langchain_openai
 sentence_transformers
+pillow
