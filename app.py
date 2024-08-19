@@ -163,7 +163,8 @@ def main():
                   #text222 = text1
                  # st.write(text222[:5000])
     
-    
+                  text1 = re.sub(r'\n', ' ', text1)
+                  re.sub(r' {2,}', ' ', text1)
                   text1 = re.sub(r'(\n\d+)(?:\. | |\n)([a-z])(.*) \d+', r'\1.\2\3', text1)
                   text1 = re.sub(r'(\n\d+\.\d+)(?:\. | )([a-z])(.*) \d+', r'\1.\2\3', text1) #\n1\n1.1\n
                   text1 = re.sub(r'(\n\d+\.\d+\.\d+)(?:\. | )([a-z])(.*) \d+', r'\1.\2\3', text1)
