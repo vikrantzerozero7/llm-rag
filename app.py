@@ -421,8 +421,8 @@ def main():
               embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
               st.write(embedding_function)
               import chromadb
-              from langchain_community.vectorstores import Chroma
-              #from langchain_chroma import Chroma
+              #from langchain_community.vectorstores import Chroma
+              from langchain_chroma import Chroma
               db = Chroma.from_documents(documents, embedding_function)
     
               retriever = db.as_retriever()
