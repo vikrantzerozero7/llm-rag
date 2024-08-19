@@ -158,8 +158,9 @@ def main():
                   #text1 = re.sub(r' \n', ' ',re.sub(r'\n ', '\n', text1)) #works
     
                   #text1 = re.sub(r'(\s*\.\s*){2,}', '\n', text1)
-                  #text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
-                  #text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
+                  text1 = re.sub(r'([a-z])\n([a-z])',"\\1 \\2", text1)
+                  text1 = re.sub(r'([0-9])\n([a-z])',"\\1 \\2", text1)
+                  text1 = re.sub(r'([a-z])\n([0-9])',"\\1 \\2", text1)
                   #text222 = text1
                  # st.write(text222[:5000])
     
