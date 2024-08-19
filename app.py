@@ -358,6 +358,34 @@ def main():
     
               import json
               json_data = json.dumps(doc, indent=4)
+              # Define file details
+              file_list = [json_data]
+              file_names = ['file1.json']
+            
+              # Generate commit message
+              commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            
+              # Access the repository
+              repo = g.get_user().get_repo('llm-rag')  # Replace 'your_repo_name' with your actual repository name
+              master_ref = repo.get_git_ref("heads/master")
+              master_sha = master_ref.object.sha
+              base_tree = repo.get_git_tree(master_sha)
+            
+              # Create git tree elements
+              element_list = []
+              for i in range(len(file_list)):
+                 element = InputGitTreeElement(file_names[i], '100644', 'blob', file_list[i])
+                 element_list.append(element)
+            
+              # Create a new git tree
+              tree = repo.create_git_tree(element_list, base_tree)
+            
+              # Create a new commit
+              parent = repo.get_git_commit(master_sha)
+              commit = repo.create_git_commit(commit_message, tree, [parent])
+            
+              # Update the reference
+              master_ref.edit(commit.sha)
               #print(json_data)
               file_path = 'data.json'
     
