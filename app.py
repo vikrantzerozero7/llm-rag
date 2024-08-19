@@ -352,7 +352,7 @@ def main():
                       'Title': row['topic name'],
                       'Subtopic': row['matched_subtopics'],
                       'Subsubtopic': row['matched_subsubtopics'],
-                      'Contents': row['Contents']
+                      'Contents': row['Contents'][:2000]
                   }
                   contents_list.append(content_entry)
     
