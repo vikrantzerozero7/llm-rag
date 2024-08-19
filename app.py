@@ -170,7 +170,7 @@ def main():
                   text1 = unidecode(text1)
                   st.write(text1[:5000])
                   
-    
+''' 
                   import re # topic subtopic subtopic2
                   text2 = str(get_text_starting_from_index(raw_text2))
                   text2 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text2))
@@ -372,17 +372,7 @@ def main():
                   HarmBlockThreshold,
                   HarmCategory,
               )
-              '''
-              import json
-              json_data = json.dumps(doc, indent=4)
-              #print(json_data)
-              file_path = 'data.json'
-    
-              # Save JSON data to the file
-              with open(file_path, 'w') as file:
-                  json.dump(doc, file, indent=4)
-              '''
-    
+              
     
               loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
               documents = loader.load()
@@ -402,14 +392,7 @@ def main():
     
               """
               prompt = ChatPromptTemplate.from_template(template)
-              '''
-              #prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-              #gemini-1.5-pro-latest
-              model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0, google_api_key=api_key,safety_settings={
-                      HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-                      HarmCategory.HARM_CATEGORY_UNSPECIFIED: HarmBlockThreshold.BLOCK_NONE,
-                      model_kwargs = {"temperature": 0.5, "max_length": 2000})
-              '''
+              
     
     
               model = ChatGoogleGenerativeAI(
@@ -491,7 +474,7 @@ def main():
                         st.write("Subtopic : ",data_dict["Subtopic"])
                         st.write("Subsubtopic : ",data_dict["Subsubtopic"])
                   ######
-
+'''
 if __name__=='__main__':
     main()
 
