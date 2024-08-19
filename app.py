@@ -364,7 +364,7 @@ def main():
               json_data = json.dumps(doc, indent=4)
               # Define file details
               file_list = [json_data]
-              file_names = ['file1.json']
+              file_names = ['data.json']
               g = Github("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")
               # Generate commit message
               commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -391,12 +391,7 @@ def main():
               # Update the reference
               master_ref.edit(commit.sha)
               #print(json_data)
-              file_path = 'data.json'
-    
-              # Save JSON data to the file
-              with open(file_path, 'w') as file:
-                  json.dump(doc, file, indent=4)
-    
+            
               #############################################
     
               from langchain_google_genai import (
