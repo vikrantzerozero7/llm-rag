@@ -202,9 +202,9 @@ def main():
                   # Find all matches
                   
                   topics1 = re.findall(pattern1, text1)
-                  st.write(topics1)
+                  #st.write(topics1)
                   subtopics1 = re.findall(pattern2, text1)
-                  st.write(topics1)
+                  st.write(subtopics1)
                   subsubtopics1 = re.findall(pattern3, text1)
     
                   stop = ["review questions",'reference','further reading',"practice","section practice","multiple choice"]
