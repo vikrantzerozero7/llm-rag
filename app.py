@@ -116,6 +116,7 @@ def main():
     if uploadedFile is not None :
         try:
             uploadedFile=uploadedFile.getvalue()
+            
             df=fitz.open(stream=uploadedFile, filetype="pdf")
 
 
@@ -144,7 +145,8 @@ def main():
                   raw_text2 = " ".join(page for page in pages if page)
                   x = raw_text2
                   raw_text2 = raw_text2[:-5000].lower()
-                  st.write(raw_text2[:40000])
+                  
+                  st.write(raw_text2[:40000].decode("utf-8"))
                   #raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
     
                   import re # topic subtopic subtopic2
