@@ -413,7 +413,7 @@ def main():
               st.write(embedding_function)
               #import chromadb
               #from langchain_community.vectorstores import Chroma
-              from langchain_chroma import Chroma
+              
               #db = Chroma.from_documents(documents, embedding_function)
               db = PGEmbedding.from_documents(
               embedding=embedding_function,
