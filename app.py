@@ -1,11 +1,10 @@
-import chromadb
+#import chromadb
 import numpy as np
 import pandas as pd
 import streamlit as st
 from PIL import Image
 from github import Github
 from github import InputGitTreeElement
-import joblib
 from datetime import datetime
 
 import fitz  # PyMuPDF
@@ -14,33 +13,25 @@ from unidecode import unidecode
 
 
 from langchain_community.document_loaders import JSONLoader
-from langchain.prompts import ChatPromptTemplate
+
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-from langchain_community.vectorstores import Chroma
+#from langchain_community.vectorstores import Chroma
 
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-
-from langchain import HuggingFaceHub
+from langchain_community.vectorstores import PGEmbedding
 
 from langchain_openai import OpenAI
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langchain import HuggingFaceHub
-from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
-from langchain_openai import OpenAI
+
 from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
 import re
 
@@ -423,8 +414,11 @@ def main():
               #import chromadb
               #from langchain_community.vectorstores import Chroma
               from langchain_chroma import Chroma
-              db = Chroma.from_documents(documents, embedding_function)
-    
+              #db = Chroma.from_documents(documents, embedding_function)
+              db = PGEmbedding.from_documents(
+              embedding=embedding_function,
+              documents=documents)
+              
               retriever = db.as_retriever()
     
               template = """Answer the question based only on the following
