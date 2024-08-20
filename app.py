@@ -413,14 +413,17 @@ def main():
               st.write(embedding_function)
               #import chromadb
               #from langchain_community.vectorstores import Chroma
-              
+              import os
               #db = Chroma.from_documents(documents, embedding_function)
+              connection_string = os.environ.get("DATABASE_URL")
+              collection_name = "state_of_the_union"
+              
               db = PGEmbedding.from_documents(
               embedding=embedding_function,
-              documents=documents)
+              documents=documents,collection_name=collection_name,
+              connection_string=connection_string)
               
-              retriever = db.as_retriever()
-    
+              retriever = db.as_retriever() 
               template = """Answer the question based only on the following
               Context:
               {context}
