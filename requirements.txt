@@ -19,4 +19,4 @@ PyGithub
 jq
 langchain-chroma
 chromadb
-sqlite3
+pysqlite3
