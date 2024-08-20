@@ -356,7 +356,7 @@ def main():
               # Define file details
               file_list = [json_data]
               file_names = ['data.json']
-              g = Github("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")
+              g = Github("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")
               # Generate commit message
               commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
@@ -390,7 +390,7 @@ def main():
                   HarmBlockThreshold,
                   HarmCategory,
               )
-              g = Github("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")
+              g = Github("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")
               user = g.get_user()
               repository = user.get_repo('llm-rag')
               file_content = repository.get_contents('data.json')
