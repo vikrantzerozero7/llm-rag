@@ -6,7 +6,7 @@ from PIL import Image
 from github import Github
 from github import InputGitTreeElement
 from datetime import datetime
-
+from langchain import PromptTemplate
 import fitz  # PyMuPDF
 import re
 from unidecode import unidecode
