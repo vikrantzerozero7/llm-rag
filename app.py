@@ -443,13 +443,16 @@ def main():
                   | model4
                   | StrOutputParser()
               )
-             
+              # Initialize a session state variable to store the previous query
+              if 'query_history' not in st.session_state:
+                      st.session_state.query_history = []
+                
               while True:
                   
                   query = st.text_input("Ask Question",key = "qwe")
                   # prompt: get question and answer part
                   if st.button('Submit Answer'):
-                      
+                      st.session_state.query_history.append(query)
                       result = chain.invoke(query)
                 
                       if "answer is not available in the context" in result:
@@ -463,6 +466,8 @@ def main():
                           st.write("Title : ",data_dict["Topic"])
                           st.write("Subtopic : ",data_dict["Subtopic"])
                           st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+                      st.text_input("Enter query", value="", key="new_query")
+                      st.stop()  # Stop the current execution to rerun the script
                   if st.button('STOP'):
                       break
 
