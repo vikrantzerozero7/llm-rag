@@ -345,7 +345,7 @@ def main():
               
               for _, row in df6.iterrows():
                        x =  Document(page_content = row["Contents"],
-                       metadata = {"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
+                       metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
                        docs11.append(x)
             
               from langchain_text_splitters import (
