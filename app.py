@@ -448,7 +448,10 @@ def main():
                       st.session_state.query_history = []
                 
               while True:
-                  st.experimental_rerun()
+                  # Store the initial value of widgets in session state
+                  if "visibility" not in st.session_state:
+                      st.session_state.visibility = "visible"
+                      st.session_state.disabled = False
                   query = st.text_input("Ask Question")
                   # prompt: get question and answer part
                   if st.button('Submit Answer'):
