@@ -337,93 +337,57 @@ def main():
               # Create the desired structure
     
               api_key = "AIzaSyCKeLMrUxE9lnopj3VOmY583ceOqmxBRYI"
-    
+              
+              docs11 = []
+              
+              from langchain_core.documents import Document
+              
               for _, row in df6.iterrows():
-                  content_entry = {
-                      'Book name' : row['book name'],
-                      'Chapter': row['Chapter'],
-                      'Title': row['topic name'],
-                      'Subtopic': row['matched_subtopics'],
-                      'Subsubtopic': row['matched_subsubtopics'],
-                      'Contents': row['Contents'][:2000]
-                  }
-                  contents_list.append(content_entry)
-    
-              doc = {'contents': contents_list}
-              st.write(doc)
-              import json
-              json_data = json.dumps(doc, indent=4)
-              # Define file details
-              file_list = [json_data]
-              file_names = ['data.json']
-              g = Github("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")
-              # Generate commit message
-              commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                       x =  Document(page_content = row["Contents"],
+                       metadata = {"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
+                       docs11.append(x)
             
-              # Access the repository
-              repo = g.get_user().get_repo('llm-rag')  # Replace 'your_repo_name' with your actual repository name
-              master_ref = repo.get_git_ref("heads/main")
-              master_sha = master_ref.object.sha
-              base_tree = repo.get_git_tree(master_sha)
-            
-              # Create git tree elements
-              element_list = []
-              for i in range(len(file_list)):
-                 element = InputGitTreeElement(file_names[i], '100644', 'blob', file_list[i])
-                 element_list.append(element)
-            
-              # Create a new git tree
-              tree = repo.create_git_tree(element_list, base_tree)
-            
-              # Create a new commit
-              parent = repo.get_git_commit(master_sha)
-              commit = repo.create_git_commit(commit_message, tree, [parent])
-            
-              # Update the reference
-              master_ref.edit(commit.sha)
-              #print(json_data)
-            
-              #############################################
-    
-              from langchain_google_genai import (
-                  ChatGoogleGenerativeAI,
-                  HarmBlockThreshold,
-                  HarmCategory,
+              from langchain_text_splitters import (
+                RecursiveCharacterTextSplitter,
               )
-              g = Github("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")
-              user = g.get_user()
-              repository = user.get_repo('llm-rag')
-              file_content = repository.get_contents('data.json')
-              bytes_data = file_content.decoded_content
-              s = str(bytes_data, 'utf-8')
-              #st.write(s)
-              # Write the file content to a local file
-              with open("data.json", "w") as file:
-                  file.write(s)
-              from langchain_community.document_loaders import JSONLoader
-              loader = JSONLoader(file_path="./data.json", jq_schema=".contents[]", text_content=False)
-              documents = loader.load()
-              st.write(documents)
-              #texts = text_splitter.split_documents(documents)
-              #embedding_function = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
-              from langchain_community.embeddings.sentence_transformer import (
-              SentenceTransformerEmbeddings,
-              )
-              embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-              st.write(embedding_function)
-              #import chromadb
-              #from langchain_community.vectorstores import Chroma
-              import os
-              #db = Chroma.from_documents(documents, embedding_function)
-              connection_string = os.environ.get("DATABASE_URL")
-              collection_name = "state_of_the_union"
-              
-              db = PGEmbedding.from_documents(
-              embedding=embedding_function,
-              documents=documents,collection_name=collection_name,
-              connection_string=connection_string)
-              
-              retriever = db.as_retriever() 
+            
+              text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+              texts = text_splitter.split_documents(docs11)
+
+              from pinecone import Pinecone , ServerlessSpec
+              from uuid import uuid4
+              pc = Pinecone(api_key="31be5854-f0fb-4dba-9b1c-937aebcb89bd")
+            
+              from langchain_pinecone import PineconeVectorStore
+              from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+              index_name = "langchain-self-retriever-demo"
+            
+              if index_name in pc.list_indexes().names():
+                    pc.delete_index(index_name)
+            
+              #pc.delete_index(index_name)
+              # create new index
+              if index_name not in pc.list_indexes().names():
+                    pc.create_index(
+                        name=index_name,
+                        dimension=384 ,
+                        metric="cosine",
+                        spec=ServerlessSpec(cloud="aws", region="us-east-1"),
+                    )
+              index = pc.Index(index_name)
+              from langchain_core.documents import Document
+              embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+            
+              from langchain_pinecone import PineconeVectorStore
+            
+              vector_store = PineconeVectorStore(index=index, embedding=embeddings)
+            
+              uuids = [str(uuid4()) for _ in range(len(texts))] 
+            
+              vector_store.add_documents(documents=texts, ids=uuids)
+            
+              retriever = vector_store.as_retriever()
+
               template = """Answer the question based only on the following
               Context:
               {context}
