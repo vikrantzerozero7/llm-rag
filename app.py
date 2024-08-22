@@ -389,17 +389,17 @@ def main():
             
               retriever = vector_store.as_retriever()
 
-              template = """Answer the question based only on the following
-              Context:
-              {context}
-    
-              Question: {question}
-    
-              """
-              prompt = ChatPromptTemplate.from_template(template)
+              prompt_template = """
+                Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
+                provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
+                Context:\n {context}?\n
+                Question: \n{question}\n
+            
+                Answer:
+                """
+            
+              prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
               
-    
-    
               model = ChatGoogleGenerativeAI(
                   model="gemini-pro",
                   temperature=1,
