@@ -446,11 +446,7 @@ def main():
               upload = "Data Upload successful"
               if upload == "Data Upload successful":
                   while True:
-                      query = st.text_input("Ask Question",
-                                                label_visibility=st.session_state.visibility,
-                                                disabled=st.session_state.disabled,
-                                                placeholder=""
-                                                )
+                      query = st.text_input("Ask Question")
         
                       # prompt: get question and answer part
                       if st.button('Submit Answer'):
