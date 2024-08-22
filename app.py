@@ -468,8 +468,8 @@ def main():
                               st.write("Title : ",data_dict["Topic"])
                               st.write("Subtopic : ",data_dict["Subtopic"])
                               st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-                          if st.button('STOP'):
-                              break
+                      if st.button('STOP'):
+                          break
 
 if __name__=='__main__':
     main()
