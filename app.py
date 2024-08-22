@@ -463,7 +463,7 @@ def main():
     
                       result = chain.invoke(query)
     
-                      print(result)
+                      st.write(result)
                       result2 = get_qa(result)
                       st.success("Output : {}".format(result2))
                       #import time
