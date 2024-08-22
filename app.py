@@ -446,7 +446,7 @@ def main():
              
               while True:
                   
-                  query = st.text_input("Ask Question")
+                  query = st.text_input("Ask Question",key = "qwe")
                   # prompt: get question and answer part
                   if st.button('Submit Answer'):
                       
