@@ -452,7 +452,7 @@ def main():
                                             )
     
                   # prompt: get question and answer part
-                  if query:
+                  if st.button('Submit Answer'):
                       def get_qa(text):
                         pattern = r'(Question:.*)'
                         match = re.search(pattern, text, flags=re.DOTALL)
