@@ -449,7 +449,7 @@ def main():
                 
               while True:
                   
-                  query = st.text_input("Ask Question",key = "qwe")
+                  query = st.text_input("Ask Question")
                   # prompt: get question and answer part
                   if st.button('Submit Answer'):
                       st.session_state.query_history.append(query)
