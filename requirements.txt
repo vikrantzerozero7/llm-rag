@@ -17,6 +17,7 @@ sentence_transformers
 pillow
 PyGithub
 jq
-langchain-chroma
-chromadb
+pinecone-client 
+langchain_pinecone 
+lark
 
