@@ -453,32 +453,21 @@ def main():
     
                   # prompt: get question and answer part
                   if st.button('Submit Answer'):
-                      def get_qa(text):
-                        pattern = r'(Question:.*)'
-                        match = re.search(pattern, text, flags=re.DOTALL)
-                        if match:
-                          return match.group(1).strip()
-                        else:
-                          return ""
-    
+                      query = "what is dog"
                       result = chain.invoke(query)
-    
-                      st.write(result)
-                      result2 = get_qa(result)
-                      st.success("Output : {}".format(result2))
-                      #import time
-                      #time.sleep(5)
-                      if "does not" in result.lower() or "i don't" in result.lower() or  "not mentioned" in result.lower():
-                        print("No answer found")
-    
+                      
+                
+                      if "answer is not available in the context" in result:
+                          st.write("No answer")
                       else:
-                        docs1 = db.similarity_search(query)
-                        data_dict = json.loads(docs1[0].page_content)
-                        st.write("\nBook Name : ",data_dict["Book name"])
-                        st.write("Title : ",data_dict["Title"])
-                        st.write("Subtopic : ",data_dict["Subtopic"])
-                        st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-                  ######
+                          st.write(result)
+                          docs1 = vector_store.similarity_search(query,k=3)
+                          data_dict = docs1[0].metadata
+                          st.write("\nBook Name : ",data_dict["Book name"])
+                          st.write("Chapter : ",data_dict["Chapter"])
+                          st.write("Title : ",data_dict["Topic"])
+                          st.write("Subtopic : ",data_dict["Subtopic"])
+                          st.write("Subsubtopic : ",data_dict["Subsubtopic"])
 
 if __name__=='__main__':
     main()
