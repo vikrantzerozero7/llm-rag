@@ -66,7 +66,7 @@ def get_text_ending_to_index(text):
 import fitz  # PyMuPDF
 import re
 
-def chain_result(pdf_d,query):
+def chain_result(pdf_d):
     
       final_list = []
 
