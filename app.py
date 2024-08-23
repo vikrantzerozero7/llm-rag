@@ -426,7 +426,7 @@ def main():
     
     # Store the initial value of widgets in session state
     pdf_d = [] 
-    uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=False)
+    uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=False,key="fileUploader")
     
     if uploadedFile is not None :
         try:
