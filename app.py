@@ -424,7 +424,7 @@ def main():
     
     # Store the initial value of widgets in session state
    
-    uploadedFile = st.file_uploader("Choose a file" ,accept_multiple_files=False,key="fileUploader")
+    uploadedFile = st.file_uploader("Choose a file" ,accept_multiple_files=True,key="fileUploader")
     
     if uploadedFile is not None :
         try:
@@ -443,29 +443,24 @@ def main():
     else:
         st.sidebar.warning("you need to upload a pdf file.")
     if uploadedFile is not None :
-        if 'pdf_d' not in st.session_state:
-            st.session_state.pdf_d = []
-        # Append the DataFrame to pdf_d and save it in session state
-        st.session_state.pdf_d.append(df)
-        if 'pdf_d' in st.session_state:
-            pdf_d = st.session_state.pdf_d
+        for uploaded_file in uploadedFile:
+            pdf_d.append(uploaded_file)
+        query = st.text_input("Enter query",placeholder="text",key = "hi") 
+        if st.button('Submit query'):
             
-            query = st.text_input("Enter query",placeholder="text",key = "hi") 
-            if st.button('Submit query'):
-                
-                result1,vector_store1 = chain_result(pdf_d,query)
-                
-                if "answer is not available in the context" in result1:
-                      st.write("No answer") 
-                else:
-                      st.write(result1)
-                      docs1 = vector_store1.similarity_search(query,k=3)
-                      data_dict = docs1[0].metadata
-                      st.write("\nBook Name : ",data_dict["Book name"])
-                      st.write("Chapter : ",data_dict["Chapter"])
-                      st.write("Title : ",data_dict["Topic"])
-                      st.write("Subtopic : ",data_dict["Subtopic"])
-                      st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+            result1,vector_store1 = chain_result(pdf_d,query)
+            
+            if "answer is not available in the context" in result1:
+                  st.write("No answer") 
+            else:
+                  st.write(result1)
+                  docs1 = vector_store1.similarity_search(query,k=3)
+                  data_dict = docs1[0].metadata
+                  st.write("\nBook Name : ",data_dict["Book name"])
+                  st.write("Chapter : ",data_dict["Chapter"])
+                  st.write("Title : ",data_dict["Topic"])
+                  st.write("Subtopic : ",data_dict["Subtopic"])
+                  st.write("Subsubtopic : ",data_dict["Subsubtopic"])
 
 if __name__=='__main__':
     main()
