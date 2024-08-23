@@ -446,11 +446,7 @@ def main():
         
         pdf_d.append(df)  
         
-        query = st.text_input("Enter query",
-                                     label_visibility=st.session_state.visibility,
-                                     disabled=st.session_state.disabled,
-                                     placeholder="text"
-                                     ) 
+        query = st.text_input("Enter query",placeholder="text",key = "hi") 
         if st.button('Submit query'):
             
             result1,vector_store1 = chain_result(pdf_d,query)
