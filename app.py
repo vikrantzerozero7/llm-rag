@@ -390,8 +390,8 @@ def chain_result(pdf_d,query):
           | model4
           | StrOutputParser()
       )
-      result = chain.invoke(query)
-      return result,vector_store
+      
+      return chain,vector_store
     
 pdf_d = [] 
 
@@ -437,9 +437,10 @@ def main():
     else:
          st.sidebar.warning("you need to upload a pdf file.")
         
+    chain,vector_store1 = chain_result(pdf_d)    
     query = st.text_input("Enter query",placeholder="text") 
-   
-    result1,vector_store1 = chain_result(pdf_d,query)
+    result = chain.invoke(query)
+    
     
     if "answer is not available in the context" in result1:
           st.write("No answer") 
