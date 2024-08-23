@@ -436,10 +436,12 @@ def main():
             pdf_d.append(df)  # Add the opened PDF document to the list
     else:
          st.sidebar.warning("you need to upload a pdf file.")
+        
     if st.button("Submit"):
         
         chain,vector_store1 = chain_result(pdf_d)    
         query = st.text_input("Enter query",placeholder="text") 
+        st.write(query)
         result1 = chain.invoke(query)
         
         
