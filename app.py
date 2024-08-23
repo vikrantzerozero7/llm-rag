@@ -428,27 +428,36 @@ def main():
     
     if uploadedFile is not None :
         try:
+            df2 = []
             uploadedFile1=uploadedFile.getvalue()
             
             df=fitz.open(stream=uploadedFile1, filetype="pdf")
+            
+            df2.append(df)
         except:
                 try: 
+                    df2 = []
                     uploadedFile1=uploadedFile.getvalue()
-                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
-
+                    
+                    df=fitz.open(stream=uploadedFile1, filetype="pdf")
+                    
+                    df2.append(df)
                 except:
-                    uploadedFile1 = uploadedFile.getvalue()
-                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                    df2 = []
+                    uploadedFile1=uploadedFile.getvalue()
+                    
+                    df=fitz.open(stream=uploadedFile1, filetype="pdf")
+                    
+                    df2.append(df)
 
     else:
         st.sidebar.warning("you need to upload a pdf file.")
-    if uploadedFile is not None :
-        for uploaded_file in uploadedFile:
-            pdf_d.append(uploaded_file)
+    if df2 is not None :
+        
         query = st.text_input("Enter query",placeholder="text",key = "hi") 
         if st.button('Submit query'):
             
-            result1,vector_store1 = chain_result(pdf_d,query)
+            result1,vector_store1 = chain_result(df2,query)
             
             if "answer is not available in the context" in result1:
                   st.write("No answer") 
