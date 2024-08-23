@@ -418,7 +418,7 @@ def main():
         st.session_state.disabled = False
 
     html_temp="""
-    <div style="background-color:tomato;padding:10px">
+    <div style="background-color:tomato;padding:2px">
     <h1 style="color:white;text-align:center;"> Transportation cost prediction </h2>
     </div>
     """
