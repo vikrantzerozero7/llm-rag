@@ -391,7 +391,7 @@ def main_main(pdf_d,query):
           | StrOutputParser()
       )
       result = chain.invoke(query)
-      return result
+      return result,vector_store
               
 def main():
 
@@ -454,13 +454,13 @@ def main():
                                      ) 
         if st.button('Submit query'):
             
-            result1 = main_main(pdf_d,query)
+            result1,vector_store1 = main_main(pdf_d,query)
             
             if "answer is not available in the context" in result1:
                   st.write("No answer") 
             else:
                   st.write(result1)
-                  docs1 = vector_store.similarity_search(query,k=3)
+                  docs1 = vector_store1.similarity_search(query,k=3)
                   data_dict = docs1[0].metadata
                   st.write("\nBook Name : ",data_dict["Book name"])
                   st.write("Chapter : ",data_dict["Chapter"])
