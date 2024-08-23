@@ -424,7 +424,7 @@ def main():
     
     # Store the initial value of widgets in session state
    
-    uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=False,key="fileUploader",type = "pdf")
+    uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=True,key="fileUploader",type = "pdf")
     
     if uploadedFile is not None :
         try:
@@ -440,27 +440,27 @@ def main():
                     uploadedFile1 = uploadedFile.getvalue()
                     df = fitz.open(stream=uploadedFile1, filetype="pdf")
 
+    
+        if df is not None :
+            pdf_d.append(df)
+        query = st.text_input("Enter query",placeholder="text") 
+        if st.button('Submit query'):
+            
+            result1,vector_store1 = chain_result(pdf_d,query)
+            
+            if "answer is not available in the context" in result1:
+                  st.write("No answer") 
+            else:
+                  st.write(result1)
+                  docs1 = vector_store1.similarity_search(query,k=3)
+                  data_dict = docs1[0].metadata
+                  st.write("\nBook Name : ",data_dict["Book name"])
+                  st.write("Chapter : ",data_dict["Chapter"])
+                  st.write("Title : ",data_dict["Topic"])
+                  st.write("Subtopic : ",data_dict["Subtopic"])
+                  st.write("Subsubtopic : ",data_dict["Subsubtopic"])
     else:
-        st.sidebar.warning("you need to upload a pdf file.")
-    if df is not None :
-        pdf_d.append(df)
-    query = st.text_input("Enter query",placeholder="text") 
-    if st.button('Submit query'):
-        
-        result1,vector_store1 = chain_result(pdf_d,query)
-        
-        if "answer is not available in the context" in result1:
-              st.write("No answer") 
-        else:
-              st.write(result1)
-              docs1 = vector_store1.similarity_search(query,k=3)
-              data_dict = docs1[0].metadata
-              st.write("\nBook Name : ",data_dict["Book name"])
-              st.write("Chapter : ",data_dict["Chapter"])
-              st.write("Title : ",data_dict["Topic"])
-              st.write("Subtopic : ",data_dict["Subtopic"])
-              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-
+         st.sidebar.warning("you need to upload a pdf file.")
 if __name__=='__main__':
     main()
 
