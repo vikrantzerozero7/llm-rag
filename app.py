@@ -424,40 +424,36 @@ def main():
     
     # Store the initial value of widgets in session state
    
-    uploadedFile = st.file_uploader("Choose a file" ,accept_multiple_files=True,key="fileUploader",type = "pdf")
+    uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=False,key="fileUploader",type = "pdf")
     
     if uploadedFile is not None :
         try:
-            df2 = []
             uploadedFile1=uploadedFile.getvalue()
             
             df=fitz.open(stream=uploadedFile1, filetype="pdf")
-            
-            df2.append(df)
         except:
                 try: 
-                    df2 = []
                     uploadedFile1=uploadedFile.getvalue()
-                    
-                    df=fitz.open(stream=uploadedFile1, filetype="pdf")
-                    
-                    df2.append(df)
+                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
+
                 except:
-                    df2 = []
-                    uploadedFile1=uploadedFile.getvalue()
-                    
-                    df=fitz.open(stream=uploadedFile1, filetype="pdf")
-                    
-                    df2.append(df)
+                    uploadedFile1 = uploadedFile.getvalue()
+                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
 
     else:
         st.sidebar.warning("you need to upload a pdf file.")
-    if df2 is not None :
+    if uploadedFile is not None :
         
-        query = st.text_input("Enter query",placeholder="text",key = "hi") 
+        pdf_d.append(df)  
+        
+        query = st.text_input("Enter query",
+                                     label_visibility=st.session_state.visibility,
+                                     disabled=st.session_state.disabled,
+                                     placeholder="text"
+                                     ) 
         if st.button('Submit query'):
             
-            result1,vector_store1 = chain_result(df2,query)
+            result1,vector_store1 = chain_result(pdf_d,query)
             
             if "answer is not available in the context" in result1:
                   st.write("No answer") 
