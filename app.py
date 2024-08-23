@@ -443,8 +443,7 @@ def main():
     else:
         st.sidebar.warning("you need to upload a pdf file.")
     if df is not None :
-        pdf_d.append(df)  
-        
+        pdf_d.append(df)
     query = st.text_input("Enter query",placeholder="text") 
     if st.button('Submit query'):
         
