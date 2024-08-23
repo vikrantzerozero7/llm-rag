@@ -419,7 +419,7 @@ def main():
 
     html_temp="""
     <div style="background-color:tomato;padding:10px">
-    <h2 style="color:white;text-align:center;"> Transportation cost prediction </h2>
+    <h1 style="color:white;text-align:center;"> Transportation cost prediction </h2>
     </div>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
@@ -446,13 +446,14 @@ def main():
         st.sidebar.warning("you need to upload a pdf file.")
     if uploadedFile is not None :
         pdf_d.append(df)  
+        
+        query = st.text_input("Enter query",
+                                     label_visibility=st.session_state.visibility,
+                                     disabled=st.session_state.disabled,
+                                     placeholder="text"
+                                     ) 
         if st.button('Submit query'):
-            query = st.text_input("Enter query",
-                                         label_visibility=st.session_state.visibility,
-                                         disabled=st.session_state.disabled,
-                                         placeholder="text"
-                                         ) 
-    
+            
             result1 = main_main(pdf_d,query)
             
             if "answer is not available in the context" in result1:
