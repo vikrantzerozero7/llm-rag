@@ -66,7 +66,7 @@ def get_text_ending_to_index(text):
 import fitz  # PyMuPDF
 import re
 
-def main_main(pdf_d,query):
+def chain_result(pdf_d,query):
     
       final_list = []
 
@@ -458,7 +458,7 @@ def main():
                                      ) 
         if st.button('Submit query'):
             
-            result1,vector_store1 = main_main(pdf_d,query)
+            result1,vector_store1 = chain_result(pdf_d,query)
             
             if "answer is not available in the context" in result1:
                   st.write("No answer") 
