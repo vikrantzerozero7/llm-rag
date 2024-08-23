@@ -6,7 +6,8 @@ from PIL import Image
 from github import Github
 from github import InputGitTreeElement
 from datetime import datetime
-from langchain import PromptTemplate
+from langchain_core.prompts import PromptTemplate
+
 import fitz  # PyMuPDF
 import re
 from unidecode import unidecode
@@ -19,7 +20,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 #from langchain_community.vectorstores import Chroma
 
-from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
 
