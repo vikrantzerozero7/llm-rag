@@ -392,8 +392,15 @@ def main_main(pdf_d,query):
       )
       result = chain.invoke(query)
       return result,vector_store
-              
+    
+pdf_d = [] 
+
 def main():
+    
+     # Store the initial value of widgets in session state
+    if "visibility" not in st.session_state:
+        st.session_state.visibility = "visible"
+        st.session_state.disabled = False
 
     image_path = r"robo_Logo1.jpeg"
     image = Image.open(image_path)
@@ -412,11 +419,7 @@ def main():
 
     st.title("Transportation cost prediction")
 
-    # Store the initial value of widgets in session state
-    if "visibility" not in st.session_state:
-        st.session_state.visibility = "visible"
-        st.session_state.disabled = False
-
+   
     html_temp="""
     <div style="background-color:tomato;padding:2px">
     <h1 style="color:white;text-align:center;"> Transportation cost prediction </h2>
@@ -425,7 +428,7 @@ def main():
     st.markdown(html_temp, unsafe_allow_html=True)
     
     # Store the initial value of widgets in session state
-    pdf_d = [] 
+   
     uploadedFile = st.sidebar.file_uploader("Choose a file" ,accept_multiple_files=False,key="fileUploader")
     
     if uploadedFile is not None :
@@ -445,6 +448,7 @@ def main():
     else:
         st.sidebar.warning("you need to upload a pdf file.")
     if uploadedFile is not None :
+        
         pdf_d.append(df)  
         
         query = st.text_input("Enter query",
