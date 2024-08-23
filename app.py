@@ -442,15 +442,11 @@ def main():
 
     else:
         st.sidebar.warning("you need to upload a pdf file.")
-    if uploadedFile is not None :
+    if df is not None :
         
         pdf_d.append(df)  
         
-        query = st.text_input("Enter query",
-                                     label_visibility=st.session_state.visibility,
-                                     disabled=st.session_state.disabled,
-                                     placeholder="text"
-                                     ) 
+        query = st.text_input("Enter query",placeholder="text") 
         if st.button('Submit query'):
             
             result1,vector_store1 = chain_result(pdf_d,query)
