@@ -396,11 +396,6 @@ def chain_result(pdf_d,query):
 pdf_d = [] 
 
 def main():
-    
-     # Store the initial value of widgets in session state
-    if "visibility" not in st.session_state:
-        st.session_state.visibility = "visible"
-        st.session_state.disabled = False
 
     image_path = r"robo_Logo1.jpeg"
     image = Image.open(image_path)
