@@ -271,6 +271,7 @@ def chain_result(pdf_d):
           order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subsubtopics","Contents"]
           df6 = df6[order]
           df6 = df6.fillna("")
+          st.write(len(df6))
       
 
       #######################################################################
