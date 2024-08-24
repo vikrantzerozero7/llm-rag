@@ -267,12 +267,12 @@ def chain_result(pdf_d):
           df4['matched_subsubtopics'] = df4['Name'].apply(lambda i: i if i in subsubtopics else None)
 
           df5 = pd.concat([df4,df11[["book name","topic name"]]],axis = 1)
-          df6 = df5.drop(columns=["matched_topics"])
+          st.session_state.df6 = df5.drop(columns=["matched_topics"])
           order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subsubtopics","Contents"]
-          df6 = df6[order]
-          df6 = df6.fillna("")
-          df6.drop_duplicates()
-          st.write(len(df6))
+          st.session_state.df6 = st.session_state.df6[order]
+          st.session_state.df6 = st.session_state.df6.fillna("")
+          st.session_state.df6.drop_duplicates()
+          st.write(len(st.session_state.df6))
       
 
       #######################################################################
