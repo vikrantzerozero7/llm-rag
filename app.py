@@ -437,6 +437,7 @@ def main():
         uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
     
         if st.button("Submit & Process", key="process_button"):
+            st.session_state.pdf_d = []
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
