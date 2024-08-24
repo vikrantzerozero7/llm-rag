@@ -457,7 +457,7 @@ def main():
     
         if st.button("Submit & Process", key="process_button"):
             st.session_state.pdf_d = []
-            if uploaded_files:  # Ensure there are uploaded files
+            if st.session_state.uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
                     for upload in st.session_state.uploaded_files:
                         uploadedFile1 = upload.getvalue()
