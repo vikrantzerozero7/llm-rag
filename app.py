@@ -397,7 +397,7 @@ def chain_result(pdf_d):
       return chain,vector_store
  
 def main():
-
+    st.header("PDF CHATBOT")
     image_path = r"robo_Logo1.jpeg"
     image = Image.open(image_path)
     # Resize the image
@@ -413,24 +413,10 @@ def main():
     # st.sidebar.image(resized_sidebar_image)
     st.sidebar.image(sidebar_image)
 
-    st.title("Transportation cost prediction")
-
-   
-    html_temp="""
-    <div style="background-color:tomato;padding:2px">
-    <h1 style="color:white;text-align:center;"> Transportation cost prediction </h2>
-    </div>
-    """
-    st.markdown(html_temp, unsafe_allow_html=True)
-    
-    # Store the initial value of widgets in session state
-   
-    # File uploader to select multiple PDF files
-    
     # Initialize an empty list to store the opened PDF documents
    
     # Check if pdf_d is already in session state, if not, initialize it
-    query = st.text_input("Enter query",placeholder="text",key = "key") 
+    query = st.text_input("Enter query",placeholder="text",key = "key")
     st.session_state.query = query
         
     if st.button("Submit"): 
