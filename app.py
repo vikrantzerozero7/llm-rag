@@ -443,13 +443,11 @@ def main():
                     st.write("Done")
      
             
-    
-      
 if __name__=='__main__':
     main()
     
 if st.button("Reset"):
-        st.stop()
+        st.rerun()
     
 if st.button("About"):
     st.text("Let's learn")
