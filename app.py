@@ -398,23 +398,7 @@ def chain_result(pdf_d):
  
 def main():
     st.header("PDF CHATBOT")
-    image_path = r"robo_Logo1.jpeg"
-    image = Image.open(image_path)
-    # Resize the image
-    # new_width =300 # Specify the desired width
-    # new_height = 200  # Specify the desired height
-    # resized_image = image.resize((new_width, new_height))
-    # st.image(resized_image, use_column_width=True)
-    st.image(image) #, use_column_width=True)
 
-    sidebar_image_path = r"INNODATATICS.png"
-    sidebar_image = Image.open(sidebar_image_path)
-    # resized_sidebar_image = sidebar_image.resize((450, 300))  # Adjust the width and height as desired
-    # st.sidebar.image(resized_sidebar_image)
-    st.sidebar.image(sidebar_image)
-
-    # Initialize an empty list to store the opened PDF documents
-   
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Enter query",placeholder="text",key = "key")
     st.session_state.query = query
