@@ -77,6 +77,7 @@ def chain_result(pdf_d):
       contents_list = []
 
       for pdf in pdf_d:
+          st.write(pdf)
           
           pages = [] 
           for i in range(len(pdf)): 
