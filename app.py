@@ -425,27 +425,39 @@ def main():
     # File uploader to select multiple PDF files
     
     # Initialize an empty list to store the opened PDF documents
-    pdf_d = []
+   
+    # Check if pdf_d is already in session state, if not, initialize it
+    if 'pdf_d' not in st.session_state:
+        st.session_state.pdf_d = []
+    
     with st.sidebar:
         uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
-        if st.button("Submit & Process", key="process_button"):  # Check if API key is provided before processing
-            with st.spinner("Processing..."):
-                pdf_d = uploaded_files
-                chain,vector_store1 = chain_result(pdf_d)   
+    
+        if st.button("Submit & Process", key="process_button"):
+            if uploaded_files:  # Ensure there are uploaded files
+                with st.spinner("Processing..."):
+                    for upload in uploaded_files:
+                        uploadedFile1 = upload.getvalue()
+                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                        st.session_state.pdf_d.append(df)  # Append to the session state list
+                    chain, vector_store1 = chain_result(st.session_state.pdf_d)
+                    st.session_state.chain = chain
+                    st.session_state.vector_store1 = vector_store1
         else:
              st.sidebar.warning("you need to upload a pdf file.")
             
     query = st.text_input("Enter query",placeholder="text",key = "key") 
-   
+    st.session_state.query = query
+    
     if st.button("Submit"): 
-        st.write(query)
-        result1 = chain.invoke(query) 
+        st.write(st.session_state.query)
+        result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
         if "answer is not available in the context" in result1:
               st.write("No answer") 
         else:
               st.write(result1)
-              docs1 = vector_store1.similarity_search(query,k=3)
+              docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
               data_dict = docs1[0].metadata
               st.write("\nBook Name : ",data_dict["Book name"])
               st.write("Chapter : ",data_dict["Chapter"])
