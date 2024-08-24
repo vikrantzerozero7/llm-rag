@@ -423,7 +423,7 @@ def main():
         st.session_state.pdf_d = []
     
     with st.sidebar:
-        st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
+        st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     
         if st.button("Submit & Process", key="process_button"):
             st.session_state.pdf_d = []
