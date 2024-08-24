@@ -440,6 +440,7 @@ def main():
                         uploadedFile1 = upload.getvalue()
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         st.session_state.pdf_d.append(df)  # Append to the session state list
+                    st.write(st.session_state.pdf_d)
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
