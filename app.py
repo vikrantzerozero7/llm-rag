@@ -78,8 +78,8 @@ def chain_result(pdf_d):
 
       for pdf in pdf_d:
           
-          pages = []
-          for i in range(len(pdf)):
+          pages = [] 
+          for i in range(len(pdf)): 
               page = pdf.load_page(i)  # Load each page by index
               pages.append(page.get_text())  # Append the text of each page to the list
           # Combine all the page texts into a single string
@@ -392,9 +392,7 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
-    
-pdf_d = [] 
-
+ 
 def main():
 
     image_path = r"robo_Logo1.jpeg"
@@ -425,25 +423,23 @@ def main():
     # Store the initial value of widgets in session state
    
     # File uploader to select multiple PDF files
-    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
     
     # Initialize an empty list to store the opened PDF documents
     pdf_d = []
-    
-    if uploaded_files is not None:
-        for uploaded_file in uploaded_files:
-            df = fitz.open(stream=uploaded_file.read(), filetype="pdf")  # Open the uploaded PDF file
-            pdf_d.append(df)  # Add the opened PDF document to the list
-    else:
-         st.sidebar.warning("you need to upload a pdf file.")
-        
-    if st.button("Submit"):
-        
-        chain,vector_store1 = chain_result(pdf_d)    
-        query = st.text_input("Enter query",placeholder="text") 
+    with st.sidebar:
+        uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
+        if st.button("Submit & Process", key="process_button"):  # Check if API key is provided before processing
+            with st.spinner("Processing..."):
+                pdf_d = uploaded_files
+                chain,vector_store1 = chain_result(pdf_d)   
+        else:
+             st.sidebar.warning("you need to upload a pdf file.")
+            
+    query = st.text_input("Enter query",placeholder="text",key = "key") 
+   
+    if st.button("Submit"): 
         st.write(query)
-        result1 = chain.invoke(query)
-        
+        result1 = chain.invoke(query) 
         
         if "answer is not available in the context" in result1:
               st.write("No answer") 
@@ -456,7 +452,7 @@ def main():
               st.write("Title : ",data_dict["Topic"])
               st.write("Subtopic : ",data_dict["Subtopic"])
               st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-        
+      
 if __name__=='__main__':
     main()
 
