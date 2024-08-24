@@ -293,7 +293,7 @@ def chain_result(pdf_d):
       
       from langchain_core.documents import Document
       
-      for _, row in df6.iterrows():
+      for _, row in st.session_state.df6.iterrows():
                x =  Document(page_content = row["Contents"],
                metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
                docs11.append(x)
