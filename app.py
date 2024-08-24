@@ -108,7 +108,7 @@ def chain_result(pdf_d):
           text1 = re.sub(r'\n', r'\n\n', text1) #works
           text1 = re.sub(r'-', r' ',text1)
           text1 = unidecode(text1)
-          st.write(text1)
+          #st.write(text1)
           
 
           import re # topic subtopic subtopic2
