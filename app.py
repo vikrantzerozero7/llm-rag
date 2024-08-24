@@ -453,7 +453,7 @@ def main():
     st.session_state.query = query
     
     if st.button("Reset"):
-        st.experimental_rerun()
+        st.stop()
         
     if st.button("Submit"): 
         st.write(st.session_state.query)
