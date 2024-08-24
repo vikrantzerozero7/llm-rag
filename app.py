@@ -455,8 +455,8 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
-        else:
-             st.sidebar.warning("you need to upload a pdf file.")
+                    st.write("Done")
+     
             
     
       
