@@ -271,7 +271,7 @@ def chain_result(pdf_d):
           order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subsubtopics","Contents"]
           st.session_state.df6 = st.session_state.df6[order]
           st.session_state.df6 = st.session_state.df6.fillna("")
-          st.session_state.df6.drop_duplicates()
+          st.session_state.df6 = st.session_state.df6.drop_duplicates()
           st.write(len(st.session_state.df6))
       
 
