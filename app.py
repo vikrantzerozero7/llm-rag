@@ -408,7 +408,7 @@ def main():
     
     result1 =  st.session_state.chain.invoke(st.session_state.query) 
     
-    if "answer is not available in the context" in result1:
+    if "does not provide any information" in result1:
           st.write("No answer") 
     else:
           st.write(result1)
