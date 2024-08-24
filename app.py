@@ -453,13 +453,13 @@ def main():
         st.session_state.pdf_d = []
     
     with st.sidebar:
-        uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
+        st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader", type="pdf")
     
         if st.button("Submit & Process", key="process_button"):
             st.session_state.pdf_d = []
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
-                    for upload in uploaded_files:
+                    for upload in st.session_state.uploaded_files:
                         uploadedFile1 = upload.getvalue()
                         #st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
