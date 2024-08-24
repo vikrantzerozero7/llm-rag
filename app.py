@@ -452,6 +452,9 @@ def main():
     query = st.text_input("Enter query",placeholder="text",key = "key") 
     st.session_state.query = query
     
+    if st.button("Reset"):
+        st.experimental_rerun()
+        
     if st.button("Submit"): 
         st.write(st.session_state.query)
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
