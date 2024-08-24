@@ -452,9 +452,6 @@ def main():
             
     query = st.text_input("Enter query",placeholder="text",key = "key") 
     st.session_state.query = query
-    
-    if st.button("Reset"):
-        st.stop()
         
     if st.button("Submit"): 
         st.write(st.session_state.query)
@@ -474,7 +471,10 @@ def main():
       
 if __name__=='__main__':
     main()
-
+    
+if st.button("Reset"):
+        st.stop()
+    
 if st.button("About"):
     st.text("Let's learn")
     st.text("Built with Streamlit")
