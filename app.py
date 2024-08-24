@@ -438,6 +438,7 @@ def main():
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
                         uploadedFile1 = upload.getvalue()
+                        st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         st.write(df)
                         st.session_state.pdf_d.append(df)  # Append to the session state list
