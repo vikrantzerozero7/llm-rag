@@ -430,6 +430,25 @@ def main():
     # Initialize an empty list to store the opened PDF documents
    
     # Check if pdf_d is already in session state, if not, initialize it
+    query = st.text_input("Enter query",placeholder="text",key = "key") 
+    st.session_state.query = query
+        
+    if st.button("Submit"): 
+        st.write(st.session_state.query)
+        result1 =  st.session_state.chain.invoke(st.session_state.query) 
+        
+        if "answer is not available in the context" in result1:
+              st.write("No answer") 
+        else:
+              st.write(result1)
+              docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
+              data_dict = docs1[0].metadata
+              st.write("\nBook Name : ",data_dict["Book name"])
+              st.write("Chapter : ",data_dict["Chapter"])
+              st.write("Title : ",data_dict["Topic"])
+              st.write("Subtopic : ",data_dict["Subtopic"])
+              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+    
     if 'pdf_d' not in st.session_state:
         st.session_state.pdf_d = []
     
@@ -453,24 +472,7 @@ def main():
         else:
              st.sidebar.warning("you need to upload a pdf file.")
             
-    query = st.text_input("Enter query",placeholder="text",key = "key") 
-    st.session_state.query = query
-        
-    if st.button("Submit"): 
-        st.write(st.session_state.query)
-        result1 =  st.session_state.chain.invoke(st.session_state.query) 
-        
-        if "answer is not available in the context" in result1:
-              st.write("No answer") 
-        else:
-              st.write(result1)
-              docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
-              data_dict = docs1[0].metadata
-              st.write("\nBook Name : ",data_dict["Book name"])
-              st.write("Chapter : ",data_dict["Chapter"])
-              st.write("Title : ",data_dict["Topic"])
-              st.write("Subtopic : ",data_dict["Subtopic"])
-              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+    
       
 if __name__=='__main__':
     main()
