@@ -438,9 +438,9 @@ def main():
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
                         uploadedFile1 = upload.getvalue()
-                        st.write(uploadedFile1)
+                        #st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        st.write(df)
+                        st.write(df) 
                         st.session_state.pdf_d.append(df)  # Append to the session state list
                     st.write(st.session_state.pdf_d)
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
