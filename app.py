@@ -395,7 +395,7 @@ def chain_result(pdf_d):
 def main():
     st.header("PDF CHATBOT")
     
-    st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+    st.session_state.uploaded_files = st.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
 
     if st.button("Submit & Process", key="process_button"):
         st.session_state.pdf_d = [] 
