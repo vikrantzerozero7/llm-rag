@@ -60,7 +60,7 @@ def get_text_ending_to_index(text):
 
     # Return the text from "contents" to "index"
     return text[start_index:end_index]
-
+x = 0
 def chain_result(pdf_d):
     
       final_list = []
@@ -80,8 +80,7 @@ def chain_result(pdf_d):
               pages.append(page.get_text())  # Append the text of each page to the list
           # Combine all the page texts into a single string
           raw_text2 = " ".join(page for page in pages if page)
-          x = raw_text2
-          
+         
           raw_text2 = raw_text2[:-5000].lower()
           raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
 
@@ -105,8 +104,6 @@ def chain_result(pdf_d):
           text1 = unidecode(text1)
           #st.write(text1)
           
-
-          import re # topic subtopic subtopic2
           text2 = str(get_text_starting_from_index(raw_text2))
           text2 = re.sub(r' {2,}', ' ',re.sub(r'\n{2,}', '\n', text2))
           text2 = re.sub(r'‘', r'', text2)
@@ -124,8 +121,7 @@ def chain_result(pdf_d):
           text2 = re.sub(r'- ', r'-', re.sub(r' -', '-', text2)) #works
           text2 = re.sub(r'-', r' ',text2)
           text2 = unidecode(text2)
-
-          import re
+          
 
           # Example input text (adjust the text to test)
           #text3 = text1
@@ -289,9 +285,9 @@ def chain_result(pdf_d):
       from langchain_core.documents import Document
       
       for _, row in st.session_state.df6.iterrows():
-               x =  Document(page_content = row["Contents"],
+               documents11 =  Document(page_content = row["Contents"],
                metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
-               docs11.append(x)
+               docs11.append(documents11)
     
       from langchain_text_splitters import (
         RecursiveCharacterTextSplitter,
@@ -390,7 +386,7 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
-x = 0
+
 def main():
     st.header(x)
     st.write(x)
