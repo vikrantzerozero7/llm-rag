@@ -403,8 +403,8 @@ def main():
                         st.session_state.pdf_d.append(df)  # Append to the session state list
                     st.write(st.session_state.pdf_d)
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
-                    
-                    st.session_state.write("File processed successfully")
+                    st.session_state.success = "File processed successfully"
+                    st.write(st.session_state.success)
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
