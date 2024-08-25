@@ -441,7 +441,7 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
-                    st.write("Done")
+                    st.write("File processed successfully")
      
             
 if __name__=='__main__':
