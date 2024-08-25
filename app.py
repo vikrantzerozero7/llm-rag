@@ -33,7 +33,7 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain import HuggingFaceHub
 
 from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
-import re
+
 x = 0
 def get_text_starting_from_index(text):
     match = re.search(r'\nindex\n', text)
