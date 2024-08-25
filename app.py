@@ -82,7 +82,7 @@ def chain_result(pdf_d):
           # Combine all the page texts into a single string
           raw_text2 = " ".join(page for page in pages if page)
           x = raw_text2
-          import re
+          
           raw_text2 = raw_text2[:-5000].lower()
           raw_text2 = re.sub(r' \n', '\n',re.sub(r'\n ', '\n', raw_text2)) #works
 
@@ -394,15 +394,14 @@ def chain_result(pdf_d):
 x = 0
 def main():
     st.header("PDF CHATBOT")
-    
-    global x
+
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query and chain:
+    if query:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
@@ -420,8 +419,6 @@ def main():
     else:
         st.write("Upload file first")
 
-    
-    
     with st.sidebar:
         st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     
@@ -439,7 +436,6 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
-                    chain = st.session_state.chain 
                     st.write("File processed successfully")
                     
             
