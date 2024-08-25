@@ -391,19 +391,18 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
-
+x = 0
 def main():
     st.header("PDF CHATBOT")
-    if 'pdf_d' not in st.session_state:
-        st.session_state.pdf_d = []
-        x = 0
+    
+    global x
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query:
+    if query and chain:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
@@ -440,7 +439,7 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
-                    x = 1
+                    chain = st.session_state.chain 
                     st.write("File processed successfully")
                     
             
