@@ -395,7 +395,7 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
- 
+x = 0
 def main():
     st.header("PDF CHATBOT")
     
@@ -405,7 +405,7 @@ def main():
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query:
+    if query and x = 1:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
@@ -420,6 +420,8 @@ def main():
               st.write("Title : ",data_dict["Topic"])
               st.write("Subtopic : ",data_dict["Subtopic"])
               st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+    else:
+        st.write("Upload file first")
 
     if 'pdf_d' not in st.session_state:
         st.session_state.pdf_d = []
@@ -441,6 +443,7 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
+                    x = 1
                     st.write("File processed successfully")
                     
             
