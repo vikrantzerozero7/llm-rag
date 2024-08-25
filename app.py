@@ -394,7 +394,7 @@ def main():
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
     time.sleep(10)
-    st.button:
+    if st.button("Submit"):
         st.write(st.session_state.query)
         if query:
             
