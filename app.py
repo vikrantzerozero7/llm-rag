@@ -395,48 +395,47 @@ def chain_result(pdf_d):
 def main():
     st.header("PDF CHATBOT")
     
-    with st.sidebar:
-        st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
-    
-        if st.button("Submit & Process", key="process_button"):
-            st.session_state.pdf_d = [] 
-            if st.session_state.uploaded_files:  # Ensure there are uploaded files
-                with st.spinner("Processing..."):
-                    for upload in st.session_state.uploaded_files:
-                        uploadedFile1 = upload.getvalue()
-                        #st.write(uploadedFile1)
-                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        st.write(df) 
-                        st.session_state.pdf_d.append(df)  # Append to the session state list
-                    st.write(st.session_state.pdf_d)
-                    chain, vector_store1 = chain_result(st.session_state.pdf_d)
-                    st.session_state.chain = chain
-                    st.session_state.vector_store1 = vector_store1
-                    x = 1
-                    st.write("File processed successfully")
+    st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+
+    if st.button("Submit & Process", key="process_button"):
+        st.session_state.pdf_d = [] 
+        if st.session_state.uploaded_files:  # Ensure there are uploaded files
+            with st.spinner("Processing..."):
+                for upload in st.session_state.uploaded_files:
+                    uploadedFile1 = upload.getvalue()
+                    #st.write(uploadedFile1)
+                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                    st.write(df) 
+                    st.session_state.pdf_d.append(df)  # Append to the session state list
+                st.write(st.session_state.pdf_d)
+                chain, vector_store1 = chain_result(st.session_state.pdf_d)
+                st.session_state.chain = chain
+                st.session_state.vector_store1 = vector_store1
+                x = 1
+                st.write("File processed successfully")
+                
+                query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
+
+                st.session_state.query = query
+                
+                st.write(st.session_state.query)
+                
+                if query:
                     
-                    query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
-    
-                    st.session_state.query = query
+                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
                     
-                    st.write(st.session_state.query)
-                    
-                    if query:
-                        
-                        result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                        
-                        if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
-                              st.write("No answer") 
-                        else:
-                              st.write(result1)
-                              docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
-                              data_dict = docs1[0].metadata
-                              st.write("\nBook Name : ",data_dict["Book name"])
-                              st.write("Chapter : ",data_dict["Chapter"])
-                              st.write("Title : ",data_dict["Topic"])
-                              st.write("Subtopic : ",data_dict["Subtopic"])
-                              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-            
+                    if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
+                          st.write("No answer") 
+                    else:
+                          st.write(result1)
+                          docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
+                          data_dict = docs1[0].metadata
+                          st.write("\nBook Name : ",data_dict["Book name"])
+                          st.write("Chapter : ",data_dict["Chapter"])
+                          st.write("Title : ",data_dict["Topic"])
+                          st.write("Subtopic : ",data_dict["Subtopic"])
+                          st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+        
 if __name__=='__main__':
     main()
    
