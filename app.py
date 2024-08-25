@@ -390,22 +390,22 @@ import time
 def main():
     st.header("PDF Chatbot")
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
-
-    if st.sidebar.button("Submit & Process", key="process_button"):
-        pdf_d = [] 
-        if uploaded_files:  # Ensure there are uploaded files
-            with st.spinner("Processing..."):
-                for upload in uploaded_files:
-                    uploadedFile1 = upload.getvalue()
-                    #st.write(uploadedFile1)
-                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                    st.write(df) 
-                    pdf_d.append(df)  # Append to the session state list
-                st.write(pdf_d)
-                chain, vector_store1 = chain_result(pdf_d)
-                chain = chain
-                vector_store1 = vector_store1
-                st.write("File processed successfully")
+    with st.sidebar:
+        if st.button("Submit & Process", key="process_button"):
+            pdf_d = [] 
+            if uploaded_files:  # Ensure there are uploaded files
+                with st.spinner("Processing..."):
+                    for upload in uploaded_files:
+                        uploadedFile1 = upload.getvalue()
+                        #st.write(uploadedFile1)
+                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                        st.write(df) 
+                        pdf_d.append(df)  # Append to the session state list
+                    st.write(pdf_d)
+                    chain, vector_store1 = chain_result(pdf_d)
+                    chain = chain
+                    vector_store1 = vector_store1
+                    st.write("File processed successfully")
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
