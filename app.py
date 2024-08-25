@@ -407,7 +407,7 @@ def main():
                     st.write(st.session_state.success)
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
-    query = st.session_state.query
+    st.session_state.query = query
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
