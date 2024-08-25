@@ -34,7 +34,6 @@ from langchain import HuggingFaceHub
 
 from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
 
-x = 0
 def get_text_starting_from_index(text):
     match = re.search(r'\nindex\n', text)
     end_index = match.start() if match else -1
