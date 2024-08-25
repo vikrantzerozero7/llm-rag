@@ -62,7 +62,7 @@ def get_text_ending_to_index(text):
     return text[start_index:end_index]
 x = 0
 def chain_result(pdf_d):
-    
+      import re
       final_list = []
 
       final_list1 = []
