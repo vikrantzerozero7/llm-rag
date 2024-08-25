@@ -389,12 +389,29 @@ def chain_result(pdf_d):
 import time
 def main():
     st.header("PDF Chatbot")
+    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+
+    if st.button("Submit & Process", key="process_button"):
+        pdf_d = [] 
+        if uploaded_files:  # Ensure there are uploaded files
+            with st.spinner("Processing..."):
+                for upload in uploaded_files:
+                    uploadedFile1 = upload.getvalue()
+                    #st.write(uploadedFile1)
+                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                    st.write(df) 
+                    pdf_d.append(df)  # Append to the session state list
+                st.write(pdf_d)
+                chain, vector_store1 = chain_result(pdf_d)
+                chain = chain
+                vector_store1 = vector_store1
+                st.write("File processed successfully")
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
     time.sleep(10)
     if st.button("Submit"):
-        if uploaded_files is not None:
+        if uploaded_files:
             result1 =  chain.invoke(query) 
             
             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
@@ -414,23 +431,7 @@ def main():
         st.write("")
 
    
-    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
-
-    if st.button("Submit & Process", key="process_button"):
-        pdf_d = [] 
-        if uploaded_files:  # Ensure there are uploaded files
-            with st.spinner("Processing..."):
-                for upload in uploaded_files:
-                    uploadedFile1 = upload.getvalue()
-                    #st.write(uploadedFile1)
-                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                    st.write(df) 
-                    pdf_d.append(df)  # Append to the session state list
-                st.write(pdf_d)
-                chain, vector_store1 = chain_result(pdf_d)
-                chain = chain
-                vector_store1 = vector_store1
-                st.write("File processed successfully")
+    
                 
             
 if __name__=='__main__':
