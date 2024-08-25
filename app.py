@@ -413,25 +413,25 @@ def main():
     else:
         st.write("")
 
-    with st.sidebar:
-        uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
-    
-        if st.button("Submit & Process", key="process_button"):
-            pdf_d = [] 
-            if uploaded_files:  # Ensure there are uploaded files
-                with st.spinner("Processing..."):
-                    for upload in uploaded_files:
-                        uploadedFile1 = upload.getvalue()
-                        #st.write(uploadedFile1)
-                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        st.write(df) 
-                        pdf_d.append(df)  # Append to the session state list
-                    st.write(pdf_d)
-                    chain, vector_store1 = chain_result(pdf_d)
-                    chain = chain
-                    vector_store1 = vector_store1
-                    st.write("File processed successfully")
-                    
+   
+    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+
+    if st.button("Submit & Process", key="process_button"):
+        pdf_d = [] 
+        if uploaded_files:  # Ensure there are uploaded files
+            with st.spinner("Processing..."):
+                for upload in uploaded_files:
+                    uploadedFile1 = upload.getvalue()
+                    #st.write(uploadedFile1)
+                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                    st.write(df) 
+                    pdf_d.append(df)  # Append to the session state list
+                st.write(pdf_d)
+                chain, vector_store1 = chain_result(pdf_d)
+                chain = chain
+                vector_store1 = vector_store1
+                st.write("File processed successfully")
+                
             
 if __name__=='__main__':
     main()
