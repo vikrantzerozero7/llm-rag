@@ -347,7 +347,7 @@ def chain_result(pdf_d):
     
         Answer:
         """
-    
+      
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
       
       model = ChatGoogleGenerativeAI(
@@ -409,7 +409,7 @@ def main():
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
-        if "does not provide any information" in result1 or "does not contain any information" in result1:
+        if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
               st.write("No answer") 
         else:
               st.write(result1)
