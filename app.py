@@ -258,12 +258,12 @@ def chain_result(pdf_d):
           df4['matched_subsubtopics'] = df4['Name'].apply(lambda i: i if i in subsubtopics else None)
 
           df5 = pd.concat([df4,df11[["book name","topic name"]]],axis = 1)
-          st.session_state.df6 = df5.drop(columns=["matched_topics"])
+          df6 = df5.drop(columns=["matched_topics"])
           order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subsubtopics","Contents"]
-          st.session_state.df6 = st.session_state.df6[order]
-          st.session_state.df6 = st.session_state.df6.fillna("")
-          st.session_state.df6 = st.session_state.df6.drop_duplicates()
-          st.write(len(st.session_state.df6))
+          df6 = df6[order]
+          df6 = df6.fillna("")
+          df6 = df6.drop_duplicates()
+          st.write(len(df6))
       
 
       #######################################################################
@@ -284,7 +284,7 @@ def chain_result(pdf_d):
       
       from langchain_core.documents import Document
       
-      for _, row in st.session_state.df6.iterrows():
+      for _, row in df6.iterrows():
                documents11 =  Document(page_content = row["Contents"],
                metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
                docs11.append(documents11)
@@ -389,22 +389,19 @@ def chain_result(pdf_d):
 import time
 def main():
     st.header("PDF Chatbot")
-    
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
-    st.session_state.query = query
+    query = query
     time.sleep(10)
     if st.button("Submit"):
-        st.write(st.session_state.query)
-        if query:
-            
-            result1 =  st.session_state.chain.invoke(st.session_state.query) 
+        if uploaded_file not None:
+            result1 =  chain.invoke(query) 
             
             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
                   st.write("No answer") 
             else:
                   st.write(result1)
-                  docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
+                  docs1 =  vector_store1.similarity_search( query,k=3)
                   data_dict = docs1[0].metadata
                   st.write("\nBook Name : ",data_dict["Book name"])
                   st.write("Chapter : ",data_dict["Chapter"])
@@ -413,25 +410,26 @@ def main():
                   st.write("Subsubtopic : ",data_dict["Subsubtopic"])
         else:
             st.write("Upload file first")
+    else:
+        st.write("")
 
     with st.sidebar:
-        st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+        uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     
         if st.button("Submit & Process", key="process_button"):
-            st.session_state.pdf_d = [] 
-            if st.session_state.uploaded_files:  # Ensure there are uploaded files
+            pdf_d = [] 
+            if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
-                    for upload in st.session_state.uploaded_files:
+                    for upload in uploaded_files:
                         uploadedFile1 = upload.getvalue()
                         #st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         st.write(df) 
-                        st.session_state.pdf_d.append(df)  # Append to the session state list
-                    st.write(st.session_state.pdf_d)
-                    chain, vector_store1 = chain_result(st.session_state.pdf_d)
-                    st.session_state.chain = chain
-                    st.session_state.vector_store1 = vector_store1
-                    x = 1
+                        pdf_d.append(df)  # Append to the session state list
+                    st.write(pdf_d)
+                    chain, vector_store1 = chain_result(pdf_d)
+                    chain = chain
+                    vector_store1 = vector_store1
                     st.write("File processed successfully")
                     
             
