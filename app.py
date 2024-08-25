@@ -400,9 +400,9 @@ def main():
                         #st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         st.write(df) 
-                        pdf_d.append(df)  # Append to the session state list
+                        st.session_state.pdf_d.append(df)  # Append to the session state list
                     st.write(pdf_d)
-                    st.session_state.chain, st.session_state.vector_store1 = chain_result(pdf_d)
+                    st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
                     
                     st.session_state.write("File processed successfully")
     # Check if pdf_d is already in session state, if not, initialize it
