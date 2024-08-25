@@ -394,7 +394,9 @@ def chain_result(pdf_d):
 
 def main():
     st.header("PDF CHATBOT")
-    
+    if 'pdf_d' not in st.session_state:
+        st.session_state.pdf_d = []
+        x = 0
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     
@@ -419,9 +421,7 @@ def main():
     else:
         st.write("Upload file first")
 
-    if 'pdf_d' not in st.session_state:
-        st.session_state.pdf_d = []
-        x = 0
+    
     
     with st.sidebar:
         st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
