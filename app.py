@@ -401,7 +401,7 @@ def main():
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query and x == 1:
+    if query and st.session_state.chain:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
