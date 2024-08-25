@@ -391,7 +391,7 @@ def main():
     st.header("PDF Chatbot")
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
 
-    if st.button("Submit & Process", key="process_button"):
+    if st.sidebar.button("Submit & Process", key="process_button"):
         pdf_d = [] 
         if uploaded_files:  # Ensure there are uploaded files
             with st.spinner("Processing..."):
@@ -410,7 +410,7 @@ def main():
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
     time.sleep(3)
-    if st.sidebar.button("Submit"):
+    if st.button("Submit"):
         if uploaded_files:
             result1 =  chain.invoke(query) 
             
