@@ -401,7 +401,7 @@ def main():
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query and st.session_state.chain:
+    if query and x==1:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
@@ -421,6 +421,7 @@ def main():
 
     if 'pdf_d' not in st.session_state:
         st.session_state.pdf_d = []
+        x = 0
     
     with st.sidebar:
         st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
