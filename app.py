@@ -396,7 +396,7 @@ def main():
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    if query and x == 1:
+    if query and global x == 1:
         
         result1 =  st.session_state.chain.invoke(st.session_state.query) 
         
@@ -431,7 +431,7 @@ def main():
                     chain, vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
-                    x = 1
+                    global x = 1
                     st.write("File processed successfully")
                     
             
