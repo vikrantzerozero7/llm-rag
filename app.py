@@ -411,6 +411,7 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
+            st.sidebar.write("File processed successfully")
             result1 =  st.session_state.chain.invoke(st.session_state.query) 
             
             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
