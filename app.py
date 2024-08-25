@@ -428,7 +428,7 @@ def main():
         st.session_state.uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     
         if st.button("Submit & Process", key="process_button"):
-            st.session_state.pdf_d = []
+            st.session_state.pdf_d = [] 
             if st.session_state.uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
                     for upload in st.session_state.uploaded_files:
@@ -442,11 +442,8 @@ def main():
                     st.session_state.chain = chain
                     st.session_state.vector_store1 = vector_store1
                     st.write("File processed successfully")
-     
+                    
             
 if __name__=='__main__':
     main()
    
-if st.button("About"):
-    st.text("Let's learn")
-    st.text("Built with Streamlit")
