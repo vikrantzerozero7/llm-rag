@@ -394,7 +394,7 @@ def main():
     query = query
     time.sleep(10)
     if st.button("Submit"):
-        if uploaded_file not None:
+        if uploaded_file is not None:
             result1 =  chain.invoke(query) 
             
             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
