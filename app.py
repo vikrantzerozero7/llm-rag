@@ -417,7 +417,7 @@ def main():
                   st.write("No answer") 
             else:
                   st.write(result1)
-                  docs1 =  vector_store1.similarity_search( query,k=3)
+                  docs1 =  st.session_state.vector_store1.similarity_search( query,k=3)
                   data_dict = docs1[0].metadata
                   st.write("\nBook Name : ",data_dict["Book name"])
                   st.write("Chapter : ",data_dict["Chapter"])
