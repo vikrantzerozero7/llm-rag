@@ -410,7 +410,7 @@ def main():
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
     time.sleep(3)
-    if st.button("Submit"):
+    if st.sidebar.button("Submit"):
         if uploaded_files:
             result1 =  chain.invoke(query) 
             
