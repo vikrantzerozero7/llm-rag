@@ -392,7 +392,7 @@ def main():
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     with st.sidebar:
         if st.button("Submit & Process", key="process_button"):
-            pdf_d = [] 
+            st.session_state.pdf_d = [] 
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
@@ -402,17 +402,16 @@ def main():
                         st.write(df) 
                         pdf_d.append(df)  # Append to the session state list
                     st.write(pdf_d)
-                    chain, vector_store1 = chain_result(pdf_d)
-                    chain = chain
-                    vector_store1 = vector_store1
-                    st.write("File processed successfully")
+                    st.session_state.chain, st.session_state.vector_store1 = chain_result(pdf_d)
+                    
+                    st.session_state.write("File processed successfully")
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     query = query
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
-            result1 =  chain.invoke(query) 
+            result1 =  st.session_state.chain.invoke(st.session_state.query) 
             
             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
                   st.write("No answer") 
