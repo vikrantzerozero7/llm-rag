@@ -393,7 +393,7 @@ def chain_result(pdf_d):
 x = 0
 def main():
     st.header("PDF CHATBOT")
-
+    st.write(x)
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     
