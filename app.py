@@ -386,7 +386,7 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
-from time import time
+import time
 def main():
     st.header("PDF Chatbot")
     
