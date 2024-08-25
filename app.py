@@ -405,20 +405,21 @@ def main():
     st.session_state.query = query
     
     st.write(st.session_state.query)
-    
-    result1 =  st.session_state.chain.invoke(st.session_state.query) 
-    
-    if "does not provide any information" in result1:
-          st.write("No answer") 
-    else:
-          st.write(result1)
-          docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
-          data_dict = docs1[0].metadata
-          st.write("\nBook Name : ",data_dict["Book name"])
-          st.write("Chapter : ",data_dict["Chapter"])
-          st.write("Title : ",data_dict["Topic"])
-          st.write("Subtopic : ",data_dict["Subtopic"])
-          st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+    if query:
+        
+        result1 =  st.session_state.chain.invoke(st.session_state.query) 
+        
+        if "does not provide any information" in result1:
+              st.write("No answer") 
+        else:
+              st.write(result1)
+              docs1 =  st.session_state.vector_store1.similarity_search( st.session_state.query,k=3)
+              data_dict = docs1[0].metadata
+              st.write("\nBook Name : ",data_dict["Book name"])
+              st.write("Chapter : ",data_dict["Chapter"])
+              st.write("Title : ",data_dict["Topic"])
+              st.write("Subtopic : ",data_dict["Subtopic"])
+              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
 
     if 'pdf_d' not in st.session_state:
         st.session_state.pdf_d = []
