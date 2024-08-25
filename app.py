@@ -72,7 +72,7 @@ def chain_result(pdf_d):
       contents_list = []
 
       for pdf in pdf_d:
-          st.write(pdf)
+          
           
           pages = [] 
           for i in range(len(pdf)): 
@@ -263,7 +263,7 @@ def chain_result(pdf_d):
           df6 = df6[order]
           df6 = df6.fillna("")
           df6 = df6.drop_duplicates()
-          st.write(len(df6))
+          #st.write(len(df6))
       
 
       #######################################################################
@@ -399,9 +399,9 @@ def main():
                         uploadedFile1 = upload.getvalue()
                         #st.write(uploadedFile1)
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        st.write(df) 
+                        #st.write(df) 
                         st.session_state.pdf_d.append(df)  # Append to the session state list
-                    st.write(st.session_state.pdf_d)
+                    #st.write(st.session_state.pdf_d)
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.success = "File processed successfully"
                     st.write(st.session_state.success)
