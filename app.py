@@ -390,7 +390,7 @@ import time
 initialized = False
 
 def main():
-    
+   
     st.header("PDF Chatbot")
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     with st.sidebar:
@@ -407,26 +407,21 @@ def main():
                         st.session_state.pdf_d.append(df)  # Append to the session state list
                     #st.write(st.session_state.pdf_d)
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
-                    with open('file.txt', 'w') as file:
-                        file.write('True')  # Convert boolean True to string 'True'
+                    st.session_state.bool = True
                     st.session_state.success = "File processed successfully"
                     st.write(st.session_state.success)
             else:
-                None
+                st.write("") 
         else:
-            None
+            st.session_state.bool = False
         
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
     time.sleep(1)
     if st.button("Submit"):
-        if uploaded_files:
-            with open('file.txt', 'r') as file:
-                content = file.read().strip()  # Read the content and strip any extra whitespace
-                boolean_value = content == 'True'
-                st.write(boolean_value)
-            if boolean_value:
+            
+            if st.session_state.bool==True:
                 st.sidebar.write("File processed successfully")
                 result1 =  st.session_state.chain.invoke(st.session_state.query) 
                 
