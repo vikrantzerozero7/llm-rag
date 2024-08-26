@@ -434,7 +434,7 @@ def main():
 
 # Search for the pattern in the text
                     match = re.search(patternx, result1)
-                    if match:
+                    if match or "answer is not available in the context" in result1:
                         st.write("No answer") 
                     else:
                           st.write(result1)
