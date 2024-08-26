@@ -421,7 +421,7 @@ def main():
                 if uploaded_files:
                     if "bool" in st.session_state:
                         if st.session_state.bool==True:
-                            st.sidebar.write("File processed successfully")
+                            st.write("File processed successfully")
                             result1 =  st.session_state.chain.invoke(st.session_state.query) 
                             
                             if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
@@ -436,7 +436,7 @@ def main():
                                   st.write("Subtopic : ",data_dict["Subtopic"])
                                   st.write("Subsubtopic : ",data_dict["Subsubtopic"])
                         else:
-                             st.write("Process file/files first")
+                             st.write("")
                     else:
                         st.write("Process file/files first")
                 else: 
