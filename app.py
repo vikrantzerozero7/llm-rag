@@ -397,7 +397,7 @@ def main():
                         st.write("No answer") 
                     else:
                           st.write(result1)
-                          docs1 =  st.session_state.vector_store1.similarity_search( query,k=1) 
+                          docs1 =  st.session_state.vector_store1.similarity_search(query,k=3) 
                           data_dict = docs1[0].metadata
                           st.write("\nBook Name : ",data_dict["Book name"])
                           st.write("Chapter : ",data_dict["Chapter"])
@@ -412,7 +412,13 @@ def main():
             st.write("Upload and process file/files first")
     else:
         st.write("")
-       
+
+if st.button("About"):
+    st.markdown("[Book1 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
+    st.markdown("[Book2 link](https://referenceglobe.com/CollegeLibrary/library_books/20200125041045198204Electrical%20Machines%20by%20Mr.%20S.%20K.%20Sahdev.pdf)")
+    st.markdown("[Book3 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
+    
+
 if __name__=='__main__':
     main()
     
