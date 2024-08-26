@@ -387,11 +387,19 @@ def chain_result(pdf_d):
       
       return chain,vector_store
 import time
+initialized = False
 def main():
+    global initialized
+    
     st.header("PDF Chatbot")
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     with st.sidebar:
         if st.button("Submit & Process", key="process_button"):
+            if not initialized:
+            # One-time initialization code
+                print("Initializing...")
+                # Set the flag to True so that this block doesn't run again
+                initialized = True
             st.session_state.pdf_d = [] 
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
@@ -412,7 +420,7 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
-            if on:
+            if initialized:
                 st.sidebar.write("File processed successfully")
                 result1 =  st.session_state.chain.invoke(st.session_state.query) 
                 
@@ -439,5 +447,6 @@ def main():
                 
             
 if __name__=='__main__':
+    main()
     main()
    
