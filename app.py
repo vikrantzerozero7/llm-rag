@@ -439,7 +439,7 @@ def main():
             else:
                 st.write("Process file/files first") 
     else:
-        st.write("")
+        st.write("Upload and process file/files first")
 
    
     
