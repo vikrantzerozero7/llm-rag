@@ -438,7 +438,7 @@ def main():
                       st.write("Subtopic : ",data_dict["Subtopic"])
                       st.write("Subsubtopic : ",data_dict["Subsubtopic"])
             else:
-                 st.write("") 
+                 st.write("Process file/files first") 
         else: 
             st.write("Upload and process file/files first")
     else:
