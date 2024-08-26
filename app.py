@@ -413,14 +413,13 @@ def main():
     else:
         st.write("")
 
+if __name__=='__main__':
+    main()
+    
 if st.button("About"):
     st.markdown("[Book1 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
     st.markdown("[Book2 link](https://referenceglobe.com/CollegeLibrary/library_books/20200125041045198204Electrical%20Machines%20by%20Mr.%20S.%20K.%20Sahdev.pdf)")
     st.markdown("[Book3 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
     
 
-if __name__=='__main__':
-    main()
-    
-    
    
