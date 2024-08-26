@@ -8,6 +8,8 @@ from github import InputGitTreeElement
 from datetime import datetime
 from langchain_core.prompts import PromptTemplate
 
+from langchain.chains.question_answering import load_qa_chain
+
 import fitz  # PyMuPDF
 import re
 from unidecode import unidecode
@@ -332,7 +334,7 @@ def chain_result(pdf_d):
 
       prompt_template = """
         Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-        provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
+        provided context just say, "answer is not available in the context",be specific\n\n
         Context:\n {context}?\n
         Question: \n{question}\n
     
