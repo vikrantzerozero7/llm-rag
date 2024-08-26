@@ -394,55 +394,57 @@ def main():
     st.header("PDF Chatbot")
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
-
-    if st.sidebar.button("Submit & Process", key="process_button"):
-        st.session_state.pdf_d = [] 
-        if uploaded_files:  # Ensure there are uploaded files
-            with st.sidebar.spinner("Processing..."):
-                for upload in uploaded_files:
-                    uploadedFile1 = upload.getvalue()
-                    #st.write(uploadedFile1)
-                    df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                    #st.write(df) 
-                    st.session_state.pdf_d.append(df)  # Append to the session state list
-                #st.write(st.session_state.pdf_d)
-                st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
-                st.session_state.bool = True
-                st.session_state.success = "File processed successfully"
-                st.sidebar.write(st.session_state.success)
-        else:
-            st.sidebar.write("") 
-    else:
-        # Check if pdf_d is already in session state, if not, initialize it
-        query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
-        st.session_state.query = query
-        time.sleep(1)
-        if st.button("Submit"):
-            if uploaded_files:
-                if "bool" in st.session_state:
-                    if st.session_state.bool==True:
-                        st.write("File processed successfully")
-                        result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                        
-                        if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
-                              st.write("No answer") 
-                        else:
-                              st.write(result1)
-                              docs1 =  st.session_state.vector_store1.similarity_search( query,k=3)
-                              data_dict = docs1[0].metadata
-                              st.write("\nBook Name : ",data_dict["Book name"])
-                              st.write("Chapter : ",data_dict["Chapter"])
-                              st.write("Title : ",data_dict["Topic"])
-                              st.write("Subtopic : ",data_dict["Subtopic"])
-                              st.write("Subsubtopic : ",data_dict["Subsubtopic"])
-                    else:
-                         st.write("")
-                else:
-                    st.write("Process file/files first")
-            else: 
-                st.write("Upload and process file/files first")
+    with st.sidebar:
+        if st.button("Submit & Process", key="process_button"):
+            st.session_state.pdf_d = [] 
+            if uploaded_files:  # Ensure there are uploaded files
+                with st.spinner("Processing..."):
+                    for upload in uploaded_files:
+                        uploadedFile1 = upload.getvalue()
+                        #st.write(uploadedFile1)
+                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                        #st.write(df) 
+                        st.session_state.pdf_d.append(df)  # Append to the session state list
+                    #st.write(st.session_state.pdf_d)
+                    st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
+                    st.session_state.bool = True
+                    st.session_state.success = "File processed successfully"
+                    st.sidebar.write(st.session_state.success)
+            else:
+                st.write("") 
         else:
             st.write("")
+        
+    # Check if pdf_d is already in session state, if not, initialize it
+    query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
+    st.session_state.query = query
+    time.sleep(1)
+    if st.button("Submit"):
+        if uploaded_files:
+            if "bool" in st.session_state:
+                if st.session_state.bool==True:
+                    st.write("File processed successfully")
+                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                    
+                    if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
+                          st.write("No answer") 
+                    else:
+                          st.write(result1)
+                          docs1 =  st.session_state.vector_store1.similarity_search( query,k=3)
+                          data_dict = docs1[0].metadata
+                          st.write("\nBook Name : ",data_dict["Book name"])
+                          st.write("Chapter : ",data_dict["Chapter"])
+                          st.write("Title : ",data_dict["Topic"])
+                          st.write("Subtopic : ",data_dict["Subtopic"])
+                          st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+                else:
+                     st.write("")
+            else:
+                st.write("Process file/files first")
+        else: 
+            st.write("Upload and process file/files first")
+    else:
+        st.write("")
        
 if __name__=='__main__':
     main()
