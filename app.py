@@ -376,7 +376,10 @@ def main():
                 st.write("") 
         else:
             st.write("")
-        
+    if "bool" in st.session_state:
+        st.sidebar.write("File processed successfully")
+    else:
+        st.sidebar.write("") 
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
@@ -385,7 +388,6 @@ def main():
         if uploaded_files:
             if "bool" in st.session_state:
                 if st.session_state.bool==True:
-                    st.sidebar.write("File processed successfully")
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
                     
                     #if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
