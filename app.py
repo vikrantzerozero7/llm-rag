@@ -414,6 +414,7 @@ def main():
                     on = st.toggle("File processed successfully")
                     st.session_state.success = "File processed successfully"
                     st.write(st.session_state.success)
+def main2():                    
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
@@ -448,5 +449,6 @@ def main():
             
 if __name__=='__main__':
     main()
+    main2()
     
    
