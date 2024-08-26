@@ -260,7 +260,7 @@ def chain_result(pdf_d):
           df6 = df6[order]
           df6 = df6.fillna("")
           df6 = df6.drop_duplicates()
-          #st.write(len(df6))
+          st.write(len(df6))
       
 
       #######################################################################
