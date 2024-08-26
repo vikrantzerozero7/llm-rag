@@ -403,6 +403,7 @@ def main():
                         st.session_state.pdf_d.append(df)  # Append to the session state list
                     #st.write(st.session_state.pdf_d)
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
+                    on = st.toggle("File processed successfully")
                     st.session_state.success = "File processed successfully"
                     st.write(st.session_state.success)
     # Check if pdf_d is already in session state, if not, initialize it
@@ -411,7 +412,7 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
-            if st.session_state.chain:
+            if on:
                 st.sidebar.write("File processed successfully")
                 result1 =  st.session_state.chain.invoke(st.session_state.query) 
                 
