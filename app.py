@@ -394,25 +394,31 @@ def main():
     st.header("PDF Chatbot")
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     with st.sidebar:
-        
-        if st.button("Submit & Process", key="process_button"):
-            with open('file.txt', 'w') as file:
-                file.write('True')  # Convert boolean True to string 'True'
-
-            st.session_state.pdf_d = [] 
-            if uploaded_files:  # Ensure there are uploaded files
-                with st.spinner("Processing..."):
-                    for upload in uploaded_files:
-                        uploadedFile1 = upload.getvalue()
-                        #st.write(uploadedFile1)
-                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        #st.write(df) 
-                        st.session_state.pdf_d.append(df)  # Append to the session state list
-                    #st.write(st.session_state.pdf_d)
-                    st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
-                    on = st.toggle("File processed successfully")
-                    st.session_state.success = "File processed successfully"
-                    st.write(st.session_state.success)
+        if uploaded_files:
+            if st.button("Submit & Process", key="process_button"):
+                with open('file.txt', 'w') as file:
+                    file.write('True')  # Convert boolean True to string 'True'
+    
+                st.session_state.pdf_d = [] 
+                if uploaded_files:  # Ensure there are uploaded files
+                    with st.spinner("Processing..."):
+                        for upload in uploaded_files:
+                            uploadedFile1 = upload.getvalue()
+                            #st.write(uploadedFile1)
+                            df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                            #st.write(df) 
+                            st.session_state.pdf_d.append(df)  # Append to the session state list
+                        #st.write(st.session_state.pdf_d)
+                        st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
+                        on = st.toggle("File processed successfully")
+                        st.session_state.success = "File processed successfully"
+                        st.write(st.session_state.success)
+                else:
+                    None
+            else:
+                None
+        else: 
+            None
     # Check if pdf_d is already in session state, if not, initialize it
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
@@ -442,7 +448,7 @@ def main():
         else:
             st.write("Upload file/files first")
     else:
-        st.write("")
+        None
 
    
     
