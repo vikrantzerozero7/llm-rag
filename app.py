@@ -1,4 +1,3 @@
-
 import numpy as np
 
 import pandas as pd
@@ -142,7 +141,7 @@ def chain_result(pdf_d):
           #st.write(topics1)
           subtopics1 = re.findall(pattern2, text1)
           #st.write(subtopics1)
-          subsubtopics1 = re.findall(pattern3, text1)
+          subtopics21 = re.findall(pattern3, text1)
 
           stop = ["review questions",'reference','further reading',"practice","section practice","multiple choice"]
 
@@ -162,13 +161,11 @@ def chain_result(pdf_d):
           subtopics = []
           for i in subtopics1:
             subtopics.append(i.strip())
-          #st.write(subtopics)
 
-          subsubtopics = []
-          for i in subsubtopics1:
-            subsubtopics.append(i[:].strip())
-          #st.write(subsubtopics)
-
+          subtopics2 = []
+          for i in subtopics21:
+            subtopics2.append(i[:].strip())
+          
           # Initialize text3 with text2
           text3 = text2
 
@@ -176,32 +173,28 @@ def chain_result(pdf_d):
           for topic in topics:
               # Add leading and trailing newlines around the topic
               text3 = text3.replace(topic, f"{topic}\n")
-
+          
           # Iterate over each subtopic and add newlines
           for subtopic in subtopics:
               # Add leading and trailing newlines around the subtopic
               text3 = text3.replace(f"{subtopic}", f"\n{subtopic}\n")
 
-          # Iterate over each subsubtopic and add newlines
-          for subsubtopic in subsubtopics:
-              # Add leading and trailing newlines around the subsubtopic
-              text3 = text3.replace(subsubtopic, f"\n{subsubtopic}\n")
-          #text3 = re.sub(r'\n', '\n\n', text3) #works
-
-          # Initialize the final list`
-          #final_list = []
-          # Iterate through the topics
+          # Iterate over each subtopic2 and add newlines
+          for subtopic2 in subtopics2:
+              # Add leading and trailing newlines around the subtopic2
+              text3 = text3.replace(subtopic2, f"\n{subtopic2}\n")
+          
           for topic in topics:
             final_list.append(topic)
             # Add subtopics that belong to the current topic
             for subtopic in subtopics:
                 if subtopic.startswith('.'.join(topic.split('.')[:1])+"."):
                     final_list.append(subtopic)
-                    # Add subsubtopics that belong to the current subtopic
-                    for subsubtopic in subsubtopics:
-                        if subsubtopic.startswith('.'.join(subtopic.split('.')[:2])+"."):
-                            final_list.append(subsubtopic)
-
+                    # Add subtopics2 that belong to the current subtopic
+                    for subtopic2 in subtopics2:
+                        if subtopic2.startswith('.'.join(subtopic.split('.')[:2])+"."):
+                            final_list.append(subtopic2)
+          
           if topics[0]=="1.estimation of plant electrical load":
             book_name = "handbook of electrical engineering by alan.l.sheldrake"
           elif topics[0]=="1.electro magnetic circuits":
@@ -215,31 +208,29 @@ def chain_result(pdf_d):
           # Iterate through the topics
           for topic in topics:
               # Add the topic to the final list
-              final_list1.append({'book name': book_name, 'topic name': topic, 'subtopic name': '', 'subsubtopic name': ''})
-
+              final_list1.append({'book name': book_name, 'topic name': topic, 'subtopic name': '', 'subtopic2 name': ''})
+               
               # Add subtopics that belong to the current topic
               for subtopic in subtopics:
                   if subtopic.startswith('.'.join(topic.split('.')[:1])+"."):
-                      final_list1.append({'book name': book_name,'topic name': topic, 'subtopic name': subtopic, 'subsubtopic name': ''})
-
-                      # Add subsubtopics that belong to the current subtopic
-                      for subsubtopic in subsubtopics:
-                          if subsubtopic.startswith('.'.join(subtopic.split('.')[:2])+"."):
-                              final_list1.append({'book name': book_name,'topic name': topic, 'subtopic name': subtopic, 'subsubtopic name': subsubtopic})
+                      final_list1.append({'book name': book_name,'topic name': topic, 'subtopic name': subtopic, 'subtopic2 name': ''})
+                      
+                      # Add subtopics2 that belong to the current subtopic
+                      for subtopic2 in subtopics2:                                       
+                          if subtopic2.startswith('.'.join(subtopic.split('.')[:2])+"."):
+                              final_list1.append({'book name': book_name,'topic name': topic, 'subtopic name': subtopic, 'subtopic2 name': subtopic2})
 
           # Create the DataFrame
           df11 = pd.DataFrame(final_list1)
-          # Display the DataFrame
-          k=[]
+          
           #results = []
           for name in final_list:
                 contents = []
-                chapter_number = name.split('.')[:1][0]
-                #print(chapter_number,topic_name)
-                subsubtopic_name = name
-                next_index = final_list.index(name) + 1
-                if next_index < len(final_list):
-                    next_entry = final_list[next_index]
+                chapter_number = name.split('.')[:1][0] 
+                
+                next_index = final_list.index(name) + 1 
+                if next_index < len(final_list): 
+                    next_entry = final_list[next_index] 
                     pattern = re.compile(re.escape(name) + r'(.*?)' + re.escape(next_entry), re.DOTALL)
                 else:
                     pattern = re.compile(re.escape(name) + r'(.*)', re.DOTALL)
@@ -249,7 +240,7 @@ def chain_result(pdf_d):
                     contents.append(match.group(1).strip())
                 else: 
                     contents.append('')  # In case no match is found, append an empty string
-                k.append(name)
+                
                 results.append([chapter_number,name, " ".join(contents)])
           final_list=[] 
           topics=[]
@@ -261,11 +252,11 @@ def chain_result(pdf_d):
           # Assign topics to a new column if the value in 'name' matches an entry in the topics list
           df4['matched_topics'] = df4['Name'].apply(lambda i: i if i in topics else None)
           df4['matched_subtopics'] = df4['Name'].apply(lambda i: i if i in subtopics else None)
-          df4['matched_subsubtopics'] = df4['Name'].apply(lambda i: i if i in subsubtopics else None)
+          df4['matched_subtopics2'] = df4['Name'].apply(lambda i: i if i in subtopics2 else None)
 
           df5 = pd.concat([df4,df11[["book name","topic name"]]],axis = 1)
           df6 = df5.drop(columns=["matched_topics"])
-          order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subsubtopics","Contents"]
+          order = ["book name","Chapter","Name","topic name","matched_subtopics","matched_subtopics2","Contents"]
           df6 = df6[order]
           df6 = df6.fillna("")
           df6 = df6.drop_duplicates()
@@ -288,7 +279,7 @@ def chain_result(pdf_d):
       
       for _, row in df6.iterrows():
                documents11 =  Document(page_content = row["Contents"],
-               metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
+               metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subtopic2":row["matched_subtopics2"]})
                docs11.append(documents11)
       
     
@@ -404,7 +395,7 @@ def main():
                           st.write("Chapter : ",data_dict["Chapter"])
                           st.write("Title : ",data_dict["Topic"])
                           st.write("Subtopic : ",data_dict["Subtopic"])
-                          st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+                          st.write("Subtopic2 : ",data_dict["Subtopic2"])
                 else:
                      st.write("")
             else:
