@@ -1,40 +1,47 @@
 
 import numpy as np
+
 import pandas as pd
+
 import streamlit as st
-from PIL import Image
-from github import Github
-from github import InputGitTreeElement
-from datetime import datetime
+
+import time
+
+from langchain_core.documents import Document
+
+from pinecone import Pinecone , ServerlessSpec
+
+from uuid import uuid4
+
 from langchain_core.prompts import PromptTemplate
 
-from langchain.chains.question_answering import load_qa_chain
-
 import fitz  # PyMuPDF
-import re
-from unidecode import unidecode
 
+import re
+
+from unidecode import unidecode
 
 from langchain_community.document_loaders import JSONLoader
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-#from langchain_community.vectorstores import Chroma
 
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
 
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 from langchain_community.vectorstores import PGEmbedding
 
-from langchain_openai import OpenAI
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
-
-from langchain import HuggingFaceHub
-
 from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
+
+from langchain_pinecone import PineconeVectorStore
+
+from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+
+from langchain_text_splitters import (
+RecursiveCharacterTextSplitter,
+)
 
 def get_text_starting_from_index(text):
     match = re.search(r'\nindex\n', text)
@@ -62,7 +69,7 @@ def get_text_ending_to_index(text):
 
     # Return the text from "contents" to "index"
     return text[start_index:end_index]
-x = 0
+
 def chain_result(pdf_d):
       import re
       final_list = []
@@ -197,7 +204,6 @@ def chain_result(pdf_d):
                         if subsubtopic.startswith('.'.join(subtopic.split('.')[:2])+"."):
                             final_list.append(subsubtopic)
 
-          import pandas as pd
           if topics[0]=="1.estimation of plant electrical load":
             book_name = "handbook of electrical engineering by alan.l.sheldrake"
           elif topics[0]=="1.electro magnetic circuits":
@@ -249,7 +255,7 @@ def chain_result(pdf_d):
                 results.append([chapter_number,name, " ".join(contents)])
           final_list=[] 
           topics=[]
-          import pandas as pd
+         
           df4 = pd.DataFrame(results, columns=['Chapter','Name',  'Contents'])
 
           #contents = []
@@ -280,30 +286,20 @@ def chain_result(pdf_d):
 
       # Create the desired structure
 
-      api_key = "AIzaSyCKeLMrUxE9lnopj3VOmY583ceOqmxBRYI"
-      
       docs11 = []
-      
-      from langchain_core.documents import Document
       
       for _, row in df6.iterrows():
                documents11 =  Document(page_content = row["Contents"],
                metadata = {"Book name":row["book name"],"Chapter":row["Chapter"],"Topic":row["topic name"],"Subtopic":row["matched_subtopics"],"Subsubtopic":row["matched_subsubtopics"]})
                docs11.append(documents11)
-    
-      from langchain_text_splitters import (
-        RecursiveCharacterTextSplitter,
-      )
+      
     
       text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    
       texts = text_splitter.split_documents(docs11)
 
-      from pinecone import Pinecone , ServerlessSpec
-      from uuid import uuid4
       pc = Pinecone(api_key="31be5854-f0fb-4dba-9b1c-937aebcb89bd")
-    
-      from langchain_pinecone import PineconeVectorStore
-      from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+      
       index_name = "langchain-self-retriever-demo"
     
       if index_name in pc.list_indexes().names():
@@ -319,10 +315,8 @@ def chain_result(pdf_d):
                 spec=ServerlessSpec(cloud="aws", region="us-east-1"),
             )
       index = pc.Index(index_name)
-      from langchain_core.documents import Document
+      
       embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-    
-      from langchain_pinecone import PineconeVectorStore
     
       vector_store = PineconeVectorStore(index=index, embedding=embeddings)
     
@@ -343,37 +337,8 @@ def chain_result(pdf_d):
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
       
-      model = ChatGoogleGenerativeAI(
-          model="gemini-pro",
-          temperature=1,
-          max_tokens=5000,
-          timeout=None,
-          max_retries=2,
-          google_api_key=api_key
-          # other params...
-      )
-
-      model2 = HuggingFaceHub(
-          huggingfacehub_api_token = "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",
-          repo_id = "mistralai/Mistral-7B-Instruct-v0.1",
-          model_kwargs = {"temperature": 0.9, "max_length": 2000}
-      )
-
-      model3 = OpenAI(
-          model="babbage-002",
-          temperature=0,
-          max_tokens=0,
-          timeout=None,
-          max_retries=2,
-          api_key="sk-proj-BTRZJBbfgY1LnPbHrUaET3BlbkFJqkbX9Qhf0XbK1RdCHGOU",
-          # base_url="...",
-          # organization="...",
-          # other params...
-      )
-
-      repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
-      model4 = HuggingFaceEndpoint(
-          repo_id=repo_id,
+      model = HuggingFaceEndpoint(
+          repo_id="mistralai/Mistral-7B-Instruct-v0.2",
           max_length=128,
           temperature=0.5,
           huggingfacehub_api_token= "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")
@@ -382,13 +347,11 @@ def chain_result(pdf_d):
       chain = (
           {"context": retriever, "question": RunnablePassthrough()}
           | prompt
-          | model4
+          | model
           | StrOutputParser()
       )
       
       return chain,vector_store
-import time
-initialized = False
 
 def main():
    
