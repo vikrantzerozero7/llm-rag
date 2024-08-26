@@ -333,9 +333,8 @@ def chain_result(pdf_d):
       retriever = vector_store.as_retriever()
 
       prompt_template = """
-        Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-        provided context just say, "answer is not available in the context", don't provide the wrong answer,if the answer is not in
-        provided context just write, "REMOVE66"\n\n
+        Please provide a detailed and accurate response based on the given context and question,
+        Ensure your answer is well-structured and addresses the question comprehensively, incorporating relevant information from the context." \n\n
         Context:\n {context}?\n
         Question: \n{question}\n
 
