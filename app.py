@@ -370,8 +370,7 @@ def main():
                     #st.write(st.session_state.pdf_d)
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.bool = True
-                    st.session_state.success = "File processed successfully"
-                    st.sidebar.write(st.session_state.success)
+                    
             else:
                 st.write("") 
         else:
