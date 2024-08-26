@@ -411,22 +411,25 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
-            st.sidebar.write("File processed successfully")
-            result1 =  st.session_state.chain.invoke(st.session_state.query) 
-            
-            if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
-                  st.write("No answer") 
+            if st.session_state.chain:
+                st.sidebar.write("File processed successfully")
+                result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                
+                if "does not provide any information" in result1 or "does not contain any information" in result1 or "answer is not available" in result1:
+                      st.write("No answer") 
+                else:
+                      st.write(result1)
+                      docs1 =  st.session_state.vector_store1.similarity_search( query,k=3)
+                      data_dict = docs1[0].metadata
+                      st.write("\nBook Name : ",data_dict["Book name"])
+                      st.write("Chapter : ",data_dict["Chapter"])
+                      st.write("Title : ",data_dict["Topic"])
+                      st.write("Subtopic : ",data_dict["Subtopic"])
+                      st.write("Subsubtopic : ",data_dict["Subsubtopic"])
             else:
-                  st.write(result1)
-                  docs1 =  st.session_state.vector_store1.similarity_search( query,k=3)
-                  data_dict = docs1[0].metadata
-                  st.write("\nBook Name : ",data_dict["Book name"])
-                  st.write("Chapter : ",data_dict["Chapter"])
-                  st.write("Title : ",data_dict["Topic"])
-                  st.write("Subtopic : ",data_dict["Subtopic"])
-                  st.write("Subsubtopic : ",data_dict["Subsubtopic"])
+                st.write("Process file/files first")
         else:
-            st.write("Upload file first")
+            st.write("Upload file/files first")
     else:
         st.write("")
 
