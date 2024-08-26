@@ -391,16 +391,13 @@ def main():
                     #if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
                           #st.write("No answer") 
                     patternx = r"does\s+not\s+\w+\s+\w+\s+information"
-                    
-
-# Search for the pattern in the text
+             
                     match = re.search(patternx, result1[:100])
                     if match or "answer is not available in the context" in result1:
                         st.write("No answer") 
                     else:
                           st.write(result1)
-                          docs1 =  st.session_state.vector_store1.similarity_search( query,k=1)
-                          st.write(docs1)
+                          docs1 =  st.session_state.vector_store1.similarity_search( query,k=1) 
                           data_dict = docs1[0].metadata
                           st.write("\nBook Name : ",data_dict["Book name"])
                           st.write("Chapter : ",data_dict["Chapter"])
