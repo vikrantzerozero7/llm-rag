@@ -428,6 +428,7 @@ def main():
             with open('file.txt', 'r') as file:
                 content = file.read().strip()  # Read the content and strip any extra whitespace
                 boolean_value = content == 'True'
+                st.write(boolean_value)
             if boolean_value:
                 st.sidebar.write("File processed successfully")
                 result1 =  st.session_state.chain.invoke(st.session_state.query) 
