@@ -396,6 +396,9 @@ def main():
     with st.sidebar:
         
         if st.button("Submit & Process", key="process_button"):
+            with open('file.txt', 'w') as file:
+                file.write('True')  # Convert boolean True to string 'True'
+
             if not initialized:
             # One-time initialization code
                 print("Initializing...")   
@@ -421,7 +424,10 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if uploaded_files:
-            if initialized:
+            with open('file.txt', 'r') as file:
+                content = file.read().strip()  # Read the content and strip any extra whitespace
+                boolean_value = content == 'True'
+            if boolean_value:
                 st.sidebar.write("File processed successfully")
                 result1 =  st.session_state.chain.invoke(st.session_state.query) 
                 
