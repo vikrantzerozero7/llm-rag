@@ -399,11 +399,6 @@ def main():
             with open('file.txt', 'w') as file:
                 file.write('True')  # Convert boolean True to string 'True'
 
-            if not initialized:
-            # One-time initialization code
-                print("Initializing...")   
-                # Set the flag to True so that this block doesn't run again
-                initialized = True
             st.session_state.pdf_d = [] 
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
