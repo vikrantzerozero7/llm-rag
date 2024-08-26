@@ -333,9 +333,13 @@ def chain_result(pdf_d):
       retriever = vector_store.as_retriever()
 
       prompt_template = """
-        Context:\n {context}\n
+        Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
+        provided context specifically say, "answer is not available in the context", don't provide the wrong answer, be specific\n\n
+        Context:\n {context}?\n
         Question: \n{question}\n
-        """
+
+    Answer:
+    """
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
       
