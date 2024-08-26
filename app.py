@@ -429,7 +429,7 @@ def main():
                     
                     #if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
                           #st.write("No answer") 
-                    patternx = r"does\s+not\s+\w+\s+any\s+information"
+                    patternx = r"does\s+not\s+\w+\s+information"
                     
 
 # Search for the pattern in the text
