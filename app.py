@@ -410,9 +410,9 @@ if __name__=='__main__':
     
 if st.button("Read me"):
     st.write("Download books from links, upload and process them, ask queries, and get answers \nalong with their corresponding resources.") 
-    st.markdown("[Book1 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
-    st.markdown("[Book2 link](https://referenceglobe.com/CollegeLibrary/library_books/20200125041045198204Electrical%20Machines%20by%20Mr.%20S.%20K.%20Sahdev.pdf)")
-    st.markdown("[Book3 link](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
+    st.markdown("[Book1 link(AI)](https://dl.ebooksworld.ir/books/Artificial.Intelligence.A.Modern.Approach.4th.Edition.Peter.Norvig.%20Stuart.Russell.Pearson.9780134610993.EBooksWorld.ir.pdf)")
+    st.markdown("[Book2 link(Electrical machines)](https://referenceglobe.com/CollegeLibrary/library_books/20200125041045198204Electrical%20Machines%20by%20Mr.%20S.%20K.%20Sahdev.pdf)")
+    st.markdown("[Book3 link(Electrical engineering)](https://nibmehub.com/opac-service/pdf/read/Handbook%20of%20Electrical%20Engineering.pdf)")
 
 
     
