@@ -334,8 +334,7 @@ def chain_result(pdf_d):
 
       prompt_template = """
         Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-        provided context specifically say, "REMOVE66", don't provide the wrong answer, be specific, write "REMOVE66" if the answer is not in
-        provided context  \n\n
+        provided context specifically say, \n"REMOVE66", don't provide the wrong answer, be specific\n\n
         Context:\n {context}?\n
         Question: \n{question}\n
 
