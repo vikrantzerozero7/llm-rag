@@ -427,8 +427,15 @@ def main():
                     st.sidebar.write("File processed successfully")
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
                     
-                    if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
-                          st.write("No answer") 
+                    #if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
+                          #st.write("No answer") 
+                    patternx = r"does\s+not\s+\w+\s+any\s+information"
+                    
+
+# Search for the pattern in the text
+                    match = re.search(patternx, result1)
+                    if match:
+                        st.write("No answer") 
                     else:
                           st.write(result1)
                           docs1 =  st.session_state.vector_store1.similarity_search( query,k=1)
