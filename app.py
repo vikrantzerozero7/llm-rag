@@ -395,10 +395,10 @@ def main():
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
 
-    if st.button("Submit & Process", key="process_button"):
+    if st.sidebar.button("Submit & Process", key="process_button"):
         st.session_state.pdf_d = [] 
         if uploaded_files:  # Ensure there are uploaded files
-            with st.spinner("Processing..."):
+            with st.sidebar.spinner("Processing..."):
                 for upload in uploaded_files:
                     uploadedFile1 = upload.getvalue()
                     #st.write(uploadedFile1)
@@ -409,9 +409,9 @@ def main():
                 st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
                 st.session_state.bool = True
                 st.session_state.success = "File processed successfully"
-                st.write(st.session_state.success)
+                st.sidebar.write(st.session_state.success)
         else:
-            st.write("") 
+            st.sidebar.write("") 
     else:
         # Check if pdf_d is already in session state, if not, initialize it
         query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
