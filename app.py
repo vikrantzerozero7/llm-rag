@@ -420,6 +420,7 @@ def main():
     st.session_state.query = query
     time.sleep(1)
     if st.button("Submit"):
+        if uploaded_files:
             
             if st.session_state.bool==True:
                 st.sidebar.write("File processed successfully")
@@ -437,9 +438,11 @@ def main():
                       st.write("Subtopic : ",data_dict["Subtopic"])
                       st.write("Subsubtopic : ",data_dict["Subsubtopic"])
             else:
-                st.write("Process file/files first") 
+                 st.write("") 
+        else: 
+            st.write("Upload and process file/files first")
     else:
-        st.write("Upload and process file/files first")
+        st.write("")
 
    
     
