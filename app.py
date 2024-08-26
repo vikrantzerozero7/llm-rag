@@ -342,7 +342,7 @@ def chain_result(pdf_d):
         """
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-      formatted_prompt = prompt.format(context=context, question=question)
+      
       model = ChatGoogleGenerativeAI(
           model="gemini-pro",
           temperature=1,
@@ -352,7 +352,6 @@ def chain_result(pdf_d):
           google_api_key=api_key
           # other params...
       )
-
 
       model2 = HuggingFaceHub(
           huggingfacehub_api_token = "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",
@@ -382,7 +381,7 @@ def chain_result(pdf_d):
 
       chain = (
           {"context": retriever, "question": RunnablePassthrough()}
-          | formatted_prompt
+          | prompt
           | model4
           | StrOutputParser()
       )
