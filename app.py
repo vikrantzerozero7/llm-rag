@@ -207,9 +207,7 @@ def chain_result(pdf_d):
             book_name = "artificial intelligence a modern approach by russell and norvig"
           else:
             book_name = ""
-          # Initialize the final list
-          #final_list1 = []
-          # Iterate through the topics
+          
           for topic in topics:
               # Add the topic to the final list
               final_list1.append({'book name': book_name, 'topic name': topic, 'subtopic name': '', 'subtopic2 name': ''})
@@ -320,14 +318,15 @@ def chain_result(pdf_d):
     """
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+    
 ############################################################################## LLM setup ##############################################################################################################
+      
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.2",
           max_length=128,
           temperature=1,
           huggingfacehub_api_token= "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")
-      #`pip install -U langchain-huggingface` and import as `from langchain_huggingface import HuggingFaceEmbeddings`
-
+     
       chain = (
           {"context": retriever, "question": RunnablePassthrough()}
           | prompt
@@ -351,11 +350,11 @@ def main():
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
                         uploadedFile1 = upload.getvalue()
-                        #st.write(uploadedFile1)
+                       
                         df = fitz.open(stream=uploadedFile1, filetype="pdf")
-                        #st.write(df) 
-                        st.session_state.pdf_d.append(df)  # Append to the session state list
-                    #st.write(st.session_state.pdf_d)
+                        
+                        st.session_state.pdf_d.append(df)  
+                   
                     st.session_state.chain, st.session_state.vector_store1 = chain_result(st.session_state.pdf_d)
                     st.session_state.bool = True
                     
@@ -367,7 +366,7 @@ def main():
         st.sidebar.write("File processed successfully")
     else:
         st.sidebar.write("") 
-    # Check if pdf_d is already in session state, if not, initialize it
+   
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
     st.session_state.query = query
     time.sleep(1)
