@@ -40,6 +40,8 @@ from langchain_text_splitters import (
 RecursiveCharacterTextSplitter,
 )
 
+####################################################################### PDF text extraction ############################################################################################
+
 def get_text_starting_from_index(text):
     match = re.search(r'\nindex\n', text)
     end_index = match.start() if match else -1
@@ -66,6 +68,8 @@ def get_text_ending_to_index(text):
 
     # Return the text from "contents" to "index"
     return text[start_index:end_index]
+
+#################################################################### Hierarchical Structuring of textbook ####################################################################################
 
 def chain_result(pdf_d):
       import re
@@ -263,18 +267,9 @@ def chain_result(pdf_d):
           #st.write(len(df6))
       
 
-      #######################################################################
-
-      # Concatenate all content in df6["contents"] into a single string
-      #all_content_text = " ".join(df6["Contents"][:5000].tolist())
-
-      # If you want to remove any leading or trailing whitespace
-      #all_content_text = all_content_text.strip()
-
-      #print(all_content_text)
-
-      # Create the desired structure
-
+ 
+#################################################################################### RAG setup ###########################################################################################################
+      
       docs11 = []
       
       for _, row in df6.iterrows():
@@ -325,7 +320,7 @@ def chain_result(pdf_d):
     """
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-      
+############################################################################## LLM setup ##############################################################################################################
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.2",
           max_length=128,
@@ -341,6 +336,8 @@ def chain_result(pdf_d):
       )
       
       return chain,vector_store
+
+############################################################################## Interface setup ######################################################################################################
 
 def main():
    
@@ -380,8 +377,6 @@ def main():
                 if st.session_state.bool==True:
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
                     
-                    #if "does not provide" in result1[:70] or "does not contain" in result1[:70] or "answer is not available in the context" in result1:
-                          #st.write("No answer") 
                     patternx = r"does\s+not\s+\w+\s+\w+\s+information"
              
                     match = re.search(patternx, result1[:100])
@@ -407,7 +402,8 @@ def main():
 
 if __name__=='__main__':
     main()
-    
+
+
 if st.button("Read me"):
     st.write("Download books from links, upload and process them, ask queries, and get answers \nalong with their corresponding resources.") 
     st.markdown("[Book1 link(AI)](https://dl.ebooksworld.ir/books/Artificial.Intelligence.A.Modern.Approach.4th.Edition.Peter.Norvig.%20Stuart.Russell.Pearson.9780134610993.EBooksWorld.ir.pdf)")
