@@ -313,7 +313,7 @@ def chain_result(pdf_d):
     
       vector_store.add_documents(documents=texts, ids=uuids)
     
-      retriever = vector_store.as_retriever(search_kwargs={"score_threshold": 0.8})
+      retriever = vector_store.as_retriever()
 
       prompt_template = """
         Context:\n {context}?\n
@@ -390,7 +390,7 @@ def main():
                     else:
                           st.write(result1)
                           docs1 =  st.session_state.vector_store1.similarity_search(query,k=3) 
-                          data_dict = docs1[0].metadata
+                          data_dict = docs1[1].metadata
                           st.write("\nBook Name : ",data_dict["Book name"])
                           st.write("Chapter : ",data_dict["Chapter"])
                           st.write("Title : ",data_dict["Topic"])
