@@ -1,4 +1,3 @@
-jsonlines
 streamlit
 langchain
 langchain-community
