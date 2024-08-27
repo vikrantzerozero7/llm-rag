@@ -1,12 +1,9 @@
 jsonlines
 streamlit
 langchain
-PyPDF2
 langchain-community
-
 pymupdf
 unidecode
-pypdf
 sentence_transformers
 jq
 pinecone-client 
