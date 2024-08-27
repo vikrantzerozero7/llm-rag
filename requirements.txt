@@ -3,7 +3,7 @@ streamlit
 langchain
 PyPDF2
 langchain-community
-umap-learn
+
 pymupdf
 unidecode
 pypdf
