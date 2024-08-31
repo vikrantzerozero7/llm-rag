@@ -172,8 +172,8 @@ def main():
     with open("data.txt", "w") as file:
         file.write(s)
 
-    df = pd.read_csv('data.txt')
-    csv = df
+    df11 = pd.read_csv('data.txt')
+    csv = df11
     csv2 = new_data
     csv3 = pd.concat([csv, csv2], axis=0)
     csv3 = csv3.reset_index(drop=True)
