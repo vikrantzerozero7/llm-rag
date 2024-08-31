@@ -16,6 +16,8 @@ from langchain_core.prompts import PromptTemplate
 
 import fitz  # PyMuPDF
 
+import re
+
 from unidecode import unidecode
 
 from langchain_community.document_loaders import JSONLoader
