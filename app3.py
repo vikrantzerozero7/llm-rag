@@ -230,7 +230,7 @@ if __name__=='__main__':
 
 
 if st.button("Read me"):
-    st.write('Upload any number of books in pdf format,\nPress submit and wait for processing ,\nAsk queries (use at least 3 words for example "What is electricity") and get relevant answers') 
+    st.write('Upload any number of books in pdf format,\nPress submit and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
     
 
    
