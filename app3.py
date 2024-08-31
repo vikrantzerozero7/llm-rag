@@ -94,7 +94,7 @@ def chain_result(pdf_d):
       
       vector_store.add_documents(documents=doc_list, ids=uuids)
       
-      retriever = vector_store.as_retriever(k = 3)
+      retriever = vector_store.as_retriever(k = 1)
 
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.2",
@@ -159,8 +159,6 @@ def main():
   
     st.session_state.query = query
 
-    
-    
     time.sleep(1)
     if st.button("Submit"):
         
@@ -206,7 +204,6 @@ def main():
         csv2 = new_data
         csv3 = pd.concat([csv, csv2], axis=0)
         
-    
         dataset = csv3.drop_duplicates()
     
         # Upload data to GitHub
