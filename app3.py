@@ -94,7 +94,7 @@ def chain_result(pdf_d):
       
       vector_store.add_documents(documents=doc_list, ids=uuids)
       
-      retriever = vector_store.as_retriever(k = 1)
+      retriever = vector_store.as_retriever(search_kwargs={"k": 1, "fetch_k": 2, "lambda_mult": 0.5})
 
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.2",
