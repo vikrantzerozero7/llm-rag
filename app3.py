@@ -159,7 +159,7 @@ def main():
     new_data = pd.DataFrame([new_data1])
 
     # Username of your GitHub account
-    g = Github("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")
+    g = Github("")
     user = g.get_user()
     repository = user.get_repo('llm-rag')
 
