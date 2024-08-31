@@ -163,7 +163,7 @@ def main():
     
     time.sleep(1)
     if st.button("Submit"):
-            new_data1 = {
+        new_data1 = {
             'Query': query
         }
         new_data = pd.DataFrame([new_data1])
