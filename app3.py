@@ -163,6 +163,25 @@ def main():
     
     time.sleep(1)
     if st.button("Submit"):
+        
+        if uploaded_files:
+            if "bool" in st.session_state:
+                if st.session_state.bool==True:
+                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                    
+                    patternx = r"does\s+not\s+\w+\s+\w+\s+information"
+             
+                    match = re.search(patternx, result1[:100])
+                    if match or "answer is not available in the context" in result1:
+                        st.write("No answer") 
+                    else:
+                          st.write(result1)
+                else:
+                     st.write("")
+            else:
+                st.write("Process file/files first")
+        else: 
+            st.write("Upload and process file/files first")
         new_data1 = {
             'Query': query
         }
@@ -208,24 +227,6 @@ def main():
         parent = repo.get_git_commit(master_sha) 
         commit = repo.create_git_commit(commit_message, tree, [parent])
         master_ref.edit(commit.sha)
-        if uploaded_files:
-            if "bool" in st.session_state:
-                if st.session_state.bool==True:
-                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                    
-                    patternx = r"does\s+not\s+\w+\s+\w+\s+information"
-             
-                    match = re.search(patternx, result1[:100])
-                    if match or "answer is not available in the context" in result1:
-                        st.write("No answer") 
-                    else:
-                          st.write(result1)
-                else:
-                     st.write("")
-            else:
-                st.write("Process file/files first")
-        else: 
-            st.write("Upload and process file/files first")
     else:
         st.write("")
 
