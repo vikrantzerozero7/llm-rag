@@ -186,7 +186,7 @@ def main():
         csv = df11
         csv2 = new_data
         csv3 = pd.concat([csv, csv2], axis=0)
-        csv3 = csv3.reset_index(drop=True)
+        
     
         dataset = csv3.drop_duplicates()
     
