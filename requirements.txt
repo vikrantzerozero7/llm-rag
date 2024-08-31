@@ -9,3 +9,4 @@ pinecone-client
 langchain_pinecone 
 lark 
 langchain_core
+pygithub
