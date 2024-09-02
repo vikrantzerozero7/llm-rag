@@ -4,6 +4,12 @@ import pandas as pd
 
 import streamlit as st
 
+from datetime import datetime
+
+from github import Github
+
+from github import InputGitTreeElement
+
 import time
 
 from langchain_core.documents import Document
@@ -88,7 +94,7 @@ def chain_result(pdf_d):
       
       vector_store.add_documents(documents=doc_list, ids=uuids)
       
-      retriever = vector_store.as_retriever()
+      retriever = vector_store.as_retriever(search_kwargs={"k": 1})
 
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.2",
@@ -103,8 +109,6 @@ def chain_result(pdf_d):
         Question: \n{question}\n
         Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
         provided context just say, "answer is not available in the context",don't provide the wrong answer\n\n
-        
-        Answer:
         """
       
       prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
@@ -147,30 +151,83 @@ def main():
     if "bool" in st.session_state:
         st.sidebar.write("File processed successfully")
     else:
-        st.sidebar.write("") 
-   
+        st.sidebar.write("")
+
     query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
+  
     st.session_state.query = query
+
     time.sleep(1)
     if st.button("Submit"):
+        
         if uploaded_files:
             if "bool" in st.session_state:
                 if st.session_state.bool==True:
-                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                    if query.strip()!="":
+                        result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                        
+                        patternx = r"does\s+not\s+\w+\s+\w+\s+information"
+                 
+                        match = re.search(patternx, result1[:100])
+                        if match or "answer is not available in the context" in result1:
+                            st.write("No answer") 
+                        else:
+                              st.write(result1)
+                        
+                        new_data1 = {
+                            'Query': query
+                        }
+                        new_data = pd.DataFrame([new_data1])
                     
-                    patternx = r"does\s+not\s+\w+\s+\w+\s+information"
-             
-                    match = re.search(patternx, result1[:100])
-                    if match or "answer is not available in the context" in result1:
-                        st.write("No answer") 
+                        # Username of your GitHub account
+                        g = Github("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")
+                        user = g.get_user()
+                        repository = user.get_repo('llm-rag')
+                    
+                        # Get the file content from the repository
+                        file_content = repository.get_contents('file1.csv')
+                        bytes_data = file_content.decoded_content
+                        s = str(bytes_data, 'utf-8')
+                    
+                        # Write the file content to a local file
+                        with open("data.txt", "w") as file:
+                            file.write(s)
+                    
+                        df11 = pd.read_csv('data.txt')
+                        csv = df11
+                        csv2 = new_data
+                        csv3 = pd.concat([csv, csv2], axis=0)
+                        
+                        dataset = csv3.drop_duplicates()
+                    
+                        # Upload data to GitHub
+                        df2 = dataset.to_csv(sep=',', index=False)
+                        file_list = [df2]
+                        file_names = ['file1.csv']
+                    
+                        commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        repo = g.get_user().get_repo('llm-rag')
+                        master_ref = repo.get_git_ref("heads/main")
+                        master_sha = master_ref.object.sha
+                        base_tree = repo.get_git_tree(master_sha)
+                        element_list = []
+                        for i in range(len(file_list)):
+                            element = InputGitTreeElement(file_names[i], '100644', 'blob', file_list[i])
+                            element_list.append(element)
+                        tree = repo.create_git_tree(element_list, base_tree)
+                        parent = repo.get_git_commit(master_sha) 
+                        commit = repo.create_git_commit(commit_message, tree, [parent])
+                        master_ref.edit(commit.sha)
+
                     else:
-                          st.write(result1)
+                      st.write("Enter query first")
                 else:
                      st.write("")
             else:
                 st.write("Process file/files first")
         else: 
             st.write("Upload and process file/files first")
+        
     else:
         st.write("")
 
@@ -179,7 +236,7 @@ if __name__=='__main__':
 
 
 if st.button("Read me"):
-    st.write("Upload any number of books in pdf format , Press submit and wait for processing , ask queries, and get answers ") 
+    st.write('Upload any number of books in pdf format,\nPress submit and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
     
 
    
