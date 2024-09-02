@@ -174,51 +174,6 @@ def main():
                         else:
                               st.write(result1)
                         
-                        new_data1 = {
-                            'Query': query
-                        }
-                        new_data = pd.DataFrame([new_data1])
-                    
-                        # Username of your GitHub account
-                        g = Github("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")
-                        user = g.get_user()
-                        repository = user.get_repo('llm-rag')
-                    
-                        # Get the file content from the repository
-                        file_content = repository.get_contents('file1.csv')
-                        bytes_data = file_content.decoded_content
-                        s = str(bytes_data, 'utf-8')
-                    
-                        # Write the file content to a local file
-                        with open("data.txt", "w") as file:
-                            file.write(s)
-                    
-                        df11 = pd.read_csv('data.txt')
-                        csv = df11
-                        csv2 = new_data
-                        csv3 = pd.concat([csv, csv2], axis=0)
-                        
-                        dataset = csv3.drop_duplicates()
-                    
-                        # Upload data to GitHub
-                        df2 = dataset.to_csv(sep=',', index=False)
-                        file_list = [df2]
-                        file_names = ['file1.csv']
-                    
-                        commit_message = "Data Updated - " + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        repo = g.get_user().get_repo('llm-rag')
-                        master_ref = repo.get_git_ref("heads/main")
-                        master_sha = master_ref.object.sha
-                        base_tree = repo.get_git_tree(master_sha)
-                        element_list = []
-                        for i in range(len(file_list)):
-                            element = InputGitTreeElement(file_names[i], '100644', 'blob', file_list[i])
-                            element_list.append(element)
-                        tree = repo.create_git_tree(element_list, base_tree)
-                        parent = repo.get_git_commit(master_sha) 
-                        commit = repo.create_git_commit(commit_message, tree, [parent])
-                        master_ref.edit(commit.sha)
-
                     else:
                       st.write("Enter query first")
                 else:
