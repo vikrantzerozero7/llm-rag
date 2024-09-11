@@ -375,6 +375,7 @@ def main():
             if "bool" in st.session_state:
                 if st.session_state.bool==True:
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                    st.write(result1)
                    # is not defined in the provided context
                     patternx = r"not\s+\w+\s+\in\s+the\s+\w+\s+context"
              
