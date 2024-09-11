@@ -338,7 +338,7 @@ def chain_result(pdf_d):
 
 def main():
    
-    st.header("PDF Chatbot")
+    st.header("PDF Chatbot With Hierarchical Clustering")
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
     with st.sidebar:
