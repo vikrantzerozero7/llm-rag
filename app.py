@@ -324,7 +324,7 @@ def chain_result(pdf_d):
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.3",
           model_kwargs={"max_length":128},
-          temperature=0.5,
+          temperature=0.8,
           huggingfacehub_api_token= "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")
      
       chain = (
