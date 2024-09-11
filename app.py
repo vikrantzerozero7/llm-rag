@@ -322,7 +322,7 @@ def chain_result(pdf_d):
 ############################################################################## LLM setup ##############################################################################################################
       
       model = HuggingFaceEndpoint(
-          repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+          repo_id="mistralai/Mistral-7B-Instruct-v0.1",
           max_length=128,
           temperature=1,
           huggingfacehub_api_token= "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")
