@@ -169,7 +169,7 @@ def main():
                         if query.strip()!="":
                             result1 =  st.session_state.chain.invoke(st.session_state.query) 
                             
-                            patternx = r"mentioned\s+in\s+the\s+provided\s+context"
+                            patternx = r"\w+\s+in\s+the\s+provided\s+context"
                      
                             match = re.search(patternx, result1[:100])
                             if match or "answer is not available in the context" in result1 or result1 == "":
