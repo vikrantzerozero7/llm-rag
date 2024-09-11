@@ -169,7 +169,7 @@ def main():
                         patternx = r"mentioned\s+in\s+the\s+provided\s+context"
                  
                         match = re.search(patternx, result1[:100])
-                        if match or "answer is not available in the context" in result1:
+                        if match or "answer is not available in the context" in result1 or result1 == "":
                             st.write("No answer") 
                         else:
                               st.write(result1)
