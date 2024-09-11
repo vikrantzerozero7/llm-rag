@@ -165,8 +165,7 @@ def main():
                 if st.session_state.bool==True:
                     if query.strip()!="":
                         result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                        st.write(result1)
-                     # mentioned in the provided context
+                        
                         patternx = r"mentioned\s+in\s+the\s+provided\s+context"
                  
                         match = re.search(patternx, result1[:100])
