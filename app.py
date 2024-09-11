@@ -367,36 +367,41 @@ def main():
     else:
         st.sidebar.write("") 
    
-    query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
-    st.session_state.query = query
-    time.sleep(1)
-    if st.button("Submit"):
-        if uploaded_files:
-            if "bool" in st.session_state:
-                if st.session_state.bool==True:
-                    result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                    patternx = r"not\s+\w+\s+in\s+the\s+\w+\s+context"
-             
-                    match = re.search(patternx, result1[:100])
-                    if match or "does not contain" in result1 or result1 =="":
-                        st.write("No answer") 
-                    else:
-                          st.write(result1)
-                          docs1 =  st.session_state.vector_store1.similarity_search(query,k=3) 
-                          data_dict = docs1[1].metadata
-                          st.write("\nBook Name : ",data_dict["Book name"])
-                          st.write("Chapter : ",data_dict["Chapter"])
-                          st.write("Title : ",data_dict["Topic"])
-                          st.write("Subtopic : ",data_dict["Subtopic"])
-                          st.write("Subtopic2 : ",data_dict["Subtopic2"])
-                else:
-                     st.write("")
-            else:
-                st.write("Process file/files first")
-        else: 
-            st.write("Upload and process file/files first")
+    query = st.text_input("Ask query and press enter(Enter atleast 3 words)",placeholder="Ask query and press enter",key = "key")
+    if query:
+        word_count = len(query.split())
+    if word_count < 3:
+        st.warning("Please enter at least 3 words(example : what is electricity")
     else:
-        st.write("")
+        st.session_state.query = query
+        time.sleep(1)
+        if st.button("Submit"):
+            if uploaded_files:
+                if "bool" in st.session_state:
+                    if st.session_state.bool==True:
+                        result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                        patternx = r"not\s+\w+\s+in\s+the\s+\w+\s+context"
+                 
+                        match = re.search(patternx, result1[:100])
+                        if match or "does not contain" in result1 or result1 =="":
+                            st.write("No answer") 
+                        else:
+                              st.write(result1)
+                              docs1 =  st.session_state.vector_store1.similarity_search(query,k=3) 
+                              data_dict = docs1[1].metadata
+                              st.write("\nBook Name : ",data_dict["Book name"])
+                              st.write("Chapter : ",data_dict["Chapter"])
+                              st.write("Title : ",data_dict["Topic"])
+                              st.write("Subtopic : ",data_dict["Subtopic"])
+                              st.write("Subtopic2 : ",data_dict["Subtopic2"])
+                    else:
+                         st.write("")
+                else:
+                    st.write("Process file/files first")
+            else: 
+                st.write("Upload and process file/files first")
+        else:
+            st.write("")
 
 if __name__=='__main__':
     main()
