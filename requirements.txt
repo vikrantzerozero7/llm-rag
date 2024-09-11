@@ -1,6 +1,7 @@
 streamlit
 langchain
 langchain-community
+langchain_huggingface 
 pymupdf
 unidecode
 sentence_transformers
