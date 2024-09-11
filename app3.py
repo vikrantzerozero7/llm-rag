@@ -154,41 +154,41 @@ def main():
         st.sidebar.write("")
 
     query = st.text_input("Ask query and press enter enter at least 3 words (for example What is electricity)",placeholder="Ask query and press enter",key = "key")
-    if query:
-        word_count = len(query.split())
+
+    st.session_state.query = query
+
+    time.sleep(1)
+    if st.button("Submit"):
+        if "query" in session.state:
+           word_count = len(session_state.query.split())
         if word_count < 3:
             st.warning("Please enter at least 3 words (for example What is electricity)")
         else:
-            st.session_state.query = query
-        
-            time.sleep(1)
-            if st.button("Submit"):
-                
-                if uploaded_files:
-                    if "bool" in st.session_state:
-                        if st.session_state.bool==True:
-                            if query.strip()!="":
-                                result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                                
-                                patternx = r"mentioned\s+in\s+the\s+provided\s+context"
-                         
-                                match = re.search(patternx, result1[:100])
-                                if match or "answer is not available in the context" in result1 or result1 == "":
-                                    st.write("No answer") 
-                                else:
-                                      st.write(result1)
-                                
+            if uploaded_files:
+                if "bool" in st.session_state:
+                    if st.session_state.bool==True:
+                        if query.strip()!="":
+                            result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                            
+                            patternx = r"mentioned\s+in\s+the\s+provided\s+context"
+                     
+                            match = re.search(patternx, result1[:100])
+                            if match or "answer is not available in the context" in result1 or result1 == "":
+                                st.write("No answer") 
                             else:
-                              st.write("Enter query first")
+                                  st.write(result1)
+                            
                         else:
-                             st.write("")
+                          st.write("Enter query first")
                     else:
-                        st.write("Process file/files first")
-                else: 
-                    st.write("Upload and process file/files first")
-                
-            else:
-                st.write("")
+                         st.write("")
+                else:
+                    st.write("Process file/files first")
+            else: 
+                st.write("Upload and process file/files first")
+            
+        else:
+            st.write("")
 
 if __name__=='__main__':
     main()
