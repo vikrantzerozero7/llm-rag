@@ -30,7 +30,7 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 from langchain_community.vectorstores import PGEmbedding
 
-from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
+from langchain_huggingface import HuggingFaceEndpoint
 
 from langchain_pinecone import PineconeVectorStore
 
