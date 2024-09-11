@@ -322,7 +322,7 @@ def chain_result(pdf_d):
 ############################################################################## LLM setup ##############################################################################################################
       
       model = HuggingFaceEndpoint(
-          repo_id="mistralai/Mistral-7B-Instruct-v0.1",
+          repo_id="mistralai/Mistral-7B-Instruct-v0.3",
           max_length=128,
           temperature=1,
           huggingfacehub_api_token= "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")
@@ -375,11 +375,11 @@ def main():
             if "bool" in st.session_state:
                 if st.session_state.bool==True:
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                    
-                    patternx = r"does\s+not\s+\w+\s+\w+\s+information"
+                   # is not defined in the provided context
+                    patternx = r"not\s+\w+\s+\in\s+the\s+\w+\s+context\s"
              
                     match = re.search(patternx, result1[:100])
-                    if match or "answer is not available in the context" in result1:
+                    if match or "does not contain" in result1 or result1 =="":
                         st.write("No answer") 
                     else:
                           st.write(result1)
