@@ -153,7 +153,7 @@ def main():
     else:
         st.sidebar.write("")
 
-    query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
+    query = st.text_input("Ask query and press enter ,Please enter at least 3 words(example : what is electricity)",placeholder="Ask query and press enter",key = "key")
   
     st.session_state.query = query
 
