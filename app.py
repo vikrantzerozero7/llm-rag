@@ -22,7 +22,7 @@ from unidecode import unidecode
 
 from langchain_community.document_loaders import JSONLoader
 
-from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+from langchain.embeddings import SentenceTransformerEmbeddings
 
 from langchain_core.output_parsers import StrOutputParser
 
