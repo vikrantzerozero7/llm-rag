@@ -160,35 +160,35 @@ def main():
     time.sleep(1)
     if st.button("Submit"):
         if "query" in session.state:
-           word_count = len(session_state.query.split())
-        if word_count < 3:
-            st.warning("Please enter at least 3 words (for example What is electricity)")
-        else:
-            if uploaded_files:
-                if "bool" in st.session_state:
-                    if st.session_state.bool==True:
-                        if query.strip()!="":
-                            result1 =  st.session_state.chain.invoke(st.session_state.query) 
-                            
-                            patternx = r"mentioned\s+in\s+the\s+provided\s+context"
-                     
-                            match = re.search(patternx, result1[:100])
-                            if match or "answer is not available in the context" in result1 or result1 == "":
-                                st.write("No answer") 
+            word_count = len(session_state.query.split())
+            if word_count < 3:
+                st.warning("Please enter at least 3 words (for example What is electricity)")
+            else:
+                if uploaded_files:
+                    if "bool" in st.session_state:
+                        if st.session_state.bool==True:
+                            if query.strip()!="":
+                                result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                                
+                                patternx = r"mentioned\s+in\s+the\s+provided\s+context"
+                         
+                                match = re.search(patternx, result1[:100])
+                                if match or "answer is not available in the context" in result1 or result1 == "":
+                                    st.write("No answer") 
+                                else:
+                                      st.write(result1)
+                                
                             else:
-                                  st.write(result1)
-                            
+                              st.write("Enter query first")
                         else:
-                          st.write("Enter query first")
+                             st.write("")
                     else:
-                         st.write("")
-                else:
-                    st.write("Process file/files first")
-            else: 
-                st.write("Upload and process file/files first")
-            
-        else:
-            st.write("")
+                        st.write("Process file/files first")
+                else: 
+                    st.write("Upload and process file/files first")
+                
+            else:
+                st.write("")
 
 if __name__=='__main__':
     main()
