@@ -376,7 +376,7 @@ def main():
                 if st.session_state.bool==True:
                     result1 =  st.session_state.chain.invoke(st.session_state.query) 
                    # is not defined in the provided context
-                    patternx = r"not\s+\w+\s+\in\s+the\s+\w+\s+context\s"
+                    patternx = r"not\s+\w+\s+\in\s+the\s+\w+\s+context"
              
                     match = re.search(patternx, result1[:100])
                     if match or "does not contain" in result1 or result1 =="":
