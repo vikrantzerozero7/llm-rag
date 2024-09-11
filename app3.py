@@ -98,7 +98,7 @@ def chain_result(pdf_d):
 
       model = HuggingFaceEndpoint(
           repo_id="mistralai/Mistral-7B-Instruct-v0.3",
-          max_length=128,
+          model_kwargs={"max_length":128},
           temperature=0.5,
           huggingfacehub_api_token= "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")
       #`pip install -U langchain-huggingface` and import as `from langchain_huggingface import HuggingFaceEmbeddings`
