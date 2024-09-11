@@ -161,7 +161,7 @@ def main():
     if st.button("Submit"):
         word_count = len(query.split())
         if word_count < 3:
-            st.warning("Please enter at least 3 words(example : what is electricity).")
+            st.warning("Please enter at least 3 words(for example : what is electricity).")
         else:
             if uploaded_files:
                 if "bool" in st.session_state:
