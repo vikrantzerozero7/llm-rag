@@ -153,17 +153,15 @@ def main():
     else:
         st.sidebar.write("")
 
-    query = st.text_input("Ask query and press enter enter at least 3 words (for example What is electricity)",placeholder="Ask query and press enter",key = "key")
-    
-    
-    else:
+    query = st.text_input("Ask query and press enter",placeholder="Ask query and press enter",key = "key")
+  
     st.session_state.query = query
 
     time.sleep(1)
     if st.button("Submit"):
         word_count = len(query.split())
         if word_count < 3:
-            st.warning("Please enter at least 3 words (for example What is electricity)")
+            st.warning("Please enter at least 3 words.")
         else:
             if uploaded_files:
                 if "bool" in st.session_state:
@@ -187,9 +185,8 @@ def main():
                     st.write("Process file/files first")
             else: 
                 st.write("Upload and process file/files first")
-            
-        else:
-            st.write("")
+    else:
+        st.write("")
 
 if __name__=='__main__':
     main()
