@@ -167,7 +167,7 @@ def main():
                         result1 =  st.session_state.chain.invoke(st.session_state.query) 
                         st.write(result1)
                      # mentioned in the provided context
-                        patternx = r"mentioned\s+in\s+the\s+provided\s+context\s"
+                        patternx = r"mentioned\s+in\s+the\s+provided\s+context"
                  
                         match = re.search(patternx, result1[:100])
                         if match or "answer is not available in the context" in result1:
