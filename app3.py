@@ -19,8 +19,9 @@ if uploaded_file:
         first_page = pdf_document[0]
         st.write("Text from the first page:")
         st.text(first_page.get_text())
+        st.write(uploaded_file)
         if uploaded_file is not None:
-
+             
             # Read the uploaded PDF file
     
             with open(uploaded_file.name, "rb") as f:
@@ -28,7 +29,7 @@ if uploaded_file:
                 tables = camelot.read_pdf(f, flavor='lattice') 
     
     
-            st.write(f)
+            
             # Display extracted tables
     
             for table in tables:
