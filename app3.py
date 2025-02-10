@@ -1,6 +1,6 @@
 import streamlit as st
 import fitz  # PyMuPDF library
-
+import camelot
 # Sidebar file uploader
 uploaded_file = st.sidebar.file_uploader("Upload a PDF file", type=["pdf"])
 
@@ -19,7 +19,21 @@ if uploaded_file:
         first_page = pdf_document[0]
         st.write("Text from the first page:")
         st.text(first_page.get_text())
-        
+        if uploaded_file is not None:
+
+        # Read the uploaded PDF file
+
+        with open(uploaded_file.name, "rb") as f:
+
+            tables = camelot.read_pdf(f, flavor='lattice') 
+
+
+
+        # Display extracted tables
+
+        for table in tables:
+
+            st.write(table.df) 
         pdf_document.close()
     except Exception as e:
         st.error(f"An error occurred while processing the PDF: {e}")
