@@ -28,7 +28,7 @@ if uploaded_file:
                 tables = camelot.read_pdf(f, flavor='lattice') 
     
     
-    
+            st.write(f)
             # Display extracted tables
     
             for table in tables:
