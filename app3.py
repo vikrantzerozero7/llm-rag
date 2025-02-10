@@ -26,7 +26,7 @@ if uploaded_file:
     
             with open(uploaded_file.name, "rb") as f:
     
-                tables = camelot.read_pdf(f, flavor='lattice') 
+                tables = camelot.read_pdf(uploaded_file.read(), flavor='lattice') 
     
     
             
