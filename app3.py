@@ -2,7 +2,7 @@ import streamlit as st
 import fitz  # PyMuPDF library
 import camelot
 # Sidebar file uploader
-uploaded_file = st.sidebar.file_uploader("Upload a PDF file", type=["pdf"])
+uploaded_file = st.sidebar.file_uploader("Upload a PDF file",, accept_multiple_files=True, type=["pdf"])
 
 if uploaded_file:
     st.write("Filename: ", uploaded_file.name)
