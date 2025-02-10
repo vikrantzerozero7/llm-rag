@@ -24,17 +24,18 @@ if uploaded_file:
              
             # Read the uploaded PDF file
     
-            with open(uploaded_file.name, "rb") as f:
-    
-                tables = camelot.read_pdf(uploaded_file.read(), flavor='lattice') 
-    
-    
+            temp_file_path = "temp_uploaded.pdf"
+            with open(temp_file_path, "wb") as temp_file:
+                temp_file.write(uploaded_file.getbuffer())
+            tables = camelot.read_pdf(temp_file_path, flavor="lattice", pages="all")
+            if tables.n > 0:
+                st.write(f"Number of tables found: {tables.n}")
+                for i, table in enumerate(tables):
+                    st.write(f"Table {i + 1}")
+                    st.dataframe(table.df)  # Display the table as a DataFrame
+            else:
+                st.write("No tables were found in the PDF.")
             
-            # Display extracted tables
-    
-            for table in tables:
-    
-                st.write(table.df) 
         pdf_document.close()
     except Exception as e:
         st.error(f"An error occurred while processing the PDF: {e}")
