@@ -97,7 +97,7 @@ def chain_result(pdf_d):
       retriever = vector_store.as_retriever(search_kwargs={"k": 1})
 
       model = HuggingFaceEndpoint(
-          repo_id="mistralai/Mistral-7B-Instruct-v0.3",
+          repo_id="google-t5/t5-small",
           model_kwargs={"max_length":128},
           temperature=0.5,
           huggingfacehub_api_token= "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")
