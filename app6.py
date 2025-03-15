@@ -238,7 +238,7 @@ def main():
         else:
             st.write("")
     if "bool" in st.session_state:
-        st.sidebar.write("File processed successfully") 
+        st.sidebar.write("App is ready") 
     else:             
         st.sidebar.write("")
 
