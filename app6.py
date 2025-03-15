@@ -119,7 +119,7 @@ def main():
                 if "bool" in st.session_state:
                     if st.session_state.bool==True:
                         if query.strip()!="":
-                            result1 =  st.session_state.chain.invoke(st.session_state.query) 
+                            result1 =  st.session_state.chain#st.session_state.chain.invoke(st.session_state.query) 
                             
                             patternx = r"\w+\s+in\s+the\s+provided\s+context"
                      
