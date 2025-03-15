@@ -97,7 +97,7 @@ def chain_result(pdf_d):
 
       # Create an index
       index_name = str(doc.name)
-      #index_name = index_name.split("/")[1]
+      index_name = f"{index_name.split(".pdf")[0]}"
       index_description = "Index for synthetic dataset."
       st.write(index_name)
       # Check if the index already exists
