@@ -59,8 +59,6 @@ def content_and_meta(document):
           for i in document:
             docs22.append(i.metadata)
       
-          docs33
-          docs22
           return docs33,docs22
           
           
