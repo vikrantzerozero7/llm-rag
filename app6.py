@@ -94,6 +94,7 @@ def main():
                         st.session_state.pdf_d.append(df)  
                    
                     st.session_state.chain = chain_result(st.session_state.pdf_d)
+                    st.write(st.session_state.chain)
                     st.session_state.bool = True
                     
             else:
