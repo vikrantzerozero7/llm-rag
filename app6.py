@@ -93,6 +93,10 @@ def chain_result(pdf_d):
 
       # Create an index
       index_name = f"{doc.name}"
+
+      if index.name == index_name:
+          continue
+          
       
       index_description = "Index for synthetic dataset."
 
