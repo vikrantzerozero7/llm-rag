@@ -171,7 +171,7 @@ def main():
     st.header("Index Selection with PDF Upload")
 
     # Show total indexes
-    st.write(f"Total Indexes Found: {len(index_list)}")
+    st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
 
     # Dropdown for index selection
     index_options = {index.name: index.id for index in index_list}  # Dictionary: Name -> ID
