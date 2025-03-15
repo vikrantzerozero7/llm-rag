@@ -64,7 +64,7 @@ def content_and_meta(document):
           
           
 def chain_result(pdf_d):
-      index1 = None
+      st.session_state.index1 = None
       # Extract data from PDFs
       pdf_data = []
       pdf_data1 = []
@@ -113,12 +113,12 @@ def chain_result(pdf_d):
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
           
-          index1 = IndexFactory.create(index_name, index_description)
+          st.session_state.index1 = IndexFactory.create(index_name, index_description)
           
       
           index_description = f"hi {index_name}"
     
-          index1 = IndexFactory.create(index_name, index_description)     
+          st.session_state.index1 = IndexFactory.create(index_name, index_description)     
     
           #index = IndexFactory.get("678a6dd10c3d32001d119a10")
           from aixplain.modules.model.record import Record
@@ -135,7 +135,7 @@ def chain_result(pdf_d):
           ]
         
           # Upsert records to the index
-          index1.upsert(records)
+          st.session_state.index1.upsert(records)
       text_splitter = CharacterTextSplitter(
           separator="\n\n",
           chunk_size=20000,
@@ -154,7 +154,7 @@ def chain_result(pdf_d):
       
       
       
-      if index1!=None:
+      if st.session_state.index1!=None:
           data_data = "New data uploaded"
       else:
           data_data = "Data is already there"
