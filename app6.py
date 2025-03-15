@@ -96,8 +96,8 @@ def chain_result(pdf_d):
       from aixplain.factories import IndexFactory
 
       # Create an index
-      index_name = f"{doc.name}"
-      index_name = index_name.split("/")[1]
+      index_name = "pdf"#f"{doc.name}"
+      #index_name = index_name.split("/")[1]
       index_description = "Index for synthetic dataset."
       st.write(index_name)
       # Check if the index already exists
