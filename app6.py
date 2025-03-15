@@ -15,6 +15,30 @@ os.environ["AIXPLAIN_API_KEY"] = "a25c461433477bd01dfd342526b176bd855a26f0ee79fe
 
 from aixplain.factories import IndexFactory
     
+def result(query):
+    # Perform a search query
+    #query = "Healthcare technology"
+    response = index.search(query, top_k=3)
+    
+    # Convert response.details to a list of dictionaries
+    results = response.details  # Assuming response.details is already a list
+    
+    # Extract 'data' from each dictionary in the list
+    documents = [result['data'] for result in results if 'data' in result]
+
+    #query = "no of paperclips for 5 coils"
+    prompt = f"Answer the following question based on the documents:\n\nQuestion: {query}\n\nDocuments:\n" + documents[0] #"\n".join(documents)
+    response1 = gpt_model.run([{"role": "user", "content": prompt}])
+    
+    #response1
+    #documents[0]
+
+    # Print the search results
+    #print(json.dumps(response.details, indent=4))
+
+    return response1["data"]
+
+    
     
 
 
@@ -39,6 +63,8 @@ def chain_result(pdf_d):
   
       # Extract data from PDFs
       pdf_data = []
+      pdf_data1 = []
+      
       meta_data = []
       url_pattern = r'(https?://[^\s]+)'
       
@@ -49,6 +75,9 @@ def chain_result(pdf_d):
           for page_number in range(len(doc)):
               page = doc[page_number]
               page_content = page.get_text("text") or ""
+              id_value = f'{{"Book file": "{doc.name}", "Context derived around pages": "{page_number+1} to {page_number+2}"}}'
+              x = {"id": id_value, "text": page_content}
+              pdf_data1.append(x) 
               full_content += page_content
       
       
@@ -60,7 +89,31 @@ def chain_result(pdf_d):
               if full_content.strip() == "":
                   full_content = "No content available"
               pdf_data.append(full_content)
+      from aixplain.factories import IndexFactory
+
+      # Create an index
+      index_name = f"{doc.name}"
       
+      index_description = "Index for synthetic dataset."
+
+      index = IndexFactory.create(index_name, index_description)     
+
+      #index = IndexFactory.get("678a6dd10c3d32001d119a10")
+      from aixplain.modules.model.record import Record
+
+      # Prepare the records
+      records = [
+        Record(
+            value=item["text"],
+            value_type="text",
+            id=item["id"],
+            uri="",
+            #attributes={"category": item["category"]}
+        ) for item in pdf_data1
+      ]
+    
+      # Upsert records to the index
+      index.upsert(records)
       text_splitter = CharacterTextSplitter(
           separator="\n\n",
           chunk_size=20000,
@@ -73,21 +126,11 @@ def chain_result(pdf_d):
           pdf_data, metadatas=meta_data
       )
       
-      #new_data2 = None
-      #new_data3 = None
-      import torch
-      #import google_colab_selenium as gs
-      stored_urls = {}
-      import requests
-      new_data_dict = {}
-      query_dict = {}
-      result_data={}
-      data_dict = {}
-      use_cuda = torch.cuda.is_available()  # Check if CUDA is available
-      
-      
-      
       content, meta = content_and_meta(documents)
+
+      import json
+      
+      
       
       
       return doc.name
@@ -111,6 +154,7 @@ def main():
     # Store selected index ID in session state
     st.session_state.selected_index_id = index_options[selected_index]
     
+    index = IndexFactory.get(f"{st.session_state.selected_index_id}")
     
     # Display selected index
     st.write(f"**Selected Index ID:** `{st.session_state.selected_index_id}`")
@@ -168,6 +212,8 @@ def main():
         st.sidebar.write("")
 
     query = st.text_input("Ask query and press enter ,please enter at least 3 words(example : what is electricity)",placeholder="Ask query and press enter",key = "key")
+
+    
   
     st.session_state.query = query
 
@@ -182,7 +228,8 @@ def main():
                     if st.session_state.bool==True:
                         if query.strip()!="":
                             
-                            result1 =  st.session_state.collection1#result(query) 
+                            result1 =  result(query) 
+                            st.write(result1) 
                             
                             patternx = r"\w+\s+in\s+the\s+provided\s+context"
                      
