@@ -38,7 +38,7 @@ from langchain_community.vectorstores import PGEmbedding
 
 from langchain_huggingface import HuggingFaceEndpoint
 
-from langchain_pinecone import PineconeVectorStore
+#from langchain_pinecone import PineconeVectorStore
 
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 
