@@ -103,12 +103,7 @@ def chain_result(pdf_d):
       # Check if the index already exists
       st.write(f"hi {st.session_state.index.name}")
       if st.session_state.index.name in st.session_state.index_list:
-          try:
-          # Your code that might raise an exception
-              pass  
-          except Exception as err:
-              if "collection name already exists" in str(err.lower()):
-                  print("Collection already exists")
+          st.write("Data is already present in the collection")
 
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
