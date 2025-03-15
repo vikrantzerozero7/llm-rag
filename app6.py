@@ -174,7 +174,7 @@ def main():
     st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
 
     # Dropdown for index selection
-    index_options = {index.name: index.id for index in index_list}  # Dictionary: Name -> ID
+    index_options = {index.name: index.id for index in st.session_state.index_list}  # Dictionary: Name -> ID
     selected_index = st.selectbox("Select an Index:", options=list(index_options.keys()))
 
     # Store selected index ID in session state
