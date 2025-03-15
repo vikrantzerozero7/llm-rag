@@ -10,6 +10,7 @@ import warnings
 import fitz
 from langchain.text_splitter import CharacterTextSplitter
 from aixplain.modules.model.record import Record
+from aixplain.factories import DatasetFactory, IndexFactory, ModelFactory
 
 
 # Set API Key
@@ -30,6 +31,7 @@ def result(query):
 
     #query = "no of paperclips for 5 coils"
     prompt = f"Answer the following question based on the documents:\n\nQuestion: {query}\n\nDocuments:\n" + documents[0] #"\n".join(documents)
+    gpt_model = ModelFactory.get("669a63646eb56306647e1091")
     response1 = gpt_model.run([{"role": "user", "content": prompt}])
     
     #response1
