@@ -179,7 +179,7 @@ def main():
    
     st.header("PDF Chatbot App")
     
-    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader")
+    uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader",type=["pdf"])
     with st.sidebar:
         if st.button("Submit & Process", key="process_button"):
             st.session_state.pdf_d = [] 
