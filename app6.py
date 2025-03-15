@@ -102,7 +102,14 @@ def chain_result(pdf_d):
       st.write(index_name)
       # Check if the index already exists
       if st.session_state.index.name == index_name:
-          st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
+          try:
+          # Your code that might raise an exception
+              pass  
+          except Exception as err:
+              if "Collection name already exists" in str(err):
+                  print("Collection already exists")
+
+          #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
           
           index = IndexFactory.create(index_name, index_description)
