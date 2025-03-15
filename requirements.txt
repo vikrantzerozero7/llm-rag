@@ -13,3 +13,4 @@ langchain_core
 pygithub
 git+https://github.com/huggingface/optimum-intel.git
 camelot-py
+aixplain
