@@ -14,7 +14,7 @@ import time
 
 from langchain_core.documents import Document
 
-from pinecone import Pinecone , ServerlessSpec
+#from pinecone import Pinecone , ServerlessSpec
 
 from uuid import uuid4
 
@@ -70,60 +70,9 @@ def chain_result(pdf_d):
           doc_list.append(curr_doc)
 
 #################################################################################### RAG setup ###########################################################################################################
+ 
       
-      pc = Pinecone(api_key="31be5854-f0fb-4dba-9b1c-937aebcb89bd")
-      
-      index_name = "langchain-self-retriever-demo2"
-      
-      if index_name in pc.list_indexes().names():
-          pc.delete_index(index_name)
-      
-      #pc.delete_index(index_name)
-      # create new index
-      if index_name not in pc.list_indexes().names():
-          pc.create_index(
-              name=index_name,
-              dimension=384 ,
-              metric="cosine",
-              spec=ServerlessSpec(cloud="aws", region="us-east-1"),
-          )
-      index = pc.Index(index_name)
-      
-      embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-      
-      vector_store = PineconeVectorStore(index=index, embedding=embeddings)
-      
-      uuids = [str(uuid4()) for _ in range(len(doc_list))]
-      
-      vector_store.add_documents(documents=doc_list, ids=uuids)
-      
-      retriever = vector_store.as_retriever(search_kwargs={"k": 1})
-
-      model = HuggingFaceEndpoint(
-          repo_id="google-t5/t5-small",
-          model_kwargs={"max_length":128},
-          temperature=0.5,
-          huggingfacehub_api_token= "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")
-      #`pip install -U langchain-huggingface` and import as `from langchain_huggingface import HuggingFaceEmbeddings`
-      
-      
-      prompt_template = """
-        Context:\n {context}?\n
-        Question: \n{question}\n
-        Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-        provided context just say, "answer is not available in the context",don't provide the wrong answer\n\n
-        """
-      
-      prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-  
-      chain = (
-          {"context": retriever, "question": RunnablePassthrough()}
-          | prompt
-          | model
-          | StrOutputParser()
-      )
-      
-      return chain
+      return pdf.name
 
 ############################################################################## Interface setup ######################################################################################################
 
