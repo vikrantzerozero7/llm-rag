@@ -99,7 +99,7 @@ def chain_result(pdf_d):
       index_name = f"{doc.name}"
 
       # Check if the index already exists
-      if index.name == index_name:
+      if st.session_state.index.name == index_name:
           st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
           index = IndexFactory.create(index_name, index_description)
