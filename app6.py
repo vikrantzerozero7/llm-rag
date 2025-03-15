@@ -102,7 +102,7 @@ def chain_result(pdf_d):
       st.write(index_name)
       # Check if the index already exists
       st.write(f"hi {st.session_state.index.name}")
-      import streamlit as st
+      #import streamlit as st
     
     # Ensure index and index_list exist in session_state
       if "index" in st.session_state and "index_list" in st.session_state:
