@@ -102,8 +102,13 @@ def chain_result(pdf_d):
       st.write(index_name)
       # Check if the index already exists
       st.write(f"hi {st.session_state.index.name}")
-      if st.session_state.index.name in st.session_state.index_list:
-          st.write("Data is already present in the collection")
+      import streamlit as st
+    
+    # Ensure index and index_list exist in session_state
+      if "index" in st.session_state and "index_list" in st.session_state:
+          if hasattr(st.session_state.index, "name") and st.session_state.index.name in st.session_state.index_list:
+              st.write("Data is already present in the collection")
+
 
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
