@@ -102,7 +102,7 @@ def chain_result(pdf_d):
       st.write(index_name)
       # Check if the index already exists
       st.write(f"hi {st.session_state.index.name}")
-      if st.session_state.index.name == index_name:
+      if st.session_state.index.name in st.session_state.index_list:
           try:
           # Your code that might raise an exception
               pass  
@@ -165,7 +165,7 @@ def main():
     st.title("PDF Chatbot App")
 
     # Get index list
-    index_list = IndexFactory.list().get('results', [])
+    st.session_state.index_list = IndexFactory.list().get('results', [])
 
     # Streamlit Title
     st.header("Index Selection with PDF Upload")
