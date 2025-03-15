@@ -97,11 +97,13 @@ def chain_result(pdf_d):
 
       # Create an index
       index_name = f"{doc.name}"
+      index_description = "Index for synthetic dataset."
 
       # Check if the index already exists
       if st.session_state.index.name == index_name:
           st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
+          
           index = IndexFactory.create(index_name, index_description)
           
       
