@@ -213,7 +213,7 @@ def main():
                         #st.session_state.pdf_d.append(df)  
                     
                     data_data2 = chain_result(st.session_state.pdf_d)
-                    if data_data2 == "New data uploaded"
+                    if data_data2 == "New data uploaded":
                         st.write("New data added")
                     elif data_data2 == "Data is already there":
                       st.write("Data is already there")
