@@ -55,11 +55,14 @@ def chain_result(pdf_d):
               pages.append(page.get_text())  # Append the text of each page to the list
           # Combine all the page texts into a single string
           raw_text2 = " ".join(page for page in pages if page)
+          st.write(pdf.name)
+      
       
       text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
   
       chunks = text_splitter.split_text(raw_text2)
       st.write(chunks)
+  
       doc_list = []
 
       for line in chunks:
