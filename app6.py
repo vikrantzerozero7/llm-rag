@@ -164,6 +164,8 @@ def main():
 
     # Get index list
     st.session_state.index_list = IndexFactory.list().get('results', [])
+    if st.session_state.index_list!=None:
+        st.session_state.bool = True
 
     # Streamlit Title
     st.header("Index Selection with PDF Upload")
@@ -228,7 +230,7 @@ def main():
                       st.write("Data is already there")
                         
                     #st.write("New data added")
-                    #st.session_state.bool = True
+                    st.session_state.bool = True
                     
                     
             else:
