@@ -100,9 +100,9 @@ def chain_result(pdf_d):
       index_name = str(doc.name)
       index_name = f"{index_name.split(".pdf")[0]}"
       index_description = "Index for synthetic dataset."
-      st.write(index_name)
+      #st.write(index_name)
       # Check if the index already exists
-      st.write(f"hi {st.session_state.index.name}")
+      #st.write(f"hi {st.session_state.index.name}")
       #import streamlit as st
     
     # Ensure index and index_list exist in session_state
@@ -172,7 +172,7 @@ def main():
     st.header("Index Selection with PDF Upload")
 
     # Show total indexes
-    st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
+    #st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
 
     # Dropdown for index selection
     index_options = {index.name: index.id for index in st.session_state.index_list}  # Dictionary: Name -> ID
