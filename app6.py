@@ -252,30 +252,30 @@ def main():
         if word_count < 3:
             st.warning("Please enter at least 3 words(for example : what is electricity).")
         else:
-            #if uploaded_files:
-            #if "bool" in st.session_state:
-            #if st.session_state.bool==True:
-            if query.strip()!="":
-                
-                result1 =  result(query) 
-                st.write(result1) 
-                
-                #patternx = r"\w+\s+in\s+the\s+provided\s+context"
-         
-                #match = re.search(patternx, st.session_state.collection1)#result1[:100])
-                #if match or "answer is not available in the context" in result1 or result1 == "":
-                #    st.write("No answer") 
-                #else:
-                #      st.write(result1) 
-                
-            else:
-              st.write("Enter query first")
-            #else:
-                 #st.write("")
-            #else:
-                #st.write("Process file/files first")
-            #else: 
-                #st.write("Upload and process file/files first")
+                if uploaded_files:
+                    if "bool" in st.session_state:
+                        if st.session_state.bool==True:
+                            if query.strip()!="":
+                                
+                                result1 =  result(query) 
+                                st.write(result1) 
+                                
+                                #patternx = r"\w+\s+in\s+the\s+provided\s+context"
+                         
+                                #match = re.search(patternx, st.session_state.collection1)#result1[:100])
+                                #if match or "answer is not available in the context" in result1 or result1 == "":
+                                #    st.write("No answer") 
+                                #else:
+                                #      st.write(result1) 
+                                
+                            else:
+                              st.write("Enter query first")
+                        else:
+                             st.write("")
+                    else:
+                        st.write("Process file/files first")
+                else: 
+                    st.write("Upload and process file/files first")
     else:
         st.write("")
 
