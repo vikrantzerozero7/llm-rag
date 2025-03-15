@@ -106,7 +106,7 @@ def chain_result(pdf_d):
           # Your code that might raise an exception
               pass  
           except Exception as err:
-              if "Collection name already exists" in str(err):
+              if "collection name already exists" in str(err.lower()):
                   print("Collection already exists")
 
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
