@@ -9,6 +9,8 @@ import re
 import warnings
 import fitz
 from langchain.text_splitter import CharacterTextSplitter
+from aixplain.modules.model.record import Record
+
 
 # Set API Key
 os.environ["AIXPLAIN_API_KEY"] = "a25c461433477bd01dfd342526b176bd855a26f0ee79fe060fb854f811e2748a"
@@ -94,30 +96,33 @@ def chain_result(pdf_d):
       # Create an index
       index_name = f"{doc.name}"
 
+      # Check if the index already exists
       if index.name == index_name:
-          continue
+          st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
+      else:
+          index = IndexFactory.create(index_name, index_description)
           
       
-      index_description = "Index for synthetic dataset."
-
-      index = IndexFactory.create(index_name, index_description)     
-
-      #index = IndexFactory.get("678a6dd10c3d32001d119a10")
-      from aixplain.modules.model.record import Record
-
-      # Prepare the records
-      records = [
-        Record(
-            value=item["text"],
-            value_type="text",
-            id=item["id"],
-            uri="",
-            #attributes={"category": item["category"]}
-        ) for item in pdf_data1
-      ]
+          index_description = "Index for synthetic dataset."
     
-      # Upsert records to the index
-      index.upsert(records)
+          index = IndexFactory.create(index_name, index_description)     
+    
+          #index = IndexFactory.get("678a6dd10c3d32001d119a10")
+          from aixplain.modules.model.record import Record
+    
+          # Prepare the records
+          records = [
+            Record(
+                value=item["text"],
+                value_type="text",
+                id=item["id"],
+                uri="",
+                #attributes={"category": item["category"]}
+            ) for item in pdf_data1
+          ]
+        
+          # Upsert records to the index
+          index.upsert(records)
       text_splitter = CharacterTextSplitter(
           separator="\n\n",
           chunk_size=20000,
@@ -235,13 +240,13 @@ def main():
                         result1 =  result(query) 
                         st.write(result1) 
                         
-                        patternx = r"\w+\s+in\s+the\s+provided\s+context"
+                        #patternx = r"\w+\s+in\s+the\s+provided\s+context"
                  
-                        match = re.search(patternx, st.session_state.collection1)#result1[:100])
-                        if match or "answer is not available in the context" in result1 or result1 == "":
-                            st.write("No answer") 
-                        else:
-                              st.write(result1) 
+                        #match = re.search(patternx, st.session_state.collection1)#result1[:100])
+                        #if match or "answer is not available in the context" in result1 or result1 == "":
+                        #    st.write("No answer") 
+                        #else:
+                        #      st.write(result1) 
                         
                     else:
                       st.write("Enter query first")
