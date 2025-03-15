@@ -107,6 +107,7 @@ def chain_result(pdf_d):
     
       if Exception:
           st.write("Data is already there")
+          st.experimental_rerun()
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
           
