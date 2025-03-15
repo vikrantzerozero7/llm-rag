@@ -73,7 +73,6 @@ def chain_result(pdf_d):
           pdf_data, metadatas=meta_data
       )
       
-      from dask import delayed,compute
       #new_data2 = None
       #new_data3 = None
       import torch
