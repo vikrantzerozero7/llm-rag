@@ -1,83 +1,120 @@
-import numpy as np
-
-import pandas as pd
-
 import streamlit as st
-
-from datetime import datetime
-
-from github import Github
-
-from github import InputGitTreeElement
-
-import time
-
-from langchain_core.documents import Document
-
-#from pinecone import Pinecone , ServerlessSpec
-
-from uuid import uuid4
-
-from langchain_core.prompts import PromptTemplate
-
+import os
 import fitz  # PyMuPDF
-
 import re
+import time
+import requests
+from pathlib import Path
+import re
+import warnings
+import fitz
+from langchain.text_splitter import CharacterTextSplitter
 
-from unidecode import unidecode
+# Set API Key
+os.environ["AIXPLAIN_API_KEY"] = "a25c461433477bd01dfd342526b176bd855a26f0ee79fe060fb854f811e2748a"
 
-from langchain_community.document_loaders import JSONLoader
+from aixplain.factories import IndexFactory
+    
+    
 
-from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 
-from langchain_core.output_parsers import StrOutputParser
-
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
-
-from langchain_community.vectorstores import PGEmbedding
-
-from langchain_huggingface import HuggingFaceEndpoint
-
-#from langchain_pinecone import PineconeVectorStore
-
-from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-
-from langchain_text_splitters import (
-RecursiveCharacterTextSplitter,
-)
-
+def content_and_meta(document):
+      
+          docs22 = []
+      
+          docs33 = []
+      
+          for i in document:
+            docs33.append(i.page_content[:])
+      
+          for i in document:
+            docs22.append(i.metadata)
+      
+          docs33
+          docs22
+          return docs33,docs22
+          
+          
 def chain_result(pdf_d):
   
+      # Extract data from PDFs
+      pdf_data = []
+      meta_data = []
+      url_pattern = r'(https?://[^\s]+)'
+      
       for pdf in pdf_d:
-          pages = []
-          for i in range(len(pdf)):
-              page = pdf.load_page(i)  # Load each page by index
-              pages.append(page.get_text())  # Append the text of each page to the list
-          # Combine all the page texts into a single string
-          raw_text2 = " ".join(page for page in pages if page)
-          st.session_state.kill = pdf.name
-          st.write(st.session_state.kill)
+          doc = fitz.open(pdf) 
+          full_content = ""
+      
+          for page_number in range(len(doc)):
+              page = doc[page_number]
+              page_content = page.get_text("text") or ""
+              full_content += page_content
       
       
-      text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
-  
-      chunks = text_splitter.split_text(raw_text2)
-      st.write(chunks)
-  
-      doc_list = []
-
-      for line in chunks:
-          curr_doc = Document(page_content=line, metadata={"source": line[:100]})
-          doc_list.append(curr_doc)
-
-#################################################################################### RAG setup ###########################################################################################################
- 
+              meta_data.append({
+                  "pdf_name":doc.name,
+                  
+              })
       
-      return pdf.name
-
-############################################################################## Interface setup ######################################################################################################
+              if full_content.strip() == "":
+                  full_content = "No content available"
+              pdf_data.append(full_content)
+      
+      text_splitter = CharacterTextSplitter(
+          separator="\n\n",
+          chunk_size=20000,
+          chunk_overlap=1000,
+          length_function=len,
+          is_separator_regex=False,
+      )
+      
+      documents = text_splitter.create_documents(
+          pdf_data, metadatas=meta_data
+      )
+      
+      from dask import delayed,compute
+      #new_data2 = None
+      #new_data3 = None
+      import torch
+      #import google_colab_selenium as gs
+      stored_urls = {}
+      import requests
+      new_data_dict = {}
+      query_dict = {}
+      result_data={}
+      data_dict = {}
+      use_cuda = torch.cuda.is_available()  # Check if CUDA is available
+      
+      
+      
+      content, meta = content_and_meta(documents)
+      
+      
+      return doc.name
 
 def main():
+    st.title("PDF Chatbot App")
+
+    # Get index list
+    index_list = IndexFactory.list().get('results', [])
+
+    # Streamlit Title
+    st.header("Index Selection with PDF Upload")
+
+    # Show total indexes
+    st.write(f"Total Indexes Found: {len(index_list)}")
+
+    # Dropdown for index selection
+    index_options = {index.name: index.id for index in index_list}  # Dictionary: Name -> ID
+    selected_index = st.selectbox("Select an Index:", options=list(index_options.keys()))
+
+    # Store selected index ID in session state
+    st.session_state.selected_index_id = index_options[selected_index]
+    
+    
+    # Display selected index
+    st.write(f"**Selected Index ID:** `{st.session_state.selected_index_id}`")
    
     st.header("PDF Chatbot App")
     
@@ -89,31 +126,55 @@ def main():
                 with st.spinner("Processing..."):
                     for upload in uploaded_files:
                         uploadedFile1 = upload.getvalue()
-                       
-                        df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                        temp_dir = Path("temp_pdfs")  # Define a directory for temp files
+                        temp_dir.mkdir(exist_ok=True)  # Create directory if not exists
+
+                        for upload in uploaded_files:
+                            
+                            pdf_path = temp_dir / upload.name  # Define file path inside temp directory
+
+                            pdf_path_str = str(pdf_path)  # Convert path to string for session state
+                            
+                            # ✅ Check: If file exists in the directory and not in session state
+                            if pdf_path.exists() and pdf_path_str not in st.session_state.pdf_d:
+                                st.warning(f"Skipping {upload.name} (already exists in temp folder but not in session).")
+                                st.session_state.pdf_d.append(pdf_path_str)  # Append if missing in session state
+                                continue  # Skip writing again
+
+                            # ✅ Save file only if it doesn't exist
+                            if not pdf_path.exists():
+                                with open(pdf_path, "wb") as temp_file:
+                                    temp_file.write(upload.getbuffer())
+
+                                # Append the file path to session state if not already added
+                                st.session_state.pdf_d.append(pdf_path_str)
+                                
+                        #st.write(st.session_state.pdf_d)
+                        #df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         
-                        st.session_state.pdf_d.append(df)  
-                   
-                    st.session_state.chain = chain_result(st.session_state.pdf_d)
-                    st.write(st.session_state.chain)
+                        #st.session_state.pdf_d.append(df)  
+                    
+                    st.session_state.collection1 = chain_result(st.session_state.pdf_d)
+                    #st.write(collection1)
                     st.session_state.bool = True
+                    
                     
             else:
                 st.write("") 
         else:
             st.write("")
     if "bool" in st.session_state:
-        st.sidebar.write("File processed successfully")
-    else:
+        st.sidebar.write("File processed successfully") 
+    else:             
         st.sidebar.write("")
 
     query = st.text_input("Ask query and press enter ,please enter at least 3 words(example : what is electricity)",placeholder="Ask query and press enter",key = "key")
   
     st.session_state.query = query
 
-    time.sleep(1)
+    time.sleep(1)   
     if st.button("Submit"):
-        word_count = len(query.split())
+        word_count = len(query.split()) 
         if word_count < 3:
             st.warning("Please enter at least 3 words(for example : what is electricity).")
         else:
@@ -121,15 +182,16 @@ def main():
                 if "bool" in st.session_state:
                     if st.session_state.bool==True:
                         if query.strip()!="":
-                            result1 =  st.session_state.chain#st.session_state.chain.invoke(st.session_state.query) 
+                            
+                            result1 =  st.session_state.collection1#result(query) 
                             
                             patternx = r"\w+\s+in\s+the\s+provided\s+context"
                      
-                            match = re.search(patternx, result1[:100])
-                            #if match or "answer is not available in the context" in result1 or result1 == "":
-                                #st.write("No answer") 
-                            #else:
-                            st.write(result1)
+                            match = re.search(patternx, st.session_state.collection1)#result1[:100])
+                            if match or "answer is not available in the context" in result1 or result1 == "":
+                                st.write("No answer") 
+                            else:
+                                  st.write(result1) 
                             
                         else:
                           st.write("Enter query first")
@@ -147,7 +209,5 @@ if __name__=='__main__':
 
 
 if st.button("Read me"):
-    st.write(f' {st.session_state.kill} Upload any number of books in pdf format,\nPress submit and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
+    st.write('Upload any number of books in pdf format,\nPress submit and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
     
-
-   
