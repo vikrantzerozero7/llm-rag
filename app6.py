@@ -101,7 +101,7 @@ def chain_result(pdf_d):
       index_description = "Index for synthetic dataset."
       st.write(index_name)
       # Check if the index already exists
-      st.write(f"hi {st.session_state.index.name})
+      st.write(f"hi {st.session_state.index.name}")
       if st.session_state.index.name == index_name:
           try:
           # Your code that might raise an exception
