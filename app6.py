@@ -106,7 +106,7 @@ def chain_result(pdf_d):
     
     # Ensure index and index_list exist in session_state
     
-      if index_name in st.session_state.index_list:
+      if Exception:
           st.write("Data is already there")
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
