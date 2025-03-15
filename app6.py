@@ -20,7 +20,7 @@ from aixplain.factories import IndexFactory
 def result(query):
     # Perform a search query
     #query = "Healthcare technology"
-    response = index.search(query, top_k=3)
+    response = st.session_state.index.search(query, top_k=3)
     
     # Convert response.details to a list of dictionaries
     results = response.details  # Assuming response.details is already a list
@@ -163,7 +163,7 @@ def main():
     # Store selected index ID in session state
     st.session_state.selected_index_id = index_options[selected_index]
     
-    index = IndexFactory.get(f"{st.session_state.selected_index_id}")
+    st.session_state.index = IndexFactory.get(f"{st.session_state.selected_index_id}")
     
     # Display selected index
     st.write(f"**Selected Index ID:** `{st.session_state.selected_index_id}`")
