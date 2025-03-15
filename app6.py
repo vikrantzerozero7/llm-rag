@@ -143,8 +143,12 @@ def chain_result(pdf_d):
       
       
       
-      
-      return doc.name
+      if index!=None:
+          data_data = "New data uploaded"
+      else:
+          data_data = "Data is already there"
+          
+      return data_data
 
 def main():
     st.title("PDF Chatbot App")
@@ -208,8 +212,13 @@ def main():
                         
                         #st.session_state.pdf_d.append(df)  
                     
-                    st.session_state.collection1 = chain_result(st.session_state.pdf_d)
-                    #st.write(collection1)
+                    data_data2 = chain_result(st.session_state.pdf_d)
+                    if data_data2 == "New data uploaded"
+                        st.write("New data added")
+                    elif data_data2 == "Data is already there":
+                      st.write("Data is already there")
+                        
+                    #st.write("New data added")
                     #st.session_state.bool = True
                     
                     
