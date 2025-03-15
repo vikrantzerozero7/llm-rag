@@ -9,12 +9,13 @@ import re
 import warnings
 import fitz
 from langchain.text_splitter import CharacterTextSplitter
-from aixplain.modules.model.record import Record
-from aixplain.factories import DatasetFactory, IndexFactory, ModelFactory
-
 
 # Set API Key
 os.environ["AIXPLAIN_API_KEY"] = "a25c461433477bd01dfd342526b176bd855a26f0ee79fe060fb854f811e2748a"
+
+from aixplain.modules.model.record import Record
+from aixplain.factories import DatasetFactory, IndexFactory, ModelFactory
+
 
 from aixplain.factories import IndexFactory
     
