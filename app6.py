@@ -107,7 +107,7 @@ def chain_result(pdf_d):
           index = IndexFactory.create(index_name, index_description)
           
       
-          index_description = "Index for synthetic dataset."
+          index_description = f"hi {index_name}"
     
           index = IndexFactory.create(index_name, index_description)     
     
