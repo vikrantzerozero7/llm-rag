@@ -128,9 +128,10 @@ def chain_result(pdf_d):
       # Output example:
       #print(final_data[:5])  # Print the first 5 entries
 
-      if Exception:
-          st.write("Data is already there")
-          st.rerun()
+      if final_data:
+          #st.write("Data is already there")
+          #st.rerun()
+          st.write("yes")
           #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
       else:
           
