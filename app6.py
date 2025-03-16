@@ -43,7 +43,7 @@ def result(query):
     #print(json.dumps(response.details, indent=4)) 
     import ast
     #st.write(results)
-    st.write(ast.literal_eval(documents2[0]["documents"])['Book file'])
+    st.write(ast.literal_eval(results[0]["documents"])['Book file'])
     return response1["data"]
 
     
