@@ -260,10 +260,10 @@ def main():
                                 
                                 result1,book,page =  result(query) 
                                 st.write(result1) 
-                                if st.button(f"Book name"):
-                                    st.write(book)
-                                if st.button("Page number"):
-                                    st.write(page)
+                                #if st.button(f"Book name"):
+                                st.write(book)
+                                #if st.button("Page number"):
+                                st.write(page)
                                 
                                 
                                 #patternx = r"\w+\s+in\s+the\s+provided\s+context"
