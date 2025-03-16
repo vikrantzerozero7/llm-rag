@@ -95,7 +95,7 @@ def chain_result(pdf_d):
               pdf_data.append(full_content)
               
       from aixplain.factories import IndexFactory
-
+      st.write(doc.name)
       # Create an index
       index_name = str(doc.name)
       index_name = f"{index_name.split(".pdf")[0]}"
