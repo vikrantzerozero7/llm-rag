@@ -261,8 +261,8 @@ def main():
                                 result1,book,page =  result(query) 
                                 st.write(result1) 
                                 #if st.button(f"Book name"):
-                                st.write(book)
-                                #if st.button("Page number"):
+                                st.write(f"Book name is: {book}")
+                                #if st.button(f"Context derived around page number: {Page number}"):
                                 st.write(page)
                                 
                                 
