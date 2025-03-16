@@ -42,7 +42,7 @@ def result(query):
     # Print the search results
     #print(json.dumps(response.details, indent=4)) 
     import ast
-    Book_name = ast.literal_eval(results[0].get("document")).get('Book file')
+    Book_name = ast.literal_eval(results[0].get("document")).get('Book file').replace("temp_pdfs/", "")
     Page_no = ast.literal_eval(results[0].get("document")).get('Context derived around pages')
     #st.write(ast.literal_eval(results[0].get("document")).get('Book file'))
     
