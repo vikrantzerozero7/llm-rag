@@ -42,11 +42,13 @@ def result(query):
     # Print the search results
     #print(json.dumps(response.details, indent=4)) 
     import ast
-    st.write(ast.literal_eval(results[0].get("document")).get('Book file'))
+    Book_name = ast.literal_eval(results[0].get("document")).get('Book file')
+    Page_no = ast.literal_eval(results[0].get("document")).get('Context derived around pages')
+    #st.write(ast.literal_eval(results[0].get("document")).get('Book file'))
     
     #st.write(ast.literal_eval(results[0]["documents"])['Book file'])
     
-    return response1["data"]
+    return response1["data"],Book_name,Page_no
 
     
     
@@ -256,8 +258,13 @@ def main():
                         if st.session_state.bool==True:
                             if query.strip()!="":
                                 
-                                result1 =  result(query) 
+                                result1,book,page =  result(query) 
                                 st.write(result1) 
+                                st.button(f"Book name"):
+                                    st.write(book)
+                                st.button("Page number"):
+                                    st.write(page)
+                                
                                 
                                 #patternx = r"\w+\s+in\s+the\s+provided\s+context"
                          
