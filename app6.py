@@ -39,7 +39,7 @@ def result(query):
     #documents[0]
 
     # Print the search results
-    #print(json.dumps(response.details, indent=4))
+    #print(json.dumps(response.details, indent=4)) 
 
     return response1["data"]
 
@@ -85,13 +85,15 @@ def chain_result(pdf_d):
       
       
               meta_data.append({
-                  "pdf_name":doc.name,
+                  #"pdf_name":doc.name,
+                  "id":id_value #f'{{"Book file": "{doc.name}", "Context derived around pages": "{page_number+1} to {page_number+2}"}}'
                   
               })
       
               if full_content.strip() == "":
                   full_content = "No content available"
               pdf_data.append(full_content)
+              
       from aixplain.factories import IndexFactory
 
       # Create an index
@@ -104,7 +106,28 @@ def chain_result(pdf_d):
       #import streamlit as st
     
     # Ensure index and index_list exist in session_state
+      text_splitter = CharacterTextSplitter(
+          separator="\n\n",
+          chunk_size=20000,
+          chunk_overlap=1000,
+          length_function=len,
+          is_separator_regex=False,
+      )
+      
+      documents = text_splitter.create_documents(
+          pdf_data, metadatas=meta_data
+      )
+      
+      content, meta = content_and_meta(documents)
+
+      final_data = []
+
+      for i in range(len(content)):  
+          final_data.append({"id": meta[i]["id"], "text": content[i]})
     
+      # Output example:
+      #print(final_data[:5])  # Print the first 5 entries
+
       if Exception:
           st.write("Data is already there")
           st.rerun()
@@ -129,24 +152,12 @@ def chain_result(pdf_d):
                 id=item["id"],
                 uri="",
                 #attributes={"category": item["category"]}
-            ) for item in pdf_data1
+            ) for item in final_data 
           ]
         
           # Upsert records to the index
           st.session_state.index1.upsert(records)
-      text_splitter = CharacterTextSplitter(
-          separator="\n\n",
-          chunk_size=20000,
-          chunk_overlap=1000,
-          length_function=len,
-          is_separator_regex=False,
-      )
       
-      documents = text_splitter.create_documents(
-          pdf_data, metadatas=meta_data
-      )
-      
-      content, meta = content_and_meta(documents)
 
       import json
       
