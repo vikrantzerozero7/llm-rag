@@ -29,6 +29,7 @@ def result(query):
     
     # Extract 'data' from each dictionary in the list
     documents = [result['data'] for result in results if 'data' in result]
+    documents2 = [result['id'] for result in results if 'id' in result]
 
     #query = "no of paperclips for 5 coils"
     prompt = f"Answer the following question based on the documents:\n\nQuestion: {query}\n\nDocuments:\n" + documents[0] #"\n".join(documents)
@@ -41,7 +42,7 @@ def result(query):
     # Print the search results
     #print(json.dumps(response.details, indent=4)) 
     import ast
-    st.write(ast.literal_eval(response1["id"])['Book file'])
+    st.write(ast.literal_eval(documents2[0]["id"])['Book file'])
     return response1["data"]
 
     
