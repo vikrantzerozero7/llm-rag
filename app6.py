@@ -76,7 +76,7 @@ def chain_result(pdf_d):
     
     # ✅ Get existing indexes properly
     existing_indexes = IndexFactory.list()  # Returns a list of IndexModel objects
-    existing_index_names = {idx.name for idx in existing_indexes}  # Store in a set for fast lookup
+    existing_index_names = {idx for idx in existing_indexes}  # Store in a set for fast lookup
 
     for pdf in pdf_d:
         # Step 1: Open PDF
