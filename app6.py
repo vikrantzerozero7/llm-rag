@@ -69,12 +69,13 @@ from aixplain.modules.model.record import Record
 from langchain.text_splitter import CharacterTextSplitter
 
 
+
 def chain_result(pdf_d):
     st.session_state.index1 = None  # Reset index
     
-    # Get existing indexes
-    existing_indexes = IndexFactory.list().get('results', [])
-    existing_index_names = [idx.get('name', '') for idx in existing_indexes]
+    # ✅ Get existing indexes properly
+    existing_indexes = IndexFactory.list()  # Returns a list of IndexModel objects
+    existing_index_names = [idx.name for idx in existing_indexes]  # Extract names
 
     for pdf in pdf_d:
         # Step 1: Open PDF
@@ -119,7 +120,7 @@ def chain_result(pdf_d):
             st.write("Data is already there")
             continue  # Skip if no new data
 
-        # Check if index exists
+        # ✅ Check if index exists properly
         if index_name in existing_index_names:
             st.write(f"Index '{index_name}' already exists. Skipping index creation.")
             continue  # Skip index creation
@@ -136,7 +137,6 @@ def chain_result(pdf_d):
         st.write(f"Processed PDF: {doc.name}")
 
     return "All PDFs Processed Successfully!"
-
 
 def main():
     st.title("PDF Chatbot App")
