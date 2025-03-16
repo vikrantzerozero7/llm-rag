@@ -62,114 +62,81 @@ def content_and_meta(document):
           return docs33,docs22
           
           
+import fitz  # PyMuPDF
+import streamlit as st
+from aixplain.factories import IndexFactory
+from aixplain.modules.model.record import Record
+from langchain.text_splitter import CharacterTextSplitter
+
+
 def chain_result(pdf_d):
-      st.session_state.index1 = None
-      # Extract data from PDFs
-      pdf_data = []
-      pdf_data1 = []
-      
-      meta_data = []
-      url_pattern = r'(https?://[^\s]+)'
-      
-      for pdf in pdf_d:
-          doc = fitz.open(pdf) 
-          full_content = ""
-      
-          for page_number in range(len(doc)):
-              page = doc[page_number]
-              page_content = page.get_text("text") or ""
-              id_value = f'{{"Book file": "{doc.name}", "Context derived around pages": "{page_number+1} to {page_number+2}"}}'
-              x = {"id": id_value, "text": page_content}
-              pdf_data1.append(x) 
-              full_content += page_content
-      
-      
-              meta_data.append({
-                  #"pdf_name":doc.name,
-                  "id":id_value #f'{{"Book file": "{doc.name}", "Context derived around pages": "{page_number+1} to {page_number+2}"}}'
-                  
-              })
-      
-              if full_content.strip() == "":
-                  full_content = "No content available"
-              pdf_data.append(full_content)
-              
-      from aixplain.factories import IndexFactory
-      st.write(doc.name)
-      # Create an index
-      index_name = str(doc.name)
-      index_name = f"{index_name.split(".pdf")[0]}"
-      index_description = "Index for synthetic dataset."
-      #st.write(index_name)
-      # Check if the index already exists
-      #st.write(f"hi {st.session_state.index.name}")
-      #import streamlit as st
+    st.session_state.index1 = None  # Reset index
     
-    # Ensure index and index_list exist in session_state
-      text_splitter = CharacterTextSplitter(
-          separator="\n\n",
-          chunk_size=20000,
-          chunk_overlap=1000,
-          length_function=len,
-          is_separator_regex=False,
-      )
-      
-      documents = text_splitter.create_documents(
-          pdf_data, metadatas=meta_data
-      )
-      
-      content, meta = content_and_meta(documents)
+    # Get existing indexes
+    existing_indexes = IndexFactory.list().get('results', [])
+    existing_index_names = [idx.get('name', '') for idx in existing_indexes]
 
-      final_data = []
-
-      for i in range(len(content)):  
-          final_data.append({"id": meta[i]["id"], "text": content[i]})
-    
-      # Output example:
-      #print(final_data[:5])  # Print the first 5 entries
-
-      if final_data:
-          #st.write("Data is already there")
-          #st.rerun()
-          st.write("yes")
-          #st.warning(f"Index '{index_name}' already exists. Skipping index creation.")
-      else:
-          
-          st.session_state.index1 = IndexFactory.create(index_name, index_description)
-          
-      
-          index_description = f"hi {index_name}"
-    
-          st.session_state.index1 = IndexFactory.create(index_name, index_description)     
-    
-          #index = IndexFactory.get("678a6dd10c3d32001d119a10")
-          from aixplain.modules.model.record import Record
-    
-          # Prepare the records
-          records = [
-            Record(
-                value=item["text"],
-                value_type="text",
-                id=item["id"],
-                uri="",
-                #attributes={"category": item["category"]}
-            ) for item in final_data 
-          ]
+    for pdf in pdf_d:
+        # Step 1: Open PDF
+        doc = fitz.open(pdf)
+        full_content = ""
+        pdf_data = []
+        meta_data = []
         
-          # Upsert records to the index
-          st.session_state.index1.upsert(records)
-      
+        for page_number in range(len(doc)):
+            page = doc[page_number]
+            page_content = page.get_text("text") or ""
+            id_value = f'{{"Book file": "{doc.name}", "Context derived around pages": "{page_number+1} to {page_number+2}"}}'
+            pdf_data.append(page_content)
+            meta_data.append({"id": id_value})
+            
+            full_content += page_content
+        
+        if full_content.strip() == "":
+            full_content = "No content available"
+        
+        # Step 2: Text Splitting
+        text_splitter = CharacterTextSplitter(
+            separator="\n\n",
+            chunk_size=20000,
+            chunk_overlap=1000,
+            length_function=len,
+            is_separator_regex=False,
+        )
+        documents = text_splitter.create_documents(pdf_data, metadatas=meta_data)
+        
+        # Extract content and metadata
+        content = [doc.page_content for doc in documents]
+        meta = [doc.metadata for doc in documents]
+        
+        final_data = [{"id": meta[i]["id"], "text": content[i]} for i in range(len(content))]
 
-      import json
-      
-      
-      
-      if st.session_state.index1!=None:
-          data_data = "New data uploaded"
-      else:
-          data_data = "Data is already there"
-          
-      return data_data
+        # Step 3: Indexing
+        index_name = doc.name.replace(".pdf", "")
+        index_description = f"Index for {index_name}"
+
+        if not final_data:
+            st.write("Data is already there")
+            continue  # Skip if no new data
+
+        # Check if index exists
+        if index_name in existing_index_names:
+            st.write(f"Index '{index_name}' already exists. Skipping index creation.")
+            continue  # Skip index creation
+        
+        # Create new index
+        st.session_state.index1 = IndexFactory.create(index_name, index_description)
+
+        # Step 4: Upsert Records
+        records = [
+            Record(value=item["text"], value_type="text", id=item["id"], uri="") for item in final_data
+        ]
+        st.session_state.index1.upsert(records)
+
+        st.write(f"Processed PDF: {doc.name}")
+
+    return "All PDFs Processed Successfully!"
+
 
 def main():
     st.title("PDF Chatbot App")
