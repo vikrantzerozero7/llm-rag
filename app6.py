@@ -70,12 +70,13 @@ from langchain.text_splitter import CharacterTextSplitter
 
 
 
+
 def chain_result(pdf_d):
     st.session_state.index1 = None  # Reset index
     
     # ✅ Get existing indexes properly
     existing_indexes = IndexFactory.list()  # Returns a list of IndexModel objects
-    existing_index_names = [idx for idx in existing_indexes]  # Extract names
+    existing_index_names = {idx.name for idx in existing_indexes}  # Store in a set for fast lookup
 
     for pdf in pdf_d:
         # Step 1: Open PDF
@@ -120,23 +121,31 @@ def chain_result(pdf_d):
             st.write("Data is already there")
             continue  # Skip if no new data
 
-        # ✅ Check if index exists properly
+        # ✅ Check if index exists before creating
         if index_name in existing_index_names:
             st.write(f"Index '{index_name}' already exists. Skipping index creation.")
             continue  # Skip index creation
         
-        # Create new index
-        st.session_state.index1 = IndexFactory.create(index_name, index_description)
+        # ✅ Create new index if it doesn't exist
+        try:
+            st.session_state.index1 = IndexFactory.create(index_name, index_description)
+            st.write(f"New index '{index_name}' created successfully.")
+        except Exception as e:
+            st.write(f"Error creating index '{index_name}': {e}")
+            continue  # Skip this PDF if index creation fails
 
         # Step 4: Upsert Records
         records = [
             Record(value=item["text"], value_type="text", id=item["id"], uri="") for item in final_data
         ]
-        st.session_state.index1.upsert(records)
-
-        st.write(f"Processed PDF: {doc.name}")
+        try:
+            st.session_state.index1.upsert(records)
+            st.write(f"Data upserted to index '{index_name}' successfully.")
+        except Exception as e:
+            st.write(f"Error upserting data into index '{index_name}': {e}")
 
     return "All PDFs Processed Successfully!"
+    
 
 def main():
     st.title("PDF Chatbot App")
