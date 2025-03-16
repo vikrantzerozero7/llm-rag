@@ -263,7 +263,7 @@ def main():
                                 #if st.button(f"Book name"):
                                 st.write(f"Book name is: {book}")
                                 #if st.button(f"Context derived around page number: {Page number}"):
-                                st.write(page)
+                                st.write(f"Context derived around page number: {page}")
                                 
                                 
                                 #patternx = r"\w+\s+in\s+the\s+provided\s+context"
