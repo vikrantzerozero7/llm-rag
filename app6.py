@@ -183,8 +183,6 @@ def main():
     
     # Display selected index
     st.write(f"**Selected Index ID:** `{st.session_state.selected_index_id}`")
-   
-    st.header("PDF Chatbot App")
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader",type=["pdf"])
     with st.sidebar:
