@@ -173,7 +173,7 @@ def main():
 
     # Dropdown for index selection
     index_options = {index.name: index.id for index in st.session_state.index_list}  # Dictionary: Name -> ID
-    selected_index = st.selectbox(f"*Select Book:*", options=list(index_options.keys()))
+    selected_index = st.selectbox(f"**Select Book:**", options=list(index_options.keys()))
 
     # Store selected index ID in session state
     st.session_state.selected_index_id = index_options[selected_index]
@@ -238,7 +238,7 @@ def main():
     else:             
         st.sidebar.write("")
 
-    query = st.text_input(f"*Ask query and press enter ,please enter at least 3 words(example : what is electricity)*",placeholder="Ask query and press enter",key = "key")
+    query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key")
 
     
   
