@@ -132,8 +132,8 @@ def chain_result(pdf_d):
             st.write(f"New index '{index_name}' created successfully.")
         except Exception as e:
             if "Collection name already exists" in f"{e}":
-                st.write("oh yeah")
-            st.write(f"Error creating index '{index_name}': {e}")
+                st.write("Collection name already exists")
+            #st.write(f"Error creating index '{index_name}': {e}")
             
             continue  # Skip this PDF if index creation fails
 
