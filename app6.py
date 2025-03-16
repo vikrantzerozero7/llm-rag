@@ -176,8 +176,8 @@ def main():
 
     # Get index list
     st.session_state.index_list = IndexFactory.list().get('results', [])
-    if st.session_state.index_list!=None:
-        st.session_state.bool = True
+    #if st.session_state.index_list!=None:
+        #st.session_state.bool = True
 
     # Streamlit Title
     st.header("Index Selection with PDF Upload")
