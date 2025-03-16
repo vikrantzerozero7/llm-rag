@@ -157,6 +157,7 @@ def main():
     st.session_state.index_list = IndexFactory.list().get('results', [])
     if st.session_state.index_list!=None:
         st.session_state.bool = True
+        st.session_state.bool2 = True
 
     # Streamlit Title
     st.header("Index Selection with PDF Upload")
@@ -246,7 +247,7 @@ def main():
             st.warning("Please enter at least 3 words(for example : what is electricity).")
         else:
                 if uploaded_files:
-                    if "bool" in st.session_state:
+                    if "bool" or "bool2" in st.session_state:
                         if st.session_state.bool==True:
                             if query.strip()!="":
                                 
