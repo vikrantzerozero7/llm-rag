@@ -131,7 +131,7 @@ def chain_result(pdf_d):
             st.session_state.index1 = IndexFactory.create(index_name, index_description)
             st.write(f"New index '{index_name}' created successfully.")
         except Exception as e:
-            if "Collection name already exists" in e:
+            if "Collection name already exists" in f"{e}":
                 st.write("oh yeah")
             st.write(f"Error creating index '{index_name}': {e}")
             
