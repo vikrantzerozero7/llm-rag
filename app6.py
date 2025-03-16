@@ -204,35 +204,34 @@ def main():
             st.session_state.pdf_d = [] 
             if uploaded_files:  # Ensure there are uploaded files
                 with st.spinner("Processing..."):
+                    
+                    temp_dir = Path("temp_pdfs")  # Define a directory for temp files
+                    temp_dir.mkdir(exist_ok=True)  # Create directory if not exists
+
                     for upload in uploaded_files:
-                        uploadedFile1 = upload.getvalue()
-                        temp_dir = Path("temp_pdfs")  # Define a directory for temp files
-                        temp_dir.mkdir(exist_ok=True)  # Create directory if not exists
-
-                        for upload in uploaded_files:
-                            
-                            pdf_path = temp_dir / upload.name  # Define file path inside temp directory
-
-                            pdf_path_str = str(pdf_path)  # Convert path to string for session state
-                            
-                            # ✅ Check: If file exists in the directory and not in session state
-                            if pdf_path.exists() and pdf_path_str not in st.session_state.pdf_d:
-                                st.warning(f"Skipping {upload.name} (already exists in temp folder but not in session).")
-                                st.session_state.pdf_d.append(pdf_path_str)  # Append if missing in session state
-                                continue  # Skip writing again
-
-                            # ✅ Save file only if it doesn't exist
-                            if not pdf_path.exists():
-                                with open(pdf_path, "wb") as temp_file:
-                                    temp_file.write(upload.getbuffer())
-
-                                # Append the file path to session state if not already added
-                                st.session_state.pdf_d.append(pdf_path_str)
-                                
-                        #st.write(st.session_state.pdf_d)
-                        #df = fitz.open(stream=uploadedFile1, filetype="pdf")
                         
-                        #st.session_state.pdf_d.append(df)  
+                        pdf_path = temp_dir / upload.name  # Define file path inside temp directory
+
+                        pdf_path_str = str(pdf_path)  # Convert path to string for session state
+                        
+                        # ✅ Check: If file exists in the directory and not in session state
+                        if pdf_path.exists() and pdf_path_str not in st.session_state.pdf_d:
+                            st.warning(f"Skipping {upload.name} (already exists in temp folder but not in session).")
+                            st.session_state.pdf_d.append(pdf_path_str)  # Append if missing in session state
+                            continue  # Skip writing again
+
+                        # ✅ Save file only if it doesn't exist
+                        if not pdf_path.exists():
+                            with open(pdf_path, "wb") as temp_file:
+                                temp_file.write(upload.getbuffer())
+
+                            # Append the file path to session state if not already added
+                            st.session_state.pdf_d.append(pdf_path_str)
+                            
+                    #st.write(st.session_state.pdf_d)
+                    #df = fitz.open(stream=uploadedFile1, filetype="pdf")
+                    
+                    #st.session_state.pdf_d.append(df)  
                     
                     data_data2 = chain_result(st.session_state.pdf_d)
                     if data_data2 == "New data uploaded":
