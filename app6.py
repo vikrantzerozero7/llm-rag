@@ -40,7 +40,8 @@ def result(query):
 
     # Print the search results
     #print(json.dumps(response.details, indent=4)) 
-
+    import ast
+    st.write(ast.literal_eval(response1["id"])['Book file'])
     return response1["data"]
 
     
