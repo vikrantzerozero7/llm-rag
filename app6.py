@@ -181,7 +181,7 @@ def main():
     st.session_state.index = IndexFactory.get(f"{st.session_state.selected_index_id}")
     
     # Display selected index
-    st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
+    #st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader",type=["pdf"])
     with st.sidebar:
