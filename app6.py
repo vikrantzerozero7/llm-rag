@@ -260,9 +260,9 @@ def main():
                                 
                                 result1,book,page =  result(query) 
                                 st.write(result1) 
-                                st.button(f"Book name"):
+                                if st.button(f"Book name"):
                                     st.write(book)
-                                st.button("Page number"):
+                                if st.button("Page number"):
                                     st.write(page)
                                 
                                 
