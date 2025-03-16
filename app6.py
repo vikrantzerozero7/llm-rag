@@ -246,8 +246,8 @@ def main():
         if word_count < 3:
             st.warning("Please enter at least 3 words(for example : what is electricity).")
         else:
-                if uploaded_files:
-                    if "bool" or "bool2" in st.session_state:
+                if uploaded_files or "bool2" in st.session_state:
+                    if "bool" in st.session_state:
                         if st.session_state.bool==True:
                             if query.strip()!="":
                                 
