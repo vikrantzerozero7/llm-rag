@@ -114,7 +114,7 @@ def chain_result(pdf_d):
         final_data = [{"id": meta[i]["id"], "text": content[i]} for i in range(len(content))]
 
         # Step 3: Indexing
-        index_name = doc.name.replace(".pdf", "")
+        index_name = doc.name.replace("temp_pdfs/", "").replace(".pdf", "")#doc.name.replace(".pdf", "")
         index_description = f"Index for {index_name}"
 
         if not final_data:
