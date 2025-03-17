@@ -239,11 +239,11 @@ def main():
             st.write("")
     if "bool" in st.session_state:
         st.sidebar.write("App is ready") 
+        st.experimental_rerun()
     else:             
         st.sidebar.write("")
 
     query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key")
-
     
   
     st.session_state.query = query
@@ -284,7 +284,7 @@ def main():
                 else: 
                     st.write("Upload and process file/files first")
     else:
-        continue
+        st.write("")
 
 if __name__=='__main__':
     main()
