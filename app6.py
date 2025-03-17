@@ -162,6 +162,8 @@ def main():
 
     # Get index list
     st.session_state.index_list = IndexFactory.list().get('results', [])
+    if not st.session_state.index_list:
+        continue
     if st.session_state.index_list!=None:
         st.session_state.bool = True
         st.session_state.bool2 = True
