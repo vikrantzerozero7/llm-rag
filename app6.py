@@ -162,28 +162,27 @@ def main():
 
     # Get index list
     st.session_state.index_list = IndexFactory.list().get('results', [])
-    if not st.session_state.index_list:
-        continue
+    
     if st.session_state.index_list!=None:
         st.session_state.bool = True
         st.session_state.bool2 = True
 
-    # Streamlit Title
+        # Streamlit Title
+        
+        # Show total indexes
+        #st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
     
-    # Show total indexes
-    #st.write(f"Total Indexes Found: {len(st.session_state.index_list)}")
-
-    # Dropdown for index selection
-    index_options = {index.name: index.id for index in st.session_state.index_list}  # Dictionary: Name -> ID
-    selected_index = st.selectbox(f"**Select Book:**", options=list(index_options.keys()))
-
-    # Store selected index ID in session state
-    st.session_state.selected_index_id = index_options[selected_index]
+        # Dropdown for index selection
+        index_options = {index.name: index.id for index in st.session_state.index_list}  # Dictionary: Name -> ID
+        selected_index = st.selectbox(f"**Select Book:**", options=list(index_options.keys()))
     
-    st.session_state.index = IndexFactory.get(f"{st.session_state.selected_index_id}")
-    
-    # Display selected index
-    #st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
+        # Store selected index ID in session state
+        st.session_state.selected_index_id = index_options[selected_index]
+        
+        st.session_state.index = IndexFactory.get(f"{st.session_state.selected_index_id}")
+        
+        # Display selected index
+        #st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader",type=["pdf"])
     with st.sidebar:
