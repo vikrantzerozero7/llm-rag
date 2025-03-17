@@ -284,7 +284,7 @@ def main():
                 else: 
                     st.write("Upload and process file/files first")
     else:
-        pass
+        main()
 
 if __name__=='__main__':
     main()
