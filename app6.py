@@ -11,7 +11,7 @@ import fitz
 from langchain.text_splitter import CharacterTextSplitter
 
 # Set API Key
-os.environ["AIXPLAIN_API_KEY"] = "a25c461433477bd01dfd342526b176bd855a26f0ee79fe060fb854f811e2748a"
+os.environ["AIXPLAIN_API_KEY"] = "7ab77aaaa1282a54b9441283eeb17e7b528295cd03003c327eadccc43e1420ae"
 
 from aixplain.modules.model.record import Record
 from aixplain.factories import DatasetFactory, IndexFactory, ModelFactory
