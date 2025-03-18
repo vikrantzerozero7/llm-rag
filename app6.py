@@ -156,7 +156,6 @@ def chain_result(pdf_d):
 
     return "All PDFs Processed Successfully!"
     
-if st.button("Refresh after uploading pdf"):
 def main():
     st.title("PDF Chatbot App")
 
