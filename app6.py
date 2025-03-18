@@ -186,6 +186,11 @@ def main():
         
         # Display selected index
         #st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
+
+        query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key")
+        
+      
+        st.session_state.query = query
     
     uploaded_files = st.sidebar.file_uploader("Choose a file", accept_multiple_files=True, key="fileUploader",type=["pdf"])
     with st.sidebar:
@@ -243,10 +248,7 @@ def main():
     else:             
         st.sidebar.write("")
 
-    query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key")
     
-  
-    st.session_state.query = query
 
     time.sleep(1)   
     if st.button("Submit"):
