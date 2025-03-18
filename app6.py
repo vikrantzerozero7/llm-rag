@@ -244,7 +244,7 @@ def main():
             st.write("")
     if "bool" in st.session_state:
         st.sidebar.write("App is ready") 
-        st.experimental_rerun()
+        #st.experimental_rerun()
     else:             
         st.sidebar.write("")
 
