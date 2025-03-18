@@ -156,7 +156,7 @@ def chain_result(pdf_d):
 
     return "All PDFs Processed Successfully!"
     
-
+if st.button("Refresh after uploading pdf"):
 def main():
     st.title("PDF Chatbot App")
 
@@ -187,7 +187,7 @@ def main():
         # Display selected index
         #st.write(f"Selected Index ID: `{st.session_state.selected_index_id}`")
 
-        query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key")
+        query = st.text_input(f"**Ask query and press enter ,please enter at least 3 words(example : what is electricity)**",placeholder="Ask query and press enter",key = "key",value="")
         
       
         st.session_state.query = query
