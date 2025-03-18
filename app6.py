@@ -165,7 +165,7 @@ def main():
         st.session_state.bool = True
         
     
-    if st.session_state.index_list:
+    if True:#st.session_state.index_list:
         st.session_state.bool = True
         st.session_state.bool2 = True
 
