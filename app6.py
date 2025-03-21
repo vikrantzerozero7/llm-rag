@@ -305,4 +305,5 @@ if st.button("Refresh after new file upload"):
 
 if st.button("Read me"):
     st.write('Upload any number of books in pdf format,\nPress submit & process and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
+    st.write("Note: Must refresh after new file upload in order to reflect the change in dropdown options")
     
