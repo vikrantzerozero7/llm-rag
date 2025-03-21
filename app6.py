@@ -293,6 +293,12 @@ if __name__=='__main__':
 st.write("")
 st.write("")
 st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
 
 if st.button("Refresh after new file upload"):
     pass
