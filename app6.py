@@ -290,8 +290,12 @@ def main():
 if __name__=='__main__':
     main()
     
+st.write("")
+st.write("")
+st.write("")
+
 if st.button("Refresh after new file upload"):
-    st.write("")
+    pass
 
 if st.button("Read me"):
     st.write('Upload any number of books in pdf format,\nPress submit & process and wait for processing ,\nAsk queries (use at least 3 words ,for example "What is electricity") and get relevant answers') 
